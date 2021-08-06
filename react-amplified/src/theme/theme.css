@@ -1,0 +1,29 @@
+*:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+:root {
+  --bg-color: #2e2f30;
+  --title-font-family: "Lobster Two", cursive;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0;
+  border-radius: 20px;
+  border: 3px solid #b0b0b0;
+}

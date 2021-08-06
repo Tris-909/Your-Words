@@ -1,0 +1,17 @@
+.Home {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  position: relative;
+}
+
+.logo {
+  font-family: var(--title-font-family);
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+}
+
+.css-6e3h0h {
+  /* override background-color for Drawer */
+  background-color: var(--bg-color) !important;
+}

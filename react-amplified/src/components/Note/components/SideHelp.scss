@@ -1,0 +1,6 @@
+.animation {
+  transition: all 1s;
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
