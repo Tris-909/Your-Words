@@ -87,9 +87,9 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
       const note = {
         id: uuid.v1(),
         userId: userInfo.id,
-        content: content,
-        header: header,
-        attachment: attachment ? attachment : "",
+        description: content,
+        name: header,
+        image: attachment ? attachment : "",
         x: 0,
         y: 0,
       };

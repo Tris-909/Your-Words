@@ -5,8 +5,10 @@ export const getTodo = /* GraphQL */ `
   query GetTodo($id: ID!) {
     getTodo(id: $id) {
       id
+      userId
       name
       description
+      image
       x
       y
       createdAt
@@ -23,8 +25,10 @@ export const listTodos = /* GraphQL */ `
     listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        userId
         name
         description
+        image
         x
         y
         createdAt

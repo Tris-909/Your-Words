@@ -8,8 +8,10 @@ export const createTodo = /* GraphQL */ `
   ) {
     createTodo(input: $input, condition: $condition) {
       id
+      userId
       name
       description
+      image
       x
       y
       createdAt
@@ -24,8 +26,10 @@ export const updateTodo = /* GraphQL */ `
   ) {
     updateTodo(input: $input, condition: $condition) {
       id
+      userId
       name
       description
+      image
       x
       y
       createdAt
@@ -40,8 +44,10 @@ export const deleteTodo = /* GraphQL */ `
   ) {
     deleteTodo(input: $input, condition: $condition) {
       id
+      userId
       name
       description
+      image
       x
       y
       createdAt

@@ -1,7 +1,9 @@
 type Todo @model {
   id: ID!
+  userId: ID!
   name: String!
   description: String
+  image: String
   x: Float
   y: Float
 }
