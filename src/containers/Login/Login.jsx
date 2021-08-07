@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Auth } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
 import { useAppContext } from "libs/context-libs";
 import useBreakPoints from "libs/useMediaQueries";
 import {
@@ -15,6 +15,8 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import { createUser } from "graphql/mutations";
+import * as uuid from "uuid";
 import "./Login.scss";
 
 const Login = () => {
@@ -56,12 +58,24 @@ const Login = () => {
 
     try {
       await Auth.signIn(email, password);
+
       setIsAuthenticated(true);
       setIsLoading(false);
     } catch (error) {
       setError(error.message);
       setIsLoading(false);
     }
+  };
+
+  const createUserProfile = async (username) => {
+    const user = {
+      id: uuid.v1(),
+      username: username,
+      type: "USER",
+      boardHeight: 100,
+    };
+
+    await API.graphql(graphqlOperation(createUser, { input: user }));
   };
 
   const handleSubmitSignUp = async (e) => {
@@ -109,7 +123,8 @@ const Login = () => {
 
     try {
       await Auth.confirmSignUp(email, confirmationCode);
-      await Auth.signIn(email, password);
+      const result = await Auth.signIn(email, password);
+      createUserProfile(result.username);
       setIsAuthenticated(true);
       history.push("/");
     } catch (error) {
