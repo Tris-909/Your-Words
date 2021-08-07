@@ -29,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "push": "amplify push",
-    "deploy": "amplify deploy"
+    "deploy": "amplify publish"
   },
   "eslintConfig": {
     "extends": [

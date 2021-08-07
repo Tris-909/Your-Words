@@ -10,9 +10,9 @@ Learning Amplify by going thourgh many tutorials
 
 - Check out to new branch on dev: **git checkout -b Feature-1**
 - Check out to dev env: **amplify env checkout [dev-env-name]**
-- Pushing new changes to dev env backend: **amplify push**
 - Adding all new changes to git: **git add .**
 - Commit all your code before pushing: **git commit -m "[Commit-message]"**
 - Pushing changes to Github: **git push**
+- Pushing new changes to dev env backend: **amplify push**
 - Checkout to prod env: **amplify env checkout <env-name>**
 - Pushing new changes to prod: **amplify push**
