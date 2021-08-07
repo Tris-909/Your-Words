@@ -47,14 +47,14 @@ const Note = ({ note, fetchLists }) => {
       <Box
         width="fit-content"
         minWidth="250px"
-        minHeight={note.attachment ? "250px" : "auto"}
+        minHeight={note.image ? "250px" : "auto"}
         borderRadius="7px"
         background="white"
         className="drag"
       >
         <HStack my={2} paddingLeft={2} width="250px">
           <Box fontWeight="bold" width="100%">
-            {note.header}
+            {note.name}
           </Box>
           <Menu>
             <MenuButton
@@ -75,7 +75,7 @@ const Note = ({ note, fetchLists }) => {
               />
               <MenuItem
                 icon={<CloseIcon />}
-                onClick={() => deleteNote(note.noteId, note.attachment)}
+                onClick={() => deleteNote(note.noteId, note.image)}
               >
                 Delete Note
               </MenuItem>
@@ -85,18 +85,18 @@ const Note = ({ note, fetchLists }) => {
 
         <Box
           width="260px"
-          height={note.attachment ? "260px" : "150px"}
+          height={note.image ? "260px" : "150px"}
           zIndex="1"
           position="relative"
         >
-          {note.attachment ? (
+          {note.image ? (
             <>
               <Image
                 position="absolute"
                 objectFit="cover"
                 width="100%"
                 height="100%"
-                src={`https://notes-app-upload-tritran.s3.ap-southeast-2.amazonaws.com/private/${note.userId}/${note.attachment}`}
+                src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${note.userId}/${note.image}`}
                 alt={note.id}
               />
               <Box
@@ -122,7 +122,7 @@ const Note = ({ note, fetchLists }) => {
             </>
           ) : (
             <Box height="260px" p={2}>
-              {note.content}
+              {note.description}
             </Box>
           )}
         </Box>
