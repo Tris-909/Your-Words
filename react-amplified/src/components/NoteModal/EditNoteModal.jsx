@@ -17,10 +17,11 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 import { BsPencil } from "react-icons/bs";
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { onError } from "libs/error-libs";
 import { uploadToS3 } from "libs/awsLib";
 import config from "config";
+import { updateTodo } from "graphql/mutations";
 
 // This is not a re-usable component, This is just a way to manage and swap between many different modals in the same page
 const EditNoteModal = ({
@@ -34,8 +35,8 @@ const EditNoteModal = ({
 }) => {
   const initialRef = useRef();
   const finalRef = useRef();
-  const [header, setHeader] = useState(note.header);
-  const [content, setContent] = useState(note.content);
+  const [header, setHeader] = useState(note.name);
+  const [content, setContent] = useState(note.description);
   const [previewImage, setPreviewImage] = useState(null);
   const [deleteImage, setDeleteImage] = useState(false);
   const file = useRef(null);
@@ -70,13 +71,16 @@ const EditNoteModal = ({
         attachment = await uploadToS3(file.current);
       }
 
-      await API.put("notes", `/notes/${note.noteId}`, {
-        body: {
-          header,
-          content,
-          attachment: attachment || note.attachment,
-        },
-      });
+      await API.graphql(
+        graphqlOperation(updateTodo, {
+          input: {
+            id: note.id,
+            name: header,
+            description: content,
+            image: attachment || note.image,
+          },
+        })
+      );
       onClose();
       fetchLists();
     } catch (e) {

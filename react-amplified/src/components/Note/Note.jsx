@@ -24,7 +24,7 @@ const Note = ({ note, fetchLists }) => {
   const [onHide, setOnHide] = useState(true);
   const [currentModalState, setCurrentModalState] = useState(null);
 
-  const deleteNote = async (id, objectKey) => {
+  const deleteNote = async (objectKey) => {
     await API.graphql(
       graphqlOperation(deleteTodo, {
         input: {
@@ -85,7 +85,7 @@ const Note = ({ note, fetchLists }) => {
               />
               <MenuItem
                 icon={<CloseIcon />}
-                onClick={() => deleteNote(note.id, note.image)}
+                onClick={() => deleteNote(note.image)}
               >
                 Delete Note
               </MenuItem>
