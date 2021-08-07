@@ -1,24 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchListNotes } from "redux/features/notes/note";
 import { getUserInfo } from "redux/features/user/userInfo";
+import { Auth } from "aws-amplify";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { list } = useSelector((state) => state.notes);
   const { userInfo } = useSelector((state) => state.user);
+  const [username, setUsername] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserInfo());
+    getUserName();
   }, []);
+
+  useEffect(() => {
+    if (username) {
+      dispatch(getUserInfo(username));
+    }
+  }, [username]);
 
   useEffect(() => {
     fetchLists();
   }, [userInfo]);
+
+  const getUserName = async () => {
+    const res = await Auth.currentUserInfo();
+    setUsername(res.username);
+  };
 
   const fetchLists = () => {
     if (userInfo.data) {

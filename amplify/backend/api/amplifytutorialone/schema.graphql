@@ -1,4 +1,14 @@
-type Todo @model {
+type User
+  @model
+  @key(name: "byUsername", fields: ["username"], queryField: "byUsername") {
+  id: ID!
+  username: String
+  type: String
+  boardHeight: Int
+  todos: [Todo] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Todo @model @key(name: "byUser", fields: ["userId"]) {
   id: ID!
   userId: ID!
   name: String!
@@ -6,11 +16,4 @@ type Todo @model {
   image: String
   x: Float
   y: Float
-}
-
-type User @model {
-  id: ID!
-  username: String
-  type: String
-  boardHeight: Int
 }
