@@ -1,10 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API } from "aws-amplify";
+import { listTodos } from "graphql/queries";
+import { API, graphqlOperation } from "aws-amplify";
 
-export const fetchListNotes = createAsyncThunk("notes/fetchNotes", async () => {
-  const response = await API.get("notes", "/notes");
-  return response;
-});
+export const fetchListNotes = createAsyncThunk(
+  "notes/fetchNotes",
+  async (userId) => {
+    const { data } = await API.graphql(
+      graphqlOperation(listTodos, {
+        filter: {
+          userId: {
+            eq: userId,
+          },
+        },
+      })
+    );
+
+    return data.listTodos.items;
+  }
+);
 
 const initialState = {
   list: {

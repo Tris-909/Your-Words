@@ -63,12 +63,6 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
     console.log("file", inputRef.current.value);
   };
 
-  // const createNote = (note) => {
-  //   return API.post("notes", "/notes", {
-  //     body: note,
-  //   });
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -95,8 +89,6 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
       };
 
       await API.graphql(graphqlOperation(createTodo, { input: note }));
-
-      // await createNote({ header, content, attachment });
       clearInputState();
       fetchLists();
       onClose();
@@ -105,8 +97,6 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
       onError(e);
     }
   };
-
-  console.log("user info", userInfo);
 
   return (
     <>
