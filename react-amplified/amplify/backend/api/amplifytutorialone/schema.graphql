@@ -7,3 +7,10 @@ type Todo @model {
   x: Float
   y: Float
 }
+
+type User @model {
+  id: ID!
+  username: String
+  type: String
+  boardHeight: Int
+}

@@ -19,7 +19,9 @@ const BasicLayout = (props) => {
   return (
     <Box className="Home" display="flex" flexDirection="column">
       <NavBar onOpen={onOpen} />
-      <Box flexGrow="1">{props.children}</Box>
+      <Box flexGrow="1" position="relative">
+        {props.children}
+      </Box>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
