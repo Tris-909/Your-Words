@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { byUsername } from "graphql/queries";
-import { API, graphqlOperation } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
+
+export const getAuth = createAsyncThunk("user/getAuth", async () => {
+  const response = await Auth.currentUserInfo();
+  return response;
+});
 
 export const getUserInfo = createAsyncThunk(
   "user/getUserInfo",
@@ -20,6 +25,11 @@ export const getUserInfo = createAsyncThunk(
 
 const initialState = {
   userInfo: {
+    data: null,
+    status: false,
+    error: {},
+  },
+  auth: {
     data: null,
     status: false,
     error: {},
@@ -47,6 +57,27 @@ export const user = createSlice({
     },
     [getUserInfo.rejected.type]: (state, action) => {
       state.userInfo = {
+        status: true,
+        data: null,
+        error: action.payload,
+      };
+    },
+    [getAuth.pending.type]: (state, action) => {
+      state.auth = {
+        status: true,
+        data: null,
+        error: {},
+      };
+    },
+    [getAuth.fulfilled.type]: (state, action) => {
+      state.auth = {
+        status: false,
+        data: action.payload,
+        error: {},
+      };
+    },
+    [getAuth.rejected.type]: (state, action) => {
+      state.auth = {
         status: true,
         data: null,
         error: action.payload,

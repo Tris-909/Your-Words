@@ -4,18 +4,19 @@ import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchListNotes } from "redux/features/notes/note";
-import { getUserInfo } from "redux/features/user/userInfo";
+import { getUserInfo, getAuth } from "redux/features/user/userInfo";
 import { Auth } from "aws-amplify";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { list } = useSelector((state) => state.notes);
-  const { userInfo } = useSelector((state) => state.user);
+  const { userInfo, auth } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getUserName();
+    dispatch(getAuth());
   }, []);
 
   useEffect(() => {

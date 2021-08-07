@@ -17,12 +17,14 @@ import { deleteFromS3 } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
 import { deleteTodo, updateTodo } from "graphql/mutations";
+import { useSelector } from "react-redux";
 import "./Note.scss";
 
 const Note = ({ note, fetchLists }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [onHide, setOnHide] = useState(true);
   const [currentModalState, setCurrentModalState] = useState(null);
+  const { auth } = useSelector((state) => state.user);
 
   const deleteNote = async (objectKey) => {
     await API.graphql(
@@ -106,7 +108,7 @@ const Note = ({ note, fetchLists }) => {
                 objectFit="cover"
                 width="100%"
                 height="100%"
-                src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${note.userId}/${note.image}`}
+                src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${auth.data.id}/${note.image}`}
                 alt={note.id}
               />
               <Box

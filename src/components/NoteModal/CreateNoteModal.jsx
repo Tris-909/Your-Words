@@ -18,10 +18,11 @@ import {
 import { BiNote } from "react-icons/bi";
 import { CloseIcon } from "@chakra-ui/icons";
 import config from "config";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { uploadToS3 } from "libs/awsLib";
 import { onError } from "libs/error-libs";
 import { createTodo } from "graphql/mutations";
+import { useSelector } from "react-redux";
 import * as uuid from "uuid";
 
 const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
@@ -30,21 +31,7 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
   const [previewImage, setPreviewImage] = useState(null);
   const file = useRef(null);
   const inputRef = useRef();
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    getUserInfo();
-  }, []);
-
-  const getUserInfo = async () => {
-    await Auth.currentUserInfo()
-      .then((data) => {
-        setUserInfo(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const { userInfo } = useSelector((state) => state.user);
 
   const handleFileChange = (e) => {
     file.current = e.target.files[0];
@@ -80,7 +67,7 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
 
       const note = {
         id: uuid.v1(),
-        userId: userInfo.id,
+        userId: userInfo.data.id,
         description: content,
         name: header,
         image: attachment ? attachment : "",

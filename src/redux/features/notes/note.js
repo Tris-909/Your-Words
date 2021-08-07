@@ -5,6 +5,7 @@ import { API, graphqlOperation } from "aws-amplify";
 export const fetchListNotes = createAsyncThunk(
   "notes/fetchNotes",
   async (userId) => {
+    console.log("userId", userId);
     const { data } = await API.graphql(
       graphqlOperation(listTodos, {
         filter: {
