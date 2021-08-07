@@ -16,7 +16,7 @@ import Draggable from "react-draggable";
 import { deleteFromS3 } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
-import { updateTodo } from "graphql/mutations";
+import { deleteTodo, updateTodo } from "graphql/mutations";
 import "./Note.scss";
 
 const Note = ({ note, fetchLists }) => {
@@ -25,7 +25,13 @@ const Note = ({ note, fetchLists }) => {
   const [currentModalState, setCurrentModalState] = useState(null);
 
   const deleteNote = async (id, objectKey) => {
-    await API.del("notes", `/notes/${id}`);
+    await API.graphql(
+      graphqlOperation(deleteTodo, {
+        input: {
+          id: note.id,
+        },
+      })
+    );
     await deleteFromS3(objectKey);
     fetchLists();
   };
