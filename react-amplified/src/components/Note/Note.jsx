@@ -14,8 +14,9 @@ import EditNoteModal from "components/NoteModal/EditNoteModal";
 import DetailNoteModal from "components/NoteModal/DetailNoteModal";
 import Draggable from "react-draggable";
 import { deleteFromS3 } from "libs/awsLib";
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
+import { updateTodo } from "graphql/mutations";
 import "./Note.scss";
 
 const Note = ({ note, fetchLists }) => {
@@ -23,19 +24,22 @@ const Note = ({ note, fetchLists }) => {
   const [onHide, setOnHide] = useState(true);
   const [currentModalState, setCurrentModalState] = useState(null);
 
-  const deleteNote = async (noteId, objectKey) => {
-    await API.del("notes", `/notes/${noteId}`);
+  const deleteNote = async (id, objectKey) => {
+    await API.del("notes", `/notes/${id}`);
     await deleteFromS3(objectKey);
     fetchLists();
   };
 
   const savePositionToDatabases = async (data) => {
-    await API.put("notes", `/notes/drag/${note.noteId}`, {
-      body: {
-        x: data.x,
-        y: data.y,
-      },
-    });
+    await API.graphql(
+      graphqlOperation(updateTodo, {
+        input: {
+          id: note.id,
+          x: data.x,
+          y: data.y,
+        },
+      })
+    );
   };
 
   return (
@@ -75,7 +79,7 @@ const Note = ({ note, fetchLists }) => {
               />
               <MenuItem
                 icon={<CloseIcon />}
-                onClick={() => deleteNote(note.noteId, note.image)}
+                onClick={() => deleteNote(note.id, note.image)}
               >
                 Delete Note
               </MenuItem>
