@@ -99,7 +99,7 @@ const EditNoteModal = ({
   return (
     <>
       <MenuItem
-        icon={<BsPencil viewBox="0 0 15 15" />}
+        icon={<BsPencil viewBox="0 0 22 22" wdith="1rem" height="1rem" />}
         onClick={() => onEditHandler()}
       >
         Edit Note

@@ -9,15 +9,22 @@ import {
   DrawerContent,
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import NavBar from "components/NavBar/NavBar";
 import { LinkWrapper } from "components/LinkWrapper/LinkWrapper";
 import "./BasicLayout.scss";
 
 const BasicLayout = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { userInfo } = useSelector((state) => state.user);
 
   return (
-    <Box className="Home" display="flex" flexDirection="column">
+    <Box
+      className="Home"
+      minHeight={`${userInfo.data ? userInfo.data.boardHeight : 100}vh`}
+      display="flex"
+      flexDirection="column"
+    >
       <NavBar onOpen={onOpen} />
       <Box flexGrow="1" position="relative">
         {props.children}

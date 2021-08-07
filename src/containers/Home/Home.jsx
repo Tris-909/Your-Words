@@ -10,7 +10,7 @@ import { Auth } from "aws-amplify";
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { list } = useSelector((state) => state.notes);
-  const { userInfo, auth } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const dispatch = useDispatch();
 
