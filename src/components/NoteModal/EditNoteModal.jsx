@@ -22,6 +22,7 @@ import { onError } from "libs/error-libs";
 import { uploadToS3 } from "libs/awsLib";
 import config from "config";
 import { updateTodo } from "graphql/mutations";
+import { useSelector } from "react-redux";
 
 // This is not a re-usable component, This is just a way to manage and swap between many different modals in the same page
 const EditNoteModal = ({
@@ -40,6 +41,7 @@ const EditNoteModal = ({
   const [previewImage, setPreviewImage] = useState(null);
   const [deleteImage, setDeleteImage] = useState(false);
   const file = useRef(null);
+  const { auth } = useSelector((state) => state.user);
 
   const handleFileChange = (event) => {
     file.current = event.target.files[0];
@@ -142,8 +144,8 @@ const EditNoteModal = ({
                   <HStack alignItems="flex-start">
                     <Image
                       src={
-                        note.attachment && !previewImage
-                          ? `https://notes-app-upload-tritran.s3.ap-southeast-2.amazonaws.com/private/${note.userId}/${note.attachment}`
+                        note.image && !previewImage
+                          ? `https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${auth.data.id}/${note.image}`
                           : previewImage
                       }
                       alt="previewImage"

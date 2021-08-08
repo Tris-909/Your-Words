@@ -2,6 +2,7 @@ import React from "react";
 import CommonModal from "./CommonModal";
 import { ModalHeader, ModalBody, Box, Image } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
 
 const DetailNoteModal = ({
   isOpen,
@@ -13,6 +14,8 @@ const DetailNoteModal = ({
   setCurrentModalState,
   currentModalState,
 }) => {
+  const { auth } = useSelector((state) => state.user);
+
   const onOpenDetailModal = () => {
     setOnHide(true);
     setCurrentModalState("detail");
@@ -51,8 +54,8 @@ const DetailNoteModal = ({
         >
           <Image
             src={
-              note.attachment &&
-              `https://notes-app-upload-tritran.s3.ap-southeast-2.amazonaws.com/private/${note.userId}/${note.attachment}`
+              note.image &&
+              `https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${auth.data.id}/${note.image}`
             }
             alt="previewImage"
             border="1px solid #e2e8f0"
@@ -60,8 +63,8 @@ const DetailNoteModal = ({
             height="500px"
             marginBottom={3}
           />
-          <ModalHeader>{note.header}</ModalHeader>
-          <ModalBody whiteSpace="pre-line">{note.content}</ModalBody>
+          <ModalHeader>{note.name}</ModalHeader>
+          <ModalBody whiteSpace="pre-line">{note.description}</ModalBody>
         </CommonModal>
       )}
     </Box>
