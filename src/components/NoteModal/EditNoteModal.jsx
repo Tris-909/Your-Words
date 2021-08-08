@@ -15,6 +15,7 @@ import {
   Button,
   MenuItem,
 } from "@chakra-ui/react";
+import LabelInput from "components/Note/components/LabelInput";
 import { CloseIcon } from "@chakra-ui/icons";
 import { BsPencil } from "react-icons/bs";
 import { API, graphqlOperation } from "aws-amplify";
@@ -34,7 +35,6 @@ const EditNoteModal = ({
   currentModalState,
   setCurrentModalState,
 }) => {
-  const initialRef = useRef();
   const finalRef = useRef();
   const [header, setHeader] = useState(note.name);
   const [content, setContent] = useState(note.description);
@@ -107,36 +107,30 @@ const EditNoteModal = ({
         Edit Note
       </MenuItem>
       {currentModalState === "edit" && (
-        <CommonModal
-          isOpen={isOpen}
-          onClose={onClose}
-          initialFocusRef={initialRef}
-          finalFocusRef={finalRef}
-          scrollBehavior="outside"
-        >
+        <CommonModal isOpen={isOpen} onClose={onClose} scrollBehavior="outside">
           <ModalHeader>Edit</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <form>
               <FormControl>
-                <FormLabel>Content</FormLabel>
+                <FormLabel>Header</FormLabel>
                 <Input
                   value={header}
                   onChange={(e) => setHeader(e.target.value)}
-                  ref={initialRef}
                   placeholder="Note Header"
                 />
               </FormControl>
 
               <FormControl>
-                <FormLabel>Content</FormLabel>
+                <FormLabel marginTop={2}>Content</FormLabel>
                 <Textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  ref={initialRef}
                   placeholder="Write something"
                 />
               </FormControl>
+
+              <LabelInput />
 
               <FormControl mt={4}>
                 <FormLabel>Image</FormLabel>

@@ -61,6 +61,7 @@ const Note = ({ note, fetchLists }) => {
       onStop={(e, data) => savePositionToDatabases(data)}
       defaultPosition={{ x: note.x, y: note.y }}
       bounds="parent"
+      disabled={isOpen}
     >
       <Box
         width="fit-content"
