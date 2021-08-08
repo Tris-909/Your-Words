@@ -17,7 +17,8 @@ import { deleteFromS3 } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
 import { deleteTodo, updateTodo } from "graphql/mutations";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateLocalXYPosition } from "redux/features/notes/note";
 import "./Note.scss";
 
 const Note = ({ note, fetchLists }) => {
@@ -25,6 +26,7 @@ const Note = ({ note, fetchLists }) => {
   const [onHide, setOnHide] = useState(true);
   const [currentModalState, setCurrentModalState] = useState(null);
   const { auth } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const deleteNote = async (objectKey) => {
     await API.graphql(
@@ -47,6 +49,9 @@ const Note = ({ note, fetchLists }) => {
           y: data.y,
         },
       })
+    );
+    dispatch(
+      updateLocalXYPosition({ id: note.id, newY: data.y, newX: data.x })
     );
   };
 

@@ -21,7 +21,7 @@ const BasicLayout = (props) => {
   return (
     <Box
       className="Home"
-      minHeight={`${userInfo.data ? userInfo.data.boardHeight : 100}vh`}
+      height={userInfo.data ? `${userInfo.data.boardHeight}px` : `100vh`}
       display="flex"
       flexDirection="column"
     >

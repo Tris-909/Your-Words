@@ -20,6 +20,7 @@ import "./SideHelp.scss";
 
 const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
   const { userInfo } = useSelector((state) => state.user);
+  const { list } = useSelector((state) => state.notes);
   const dispatch = useDispatch();
 
   const changeBoardHeight = async (action) => {
@@ -27,15 +28,20 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
     if (action === "increase") {
       changes = {
         id: userInfo.data.id,
-        boardHeight: userInfo.data.boardHeight + 100,
+        boardHeight: userInfo.data.boardHeight + 1000,
       };
       updateBoardHeight(changes);
-    } else if (action === "decrease" && userInfo.data.boardHeight > 100) {
+    } else if (action === "decrease" && userInfo.data.boardHeight > 1000) {
+      const eligibleForShrink = canReduceBoardHeight();
+
       changes = {
         id: userInfo.data.id,
-        boardHeight: userInfo.data.boardHeight - 100,
+        boardHeight: userInfo.data.boardHeight - 1000,
       };
-      updateBoardHeight(changes);
+
+      if (eligibleForShrink) {
+        updateBoardHeight(changes);
+      }
     }
   };
 
@@ -46,6 +52,20 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
       })
     );
     dispatch(getUserInfo(userInfo.data.username));
+  };
+
+  const canReduceBoardHeight = () => {
+    const LIMIT = userInfo.data.boardHeight - 1000;
+    let result = true;
+
+    list.data.forEach((item) => {
+      if (item.y > LIMIT) {
+        alert("There are notes in the zone you want to shrink");
+        result = false;
+      }
+    });
+
+    return result;
   };
 
   return (
