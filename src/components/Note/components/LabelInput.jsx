@@ -76,7 +76,9 @@ const LabelInput = ({ note }) => {
           note.labels.map((item) => {
             return (
               <Label
+                key={item.id}
                 id={item.id}
+                noteId={note.id}
                 content={item.content}
                 bgColor={item.color}
                 closable
