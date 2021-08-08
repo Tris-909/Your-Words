@@ -103,7 +103,7 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
         <ModalBody pb={6}>
           <form>
             <FormControl>
-              <FormLabel>Content</FormLabel>
+              <FormLabel>Header</FormLabel>
               <Input
                 value={header}
                 onChange={(e) => setHeader(e.target.value)}

@@ -102,21 +102,27 @@ const Note = ({ note, fetchLists }) => {
           </Menu>
         </HStack>
 
-        <Box
-          display="flex"
-          flexWrap="wrap"
-          width="250px"
-          mx="1"
-          marginBottom="0.5rem"
-          gridColumnGap="8px"
-          gridRowGap="0.5rem"
-        >
-          <Label content="Development" bgColor="#2bcfbe" />
-          <Label content="Feature" bgColor="#c4ed2d" />
-          <Label content="Toy" bgColor="#d60946" />
-          <Label content="Learning Web AAAAAAAAA" bgColor="#0943d6" />
-          <Label content="Skill" bgColor="#b709d6" />
-        </Box>
+        {note.labels && (
+          <Box
+            display="flex"
+            flexWrap="wrap"
+            width="250px"
+            mx="1"
+            marginBottom="0.5rem"
+            gridColumnGap="8px"
+            gridRowGap="0.5rem"
+          >
+            {note.labels.map((item) => {
+              return (
+                <Label
+                  key={item.id}
+                  content={item.content}
+                  bgColor={item.color}
+                />
+              );
+            })}
+          </Box>
+        )}
 
         <Box
           width="260px"
