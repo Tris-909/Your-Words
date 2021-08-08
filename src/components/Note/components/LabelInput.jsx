@@ -4,7 +4,7 @@ import { Box, Input, HStack, Button } from "@chakra-ui/react";
 import Label from "components/Note/components/Label";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateTodo } from "graphql/mutations";
-import { addingNewLabel } from "redux/features/notes/note";
+import { addingNewLabel, removeALabel } from "redux/features/notes/note";
 import { useDispatch } from "react-redux";
 import * as uuid from "uuid";
 
@@ -29,7 +29,31 @@ const LabelInput = ({ note }) => {
       })
     );
 
-    dispatch(addingNewLabel({ id: note.id, label: label }));
+    dispatch(addingNewLabel({ id: note.id, newLable: label }));
+    setLabelValue("");
+  };
+
+  const removeLabel = async (labelId) => {
+    await dispatch(removeALabel({ noteId: note.id, labelId: labelId }));
+    await RemoveLabelInDatabases(labelId);
+  };
+
+  const RemoveLabelInDatabases = async (labelId) => {
+    let currentLabelList = [...note.labels];
+
+    const deletePosition = currentLabelList.findIndex(
+      (item) => item.id === labelId
+    );
+    currentLabelList.splice(deletePosition, 1);
+
+    await API.graphql(
+      graphqlOperation(updateTodo, {
+        input: {
+          id: note.id,
+          labels: currentLabelList,
+        },
+      })
+    );
   };
 
   return (
@@ -48,11 +72,18 @@ const LabelInput = ({ note }) => {
         gridColumnGap="8px"
         gridRowGap="0.5rem"
       >
-        <Label content="Development" bgColor="#2bcfbe" closable />
-        <Label content="Feature" bgColor="#c4ed2d" closable />
-        <Label content="Toy" bgColor="#d60946" closable />
-        <Label content="Learning Web AAAAAAAAA" bgColor="#0943d6" closable />
-        <Label content="Skill" bgColor="#b709d6" closable />
+        {note.labels.length > 0 &&
+          note.labels.map((item) => {
+            return (
+              <Label
+                id={item.id}
+                content={item.content}
+                bgColor={item.color}
+                closable
+                deleteAction={() => removeLabel(item.id)}
+              />
+            );
+          })}
       </Box>
       <Label
         content={labelValue}

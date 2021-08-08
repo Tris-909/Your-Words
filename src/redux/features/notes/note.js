@@ -64,6 +64,30 @@ export const notes = createSlice({
 
       state.list.data = currentDataList;
     },
+    removeALabel: (state, action) => {
+      const { noteId, labelId } = action.payload;
+
+      const currentDataList = state.list.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === noteId) {
+          let currentLabelsList = currentDataList[index].labels;
+
+          const deletePosition = currentLabelsList.findIndex(
+            (item) => item.id === labelId
+          );
+
+          currentLabelsList.splice(deletePosition, 1);
+
+          currentDataList[index] = {
+            ...currentDataList[index],
+            labels: currentLabelsList,
+          };
+        }
+      });
+
+      state.list.data = currentDataList;
+    },
   },
   extraReducers: {
     [fetchListNotes.pending.type]: (state, action) => {
@@ -90,6 +114,7 @@ export const notes = createSlice({
   },
 });
 
-export const { updateLocalXYPosition, addingNewLabel } = notes.actions;
+export const { updateLocalXYPosition, addingNewLabel, removeALabel } =
+  notes.actions;
 
 export default notes.reducer;
