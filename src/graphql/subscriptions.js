@@ -87,6 +87,11 @@ export const onCreateTodo = /* GraphQL */ `
       name
       description
       image
+      labels {
+        id
+        color
+        content
+      }
       x
       y
       createdAt
@@ -102,6 +107,11 @@ export const onUpdateTodo = /* GraphQL */ `
       name
       description
       image
+      labels {
+        id
+        color
+        content
+      }
       x
       y
       createdAt
@@ -117,6 +127,11 @@ export const onDeleteTodo = /* GraphQL */ `
       name
       description
       image
+      labels {
+        id
+        color
+        content
+      }
       x
       y
       createdAt

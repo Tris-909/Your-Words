@@ -2,10 +2,35 @@ import React, { useState } from "react";
 import { SliderPicker } from "react-color";
 import { Box, Input, HStack, Button } from "@chakra-ui/react";
 import Label from "components/Note/components/Label";
+import { API, graphqlOperation } from "aws-amplify";
+import { updateTodo } from "graphql/mutations";
+import { addingNewLabel } from "redux/features/notes/note";
+import { useDispatch } from "react-redux";
+import * as uuid from "uuid";
 
-const LabelInput = () => {
+const LabelInput = ({ note }) => {
   const [bg, setBg] = useState("#fff");
   const [labelValue, setLabelValue] = useState("");
+  const dispatch = useDispatch();
+
+  const createLabel = async () => {
+    const label = {
+      id: uuid.v1(),
+      content: labelValue,
+      color: bg,
+    };
+
+    await API.graphql(
+      graphqlOperation(updateTodo, {
+        input: {
+          id: note.id,
+          labels: [...note.labels, label],
+        },
+      })
+    );
+
+    dispatch(addingNewLabel({ id: note.id, label: label }));
+  };
 
   return (
     <>
@@ -43,7 +68,7 @@ const LabelInput = () => {
           value={labelValue}
           onChange={(e) => setLabelValue(e.target.value)}
         />
-        <Button color="white" bg="black" p={4}>
+        <Button color="white" bg="black" p={4} onClick={createLabel}>
           {" "}
           Add Label{" "}
         </Button>

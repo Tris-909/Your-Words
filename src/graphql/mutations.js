@@ -99,6 +99,11 @@ export const createTodo = /* GraphQL */ `
       name
       description
       image
+      labels {
+        id
+        color
+        content
+      }
       x
       y
       createdAt
@@ -117,6 +122,11 @@ export const updateTodo = /* GraphQL */ `
       name
       description
       image
+      labels {
+        id
+        color
+        content
+      }
       x
       y
       createdAt
@@ -135,6 +145,11 @@ export const deleteTodo = /* GraphQL */ `
       name
       description
       image
+      labels {
+        id
+        color
+        content
+      }
       x
       y
       createdAt

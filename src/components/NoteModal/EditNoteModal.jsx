@@ -35,7 +35,6 @@ const EditNoteModal = ({
   currentModalState,
   setCurrentModalState,
 }) => {
-  const finalRef = useRef();
   const [header, setHeader] = useState(note.name);
   const [content, setContent] = useState(note.description);
   const [previewImage, setPreviewImage] = useState(null);
@@ -130,7 +129,7 @@ const EditNoteModal = ({
                 />
               </FormControl>
 
-              <LabelInput />
+              <LabelInput note={note} />
 
               <FormControl mt={4}>
                 <FormLabel>Image</FormLabel>

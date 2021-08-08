@@ -71,6 +71,7 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
         description: content,
         name: header,
         image: attachment ? attachment : "",
+        labels: [],
         x: 0,
         y: 0,
       };

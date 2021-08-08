@@ -57,6 +57,11 @@ export const getTodo = /* GraphQL */ `
       name
       description
       image
+      labels {
+        id
+        color
+        content
+      }
       x
       y
       createdAt
@@ -77,6 +82,11 @@ export const listTodos = /* GraphQL */ `
         name
         description
         image
+        labels {
+          id
+          color
+          content
+        }
         x
         y
         createdAt

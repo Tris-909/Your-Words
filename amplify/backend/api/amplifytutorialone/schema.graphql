@@ -14,6 +14,13 @@ type Todo @model @key(name: "byUser", fields: ["userId"]) {
   name: String!
   description: String
   image: String
+  labels: [Label]
   x: Float
   y: Float
+}
+
+type Label {
+  id: ID!
+  color: String!
+  content: String!
 }
