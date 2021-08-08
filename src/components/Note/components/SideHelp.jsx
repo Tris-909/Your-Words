@@ -5,13 +5,16 @@ import {
   IconButton,
   MenuList,
   MenuItem,
+  useToast,
 } from "@chakra-ui/react";
 import {
   BiUpArrow,
   BiMessageSquareAdd,
   BiMessageSquareMinus,
+  BiError,
 } from "react-icons/bi";
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
+import { ToastBody } from "components/Toast";
 import { API, graphqlOperation } from "aws-amplify";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "graphql/mutations";
@@ -22,6 +25,7 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
   const { userInfo } = useSelector((state) => state.user);
   const { list } = useSelector((state) => state.notes);
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const changeBoardHeight = async (action) => {
     let changes;
@@ -60,7 +64,18 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
 
     list.data.forEach((item) => {
       if (item.y > LIMIT) {
-        alert("There are notes in the zone you want to shrink");
+        toast({
+          position: "top-right",
+          duration: "30000",
+          render: () => (
+            <ToastBody
+              color="white"
+              bg="#e85151"
+              icon={BiError}
+              content="There are notes on the zone you want to delete"
+            />
+          ),
+        });
         result = false;
       }
     });
