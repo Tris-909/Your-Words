@@ -91,6 +91,7 @@ export const notes = createSlice({
     updateSingleLabelContent: (state, action) => {
       const { noteId, labelId, editValue } = action.payload;
 
+      state.list.status = true;
       const currentDataList = state.list.data;
 
       currentDataList.forEach((item, index) => {
@@ -113,6 +114,7 @@ export const notes = createSlice({
         }
       });
 
+      state.list.status = false;
       state.list.data = currentDataList;
     },
   },
@@ -133,7 +135,7 @@ export const notes = createSlice({
     },
     [fetchListNotes.rejected.type]: (state, action) => {
       state.list = {
-        status: true,
+        status: false,
         data: [],
         error: action.payload,
       };
