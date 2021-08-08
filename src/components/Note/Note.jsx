@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import EditNoteModal from "components/NoteModal/EditNoteModal";
 import DetailNoteModal from "components/NoteModal/DetailNoteModal";
+import Label from "components/Note/components/Label";
 import Draggable from "react-draggable";
 import { deleteFromS3 } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
@@ -99,6 +100,22 @@ const Note = ({ note, fetchLists }) => {
             </MenuList>
           </Menu>
         </HStack>
+
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          width="250px"
+          mx="1"
+          marginBottom="0.5rem"
+          gridColumnGap="8px"
+          gridRowGap="0.5rem"
+        >
+          <Label content="Development" bgColor="#2bcfbe" />
+          <Label content="Feature" bgColor="#c4ed2d" />
+          <Label content="Toy" bgColor="#d60946" />
+          <Label content="Learning Web AAAAAAAAA" bgColor="#0943d6" />
+          <Label content="Skill" bgColor="#b709d6" />
+        </Box>
 
         <Box
           width="260px"
