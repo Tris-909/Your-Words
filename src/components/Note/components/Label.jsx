@@ -9,7 +9,8 @@ import { updateTodo } from "graphql/mutations";
 import "./Label.scss";
 
 const Label = (props) => {
-  const { bgColor, content, closable, deleteAction, id, noteId } = props;
+  const { bgColor, content, closable, deleteAction, id, noteId, dummyOne } =
+    props;
   const [ref, hasClickedOutside] = useClickOutside();
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(content);
@@ -37,7 +38,9 @@ const Label = (props) => {
   };
 
   const openInput = () => {
-    setIsEditing(true);
+    if (!dummyOne) {
+      setIsEditing(true);
+    }
   };
 
   const updateLabelContentToDynamoDB = async () => {

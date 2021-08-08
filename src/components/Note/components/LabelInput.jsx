@@ -94,6 +94,7 @@ const LabelInput = ({ note }) => {
         maxWidth="initial"
         height="19.2px"
         marginBottom={2}
+        dummyOne={true}
         closable={false}
       />
       <HStack>
