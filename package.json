@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "push": "amplify push",
     "deploy": "amplify publish"
   },
