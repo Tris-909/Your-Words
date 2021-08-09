@@ -7,7 +7,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   ModalFooter,
   Button,
   Image,
@@ -23,6 +22,7 @@ import { uploadToS3 } from "libs/awsLib";
 import { onError } from "libs/error-libs";
 import { createTodo } from "graphql/mutations";
 import { useSelector } from "react-redux";
+import TextEditor from "components/Note/components/TextEditor";
 import * as uuid from "uuid";
 
 const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
@@ -113,11 +113,7 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
 
             <FormControl>
               <FormLabel>Content</FormLabel>
-              <Textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Write something"
-              />
+              <TextEditor content={content} setContent={setContent} />
             </FormControl>
 
             <FormControl mt={4}>

@@ -7,7 +7,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   HStack,
   Image,
   Box,
@@ -39,20 +38,17 @@ const EditNoteModal = ({
   const [header, setHeader] = useState(note.name);
   const [content, setContent] = useState(note.description);
   const [previewImage, setPreviewImage] = useState(null);
-  const [deleteImage, setDeleteImage] = useState(false);
   const file = useRef(null);
   const { auth } = useSelector((state) => state.user);
 
   const handleFileChange = (event) => {
     file.current = event.target.files[0];
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
-    setDeleteImage(false);
   };
 
   const clearFileHandler = () => {
     setPreviewImage(null);
     file.current = {};
-    setDeleteImage(true);
   };
 
   const handleSubmit = async (e) => {
@@ -93,7 +89,6 @@ const EditNoteModal = ({
   const onEditHandler = () => {
     setPreviewImage(null);
     file.current = {};
-    setDeleteImage(false);
     setCurrentModalState("edit");
     onOpen();
   };
@@ -136,11 +131,11 @@ const EditNoteModal = ({
 
               <FormControl mt={4}>
                 <FormLabel>Image</FormLabel>
-                {!deleteImage && (
+                {(previewImage || note.image) && (
                   <HStack alignItems="flex-start">
                     <Image
                       src={
-                        note.image && !previewImage
+                        !previewImage
                           ? `https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${auth.data.id}/${note.image}`
                           : previewImage
                       }
@@ -162,7 +157,7 @@ const EditNoteModal = ({
                   </HStack>
                 )}
 
-                <input onChange={handleFileChange} type="file" />
+                <input type="file" onChange={handleFileChange} />
               </FormControl>
             </form>
           </ModalBody>

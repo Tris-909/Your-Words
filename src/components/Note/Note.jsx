@@ -20,6 +20,7 @@ import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
 import { deleteTodo, updateTodo } from "graphql/mutations";
 import { useSelector, useDispatch } from "react-redux";
 import { updateLocalXYPosition } from "redux/features/notes/note";
+import Interweave from "interweave";
 import "./Note.scss";
 
 const Note = ({ note, fetchLists }) => {
@@ -163,7 +164,7 @@ const Note = ({ note, fetchLists }) => {
             </>
           ) : (
             <Box height="260px" p={2}>
-              {note.description}
+              <Interweave content={note.description} />
             </Box>
           )}
         </Box>
