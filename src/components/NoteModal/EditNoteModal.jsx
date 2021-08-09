@@ -16,6 +16,7 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import LabelInput from "components/Note/components/LabelInput";
+import TextEditor from "components/Note/components/TextEditor";
 import { CloseIcon } from "@chakra-ui/icons";
 import { BsPencil } from "react-icons/bs";
 import { API, graphqlOperation } from "aws-amplify";
@@ -106,7 +107,13 @@ const EditNoteModal = ({
         Edit Note
       </MenuItem>
       {currentModalState === "edit" && (
-        <CommonModal isOpen={isOpen} onClose={onClose} scrollBehavior="outside">
+        <CommonModal
+          isOpen={isOpen}
+          onClose={onClose}
+          size="xl"
+          customeMaxWContent="60rem"
+          scrollBehavior="outside"
+        >
           <ModalHeader>Edit</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
@@ -122,11 +129,7 @@ const EditNoteModal = ({
 
               <FormControl>
                 <FormLabel marginTop={2}>Content</FormLabel>
-                <Textarea
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder="Write something"
-                />
+                <TextEditor content={content} setContent={setContent} />
               </FormControl>
 
               <LabelInput note={note} />
@@ -143,8 +146,8 @@ const EditNoteModal = ({
                       }
                       alt="previewImage"
                       border="1px solid #e2e8f0"
-                      width="350px"
-                      height="200px"
+                      width="90%"
+                      height="500px"
                       marginBottom={3}
                     />
                     <Box

@@ -3,6 +3,7 @@ import CommonModal from "./CommonModal";
 import { ModalHeader, ModalBody, Box, Image } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
+import Interweave from "interweave";
 
 const DetailNoteModal = ({
   isOpen,
@@ -64,7 +65,9 @@ const DetailNoteModal = ({
             marginBottom={3}
           />
           <ModalHeader>{note.name}</ModalHeader>
-          <ModalBody whiteSpace="pre-line">{note.description}</ModalBody>
+          <ModalBody whiteSpace="pre-line">
+            <Interweave content={note.description} />
+          </ModalBody>
         </CommonModal>
       )}
     </Box>
