@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import LabelInput from "components/Note/components/LabelInput";
 import TextEditor from "components/Note/components/TextEditor";
+import EmojiPicker from "components/Note/components/EmojiPicker";
 import { CloseIcon } from "@chakra-ui/icons";
 import { BsPencil } from "react-icons/bs";
 import { API, graphqlOperation } from "aws-amplify";
@@ -124,6 +125,7 @@ const EditNoteModal = ({
 
               <FormControl>
                 <FormLabel marginTop={2}>Content</FormLabel>
+                <EmojiPicker content={content} setContent={setContent} />
                 <TextEditor content={content} setContent={setContent} />
               </FormControl>
 
