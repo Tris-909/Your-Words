@@ -15,6 +15,8 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import { BiNote } from "react-icons/bi";
+import BodyNoteEditor from "components/Note/components/BodyNoteEditor";
+
 import { CloseIcon } from "@chakra-ui/icons";
 import config from "config";
 import { API, graphqlOperation } from "aws-amplify";
@@ -22,7 +24,6 @@ import { uploadToS3 } from "libs/awsLib";
 import { onError } from "libs/error-libs";
 import { createTodo } from "graphql/mutations";
 import { useSelector } from "react-redux";
-import TextEditor from "components/Note/components/TextEditor";
 import * as uuid from "uuid";
 
 const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
@@ -111,12 +112,12 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
               />
             </FormControl>
 
-            <FormControl>
+            <FormControl mt={25}>
               <FormLabel>Content</FormLabel>
-              <TextEditor content={content} setContent={setContent} />
+              <BodyNoteEditor content={content} setContent={setContent} />
             </FormControl>
 
-            <FormControl mt={4}>
+            <FormControl mt={50}>
               <FormLabel>Image</FormLabel>
               {previewImage && (
                 <HStack alignItems="flex-start">

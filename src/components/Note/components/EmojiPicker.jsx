@@ -38,7 +38,7 @@ const EmojiPicker = ({ content, setContent }) => {
           }
         }
 
-        wordArr.splice(positionToInsertEmoji - 1, 0, emoji.native);
+        wordArr.splice(positionToInsertEmoji - 1, 0, `${emoji.native}`);
         HTMLElementsArray[HTMLElementsArray.length - 1] = wordArr.join("");
 
         setContent(HTMLElementsArray.join(""));

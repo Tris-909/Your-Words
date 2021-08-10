@@ -13,13 +13,9 @@ import {
   ModalFooter,
   Button,
   MenuItem,
-  Grid,
-  GridItem,
 } from "@chakra-ui/react";
 import LabelInput from "components/Note/components/LabelInput";
-import TextEditor from "components/Note/components/TextEditor";
-import EmojiPicker from "components/Note/components/EmojiPicker";
-import { StickyContainer, Sticky } from "react-sticky";
+import BodyNoteEditor from "components/Note/components/BodyNoteEditor";
 import { CloseIcon } from "@chakra-ui/icons";
 import { BsPencil } from "react-icons/bs";
 import { API, graphqlOperation } from "aws-amplify";
@@ -126,20 +122,9 @@ const EditNoteModal = ({
                 />
               </FormControl>
 
-              <FormControl mb={15}>
+              <FormControl mb={"50px"}>
                 <FormLabel marginTop={2}>Content</FormLabel>
-                <Grid
-                  templateColumns="repeat(5, 1fr)"
-                  gap={3}
-                  position="relative"
-                >
-                  <GridItem colSpan={3}>
-                    <TextEditor content={content} setContent={setContent} />
-                  </GridItem>
-                  <GridItem colStart={4} colEnd={6} height="100%">
-                    <EmojiPicker content={content} setContent={setContent} />
-                  </GridItem>
-                </Grid>
+                <BodyNoteEditor content={content} setContent={setContent} />
               </FormControl>
 
               <LabelInput note={note} />
