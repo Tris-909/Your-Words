@@ -20,6 +20,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "graphql/mutations";
 import { getUserInfo } from "redux/features/user/userInfo";
+import { createHeadingThunk } from "redux/features/heading/heading";
 import "./SideHelp.scss";
 
 const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
@@ -84,6 +85,10 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
     return result;
   };
 
+  const addHeading = () => {
+    dispatch(createHeadingThunk(userInfo.data.id));
+  };
+
   return (
     <Menu>
       <MenuButton
@@ -106,7 +111,7 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
         />
         <MenuItem
           icon={<BiText viewBox="0 0 22 22" wdith="1rem" height="1rem" />}
-          onClick={() => changeBoardHeight("increase")}
+          onClick={() => addHeading()}
         >
           Add Heading
         </MenuItem>
