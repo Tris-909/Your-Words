@@ -139,3 +139,45 @@ export const onDeleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const onCreateHeading = /* GraphQL */ `
+  subscription OnCreateHeading {
+    onCreateHeading {
+      id
+      userId
+      content
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateHeading = /* GraphQL */ `
+  subscription OnUpdateHeading {
+    onUpdateHeading {
+      id
+      userId
+      content
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteHeading = /* GraphQL */ `
+  subscription OnDeleteHeading {
+    onDeleteHeading {
+      id
+      userId
+      content
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;

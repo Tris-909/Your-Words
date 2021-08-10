@@ -19,6 +19,15 @@ type Todo @model @key(name: "byUser", fields: ["userId"]) {
   y: Float
 }
 
+type Heading @model {
+  id: ID!
+  userId: ID!
+  content: String
+  type: String
+  x: Int 
+  y: Int
+}
+
 type Label {
   id: ID!
   color: String!

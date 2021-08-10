@@ -157,3 +157,54 @@ export const deleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const createHeading = /* GraphQL */ `
+  mutation CreateHeading(
+    $input: CreateHeadingInput!
+    $condition: ModelHeadingConditionInput
+  ) {
+    createHeading(input: $input, condition: $condition) {
+      id
+      userId
+      content
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateHeading = /* GraphQL */ `
+  mutation UpdateHeading(
+    $input: UpdateHeadingInput!
+    $condition: ModelHeadingConditionInput
+  ) {
+    updateHeading(input: $input, condition: $condition) {
+      id
+      userId
+      content
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteHeading = /* GraphQL */ `
+  mutation DeleteHeading(
+    $input: DeleteHeadingInput!
+    $condition: ModelHeadingConditionInput
+  ) {
+    deleteHeading(input: $input, condition: $condition) {
+      id
+      userId
+      content
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;

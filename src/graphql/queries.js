@@ -96,6 +96,41 @@ export const listTodos = /* GraphQL */ `
     }
   }
 `;
+export const getHeading = /* GraphQL */ `
+  query GetHeading($id: ID!) {
+    getHeading(id: $id) {
+      id
+      userId
+      content
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listHeadings = /* GraphQL */ `
+  query ListHeadings(
+    $filter: ModelHeadingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listHeadings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        content
+        type
+        x
+        y
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const byUsername = /* GraphQL */ `
   query ByUsername(
     $username: String
