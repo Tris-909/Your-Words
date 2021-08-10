@@ -14,16 +14,37 @@ const EmojiPicker = ({ content, setContent }) => {
       showPreview={false}
       showSkinTones={false}
       onSelect={(emoji) => {
-        console.log("emoji", emoji);
-        console.log("content", content);
+        const doc = new DOMParser().parseFromString(content, "text/html");
+        const HTMLElementsArray = [...doc.body.children].map(
+          (el) => el.outerHTML
+        );
+        const lastWord = HTMLElementsArray[HTMLElementsArray.length - 1];
 
-        const test = content.match(/<h(.)>.*?<\/h\1>/g);
-        console.log("test", test);
+        const wordArr = lastWord.split("");
 
-        // Between >{children} [HERE] <
-        // Write a logic to insert an emoji.native into HERE position for the last element in the test array
+        let numberOfTags = 0;
+        for (let i = 0; i < wordArr.length - 1; i++) {
+          if (wordArr[i] === "<") {
+            numberOfTags += 1;
+          }
+        }
 
-        setContent(content + emoji.native);
+        let positionToInsertEmoji = 0;
+        let countingTag = 0;
+        for (let i = wordArr.length - 1; i >= 0; i--) {
+          if (wordArr[i] === "<") {
+            countingTag += 1;
+            if (countingTag === numberOfTags / 2) {
+              positionToInsertEmoji = i + 1;
+              break;
+            }
+          }
+        }
+
+        wordArr.splice(positionToInsertEmoji - 1, 0, emoji.native);
+        HTMLElementsArray[HTMLElementsArray.length - 1] = wordArr.join("");
+
+        setContent(HTMLElementsArray.join(""));
       }}
       style={{ marginTop: "10px", marginBottom: "10px" }}
     />
