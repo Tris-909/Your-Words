@@ -1,12 +1,9 @@
 import React from "react";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
+import "./EmojiPicker.scss";
 
 const EmojiPicker = ({ content, setContent }) => {
-  const isEmpty = (str) => {
-    return str.replace(/^\s+|\s+$/g, "").length == 0;
-  };
-
   return (
     <Picker
       set="twitter"
