@@ -12,6 +12,7 @@ import {
   BiMessageSquareAdd,
   BiMessageSquareMinus,
   BiError,
+  BiText,
 } from "react-icons/bi";
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
 import { ToastBody } from "components/Toast";
@@ -103,6 +104,12 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
           onClose={onClose}
           fetchLists={fetchLists}
         />
+        <MenuItem
+          icon={<BiText viewBox="0 0 22 22" wdith="1rem" height="1rem" />}
+          onClick={() => changeBoardHeight("increase")}
+        >
+          Add Heading
+        </MenuItem>
         <MenuItem
           icon={
             <BiMessageSquareAdd
