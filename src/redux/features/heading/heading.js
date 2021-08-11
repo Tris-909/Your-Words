@@ -82,6 +82,23 @@ export const headings = createSlice({
 
       state.headings.data = currentDataList;
     },
+    updateLocalXYPosition: (state, action) => {
+      const { id, newX, newY } = action.payload;
+
+      const currentDataList = state.headings.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === id) {
+          currentDataList[index] = {
+            ...currentDataList[index],
+            y: newY,
+            x: newX,
+          };
+        }
+      });
+
+      state.headings.data = currentDataList;
+    },
   },
   extraReducers: {
     [createHeadingThunk.pending.type]: (state, action) => {
@@ -129,6 +146,6 @@ export const headings = createSlice({
   },
 });
 
-export const { updateHeadingContent } = headings.actions;
+export const { updateHeadingContent, updateLocalXYPosition } = headings.actions;
 
 export default headings.reducer;

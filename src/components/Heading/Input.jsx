@@ -17,6 +17,7 @@ const TextInput = ({ input, setInput, onRemoveActiveInput }) => {
       onChange={(e) => setInput(e.target.value)}
       onBlur={(e) => onRemoveActiveInput(e)}
       border="2px solid white"
+      width="fit-content"
       bg="white"
       color="black"
     />
