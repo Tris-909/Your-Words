@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/react";
-import Note from "components/Note/Note";
-import SideHelp from "components/Note/components/SideHelp";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchListNotes } from "redux/features/notes/note";
 import { fetchHeadings } from "redux/features/heading/heading";
 import { getUserInfo, getAuth } from "redux/features/user/userInfo";
 import { Auth } from "aws-amplify";
+import Note from "components/Note/Note";
+import SideHelp from "components/Note/components/SideHelp";
+import Heading from "components/Heading/Heading";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { list } = useSelector((state) => state.notes);
+  const { headings } = useSelector((state) => state.headings);
   const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const dispatch = useDispatch();
@@ -53,6 +55,10 @@ const Home = () => {
               fetchLists={fetchLists}
             />
           );
+        })}
+      {headings.data &&
+        headings.data.map((singleHeading) => {
+          return <Heading key={singleHeading.id} content={"SUPER HEADING 1"} />;
         })}
       <SideHelp
         isOpen={isOpen}
