@@ -58,7 +58,13 @@ const Home = () => {
         })}
       {headings.data &&
         headings.data.map((singleHeading) => {
-          return <Heading key={singleHeading.id} content={"SUPER HEADING 1"} />;
+          return (
+            <Heading
+              key={singleHeading.id}
+              content={singleHeading.content}
+              id={singleHeading.id}
+            />
+          );
         })}
       <SideHelp
         isOpen={isOpen}
