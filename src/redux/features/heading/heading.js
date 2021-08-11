@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { createHeading } from "graphql/mutations";
+import { listHeadings } from "graphql/queries";
 import * as uuid from "uuid";
 
 export const createHeadingThunk = createAsyncThunk(
@@ -25,6 +26,23 @@ export const createHeadingThunk = createAsyncThunk(
   }
 );
 
+export const fetchHeadings = createAsyncThunk(
+  "headings/listHeadings",
+  async (userId) => {
+    const { data } = await API.graphql(
+      graphqlOperation(listHeadings, {
+        filter: {
+          userId: {
+            eq: userId,
+          },
+        },
+      })
+    );
+
+    return data.listHeadings.items;
+  }
+);
+
 const initialState = {
   headings: {
     data: [],
@@ -39,21 +57,42 @@ export const headings = createSlice({
   reducers: {},
   extraReducers: {
     [createHeadingThunk.pending.type]: (state, action) => {
-      state.list = {
+      state.headings = {
         status: true,
         data: [],
         error: {},
       };
     },
     [createHeadingThunk.fulfilled.type]: (state, action) => {
-      state.list = {
+      state.headings = {
         status: false,
         data: action.payload,
         error: {},
       };
     },
     [createHeadingThunk.rejected.type]: (state, action) => {
-      state.list = {
+      state.headings = {
+        status: false,
+        data: [],
+        error: action.payload,
+      };
+    },
+    [fetchHeadings.pending.type]: (state, action) => {
+      state.headings = {
+        status: true,
+        data: [],
+        error: {},
+      };
+    },
+    [fetchHeadings.fulfilled.type]: (state, action) => {
+      state.headings = {
+        status: false,
+        data: action.payload,
+        error: {},
+      };
+    },
+    [fetchHeadings.rejected.type]: (state, action) => {
+      state.headings = {
         status: false,
         data: [],
         error: action.payload,

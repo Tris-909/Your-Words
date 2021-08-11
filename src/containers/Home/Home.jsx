@@ -4,6 +4,7 @@ import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchListNotes } from "redux/features/notes/note";
+import { fetchHeadings } from "redux/features/heading/heading";
 import { getUserInfo, getAuth } from "redux/features/user/userInfo";
 import { Auth } from "aws-amplify";
 
@@ -37,6 +38,7 @@ const Home = () => {
   const fetchLists = () => {
     if (userInfo.data) {
       dispatch(fetchListNotes(userInfo.data.id));
+      dispatch(fetchHeadings(userInfo.data.id));
     }
   };
 
