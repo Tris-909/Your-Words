@@ -70,6 +70,7 @@ const TextInput = ({
         height="100%"
         bg="white"
         color="black"
+        fontSize={`${(size.width.split("p")[0] * 1) / 8}px `}
       />
     </Rnd>
   );
