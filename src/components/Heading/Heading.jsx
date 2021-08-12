@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import TexInput from "./Input";
 import {
@@ -11,16 +11,18 @@ import { updateHeading } from "graphql/mutations";
 import Draggable from "react-draggable";
 
 const Heading = ({ id, content, positionX, positionY }) => {
-  const [input, setInput] = useState(content);
-  const [isEditting, setIsEditting] = useState(content === "");
   const dispatch = useDispatch();
+  const [input, setInput] = useState(content);
+  // const [isEditting, setIsEditting] = useState(content === "");
+  const [isEditting, setIsEditting] = useState(true);
 
   const ActiveInput = () => {
     setIsEditting(true);
   };
 
   const onRemoveActiveInput = async (e) => {
-    setIsEditting(false);
+    // setIsEditting(false);
+    setIsEditting(true);
     setInput(e.target.value);
     dispatch(updateHeadingContent(id, e.target.value));
 
@@ -50,20 +52,26 @@ const Heading = ({ id, content, positionX, positionY }) => {
   return (
     <>
       {isEditting ? (
-        <Draggable
-          onStop={(e, data) => savePositionToDatabases(data)}
-          defaultPosition={{ x: positionX, y: positionY }}
-          bounds="parent"
-        >
-          <Box width="fit-content" color="white">
-            <TexInput
-              input={input}
-              setInput={setInput}
-              onRe
-              onRemoveActiveInput={onRemoveActiveInput}
-            />
-          </Box>
-        </Draggable>
+        // <Draggable
+        //   onStop={(e, data) => savePositionToDatabases(data)}
+        //   defaultPosition={{ x: positionX, y: positionY }}
+        //   bounds="parent"
+        // >
+        //   <Box width="fit-content" color="white">
+        //     <TexInput
+        //       input={input}
+        //       setInput={setInput}
+        //       onRemoveActiveInput={onRemoveActiveInput}
+        //     />
+        //   </Box>
+        // </Draggable>
+        <Box width="fit-content" color="white">
+          <TexInput
+            input={input}
+            setInput={setInput}
+            onRemoveActiveInput={onRemoveActiveInput}
+          />
+        </Box>
       ) : (
         <Draggable
           onStop={(e, data) => savePositionToDatabases(data)}
