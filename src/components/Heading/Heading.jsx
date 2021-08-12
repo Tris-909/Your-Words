@@ -70,6 +70,7 @@ const Heading = ({ id, content, positionX, positionY }) => {
             input={input}
             setInput={setInput}
             onRemoveActiveInput={onRemoveActiveInput}
+            headingId={id}
           />
         </Box>
       ) : (

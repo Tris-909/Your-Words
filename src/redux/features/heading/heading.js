@@ -14,6 +14,8 @@ export const createHeadingThunk = createAsyncThunk(
       type: "HEADING",
       x: 0,
       y: 0,
+      width: 200,
+      height: 100,
     };
 
     const { data } = await API.graphql(
@@ -99,6 +101,23 @@ export const headings = createSlice({
 
       state.headings.data = currentDataList;
     },
+    updateLocalWidthHeight: (state, action) => {
+      const { id, newWidth, newHeight } = action.payload;
+
+      const currentDataList = state.headings.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === id) {
+          currentDataList[index] = {
+            ...currentDataList[index],
+            width: newWidth,
+            height: newHeight,
+          };
+        }
+      });
+
+      state.headings.data = currentDataList;
+    },
   },
   extraReducers: {
     [createHeadingThunk.pending.type]: (state, action) => {
@@ -146,6 +165,10 @@ export const headings = createSlice({
   },
 });
 
-export const { updateHeadingContent, updateLocalXYPosition } = headings.actions;
+export const {
+  updateHeadingContent,
+  updateLocalXYPosition,
+  updateLocalWidthHeight,
+} = headings.actions;
 
 export default headings.reducer;

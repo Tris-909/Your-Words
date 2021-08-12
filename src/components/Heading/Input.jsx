@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
 import { Input } from "@chakra-ui/react";
-import "./Input.scss";
+import { updateLocalWidthHeight } from "redux/features/heading/heading";
+import { useDispatch } from "react-redux";
 
-const TextInput = ({ input, setInput, onRemoveActiveInput }) => {
+const TextInput = ({ input, setInput, onRemoveActiveInput, headingId }) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
     width: 100,
     height: 100,
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (inputRef.current) {
@@ -24,6 +26,14 @@ const TextInput = ({ input, setInput, onRemoveActiveInput }) => {
           width: ref.style.width,
           height: ref.style.height,
         });
+
+        dispatch(
+          updateLocalWidthHeight({
+            id: headingId,
+            newWidth: ref.style.width,
+            newHeight: ref.style.height,
+          })
+        );
       }}
       disableDragging={true}
     >
