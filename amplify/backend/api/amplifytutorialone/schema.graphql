@@ -26,8 +26,8 @@ type Heading @model {
   type: String
   x: Int
   y: Int
-  width: Int
-  height: Int
+  width: String
+  height: String
 }
 
 type Label {
