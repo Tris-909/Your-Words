@@ -10,7 +10,14 @@ import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
 import Draggable from "react-draggable";
 
-const Heading = ({ id, content, positionX, positionY }) => {
+const Heading = ({
+  id,
+  content,
+  positionX,
+  positionY,
+  headingWidth,
+  headingHeight,
+}) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState(content);
   // const [isEditting, setIsEditting] = useState(content === "");
@@ -71,6 +78,8 @@ const Heading = ({ id, content, positionX, positionY }) => {
             setInput={setInput}
             onRemoveActiveInput={onRemoveActiveInput}
             headingId={id}
+            width={headingWidth}
+            height={headingHeight}
           />
         </Box>
       ) : (

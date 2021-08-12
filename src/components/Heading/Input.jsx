@@ -3,12 +3,21 @@ import { Rnd } from "react-rnd";
 import { Input } from "@chakra-ui/react";
 import { updateLocalWidthHeight } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
+import { API, graphqlOperation } from "aws-amplify";
+import { updateHeading } from "graphql/mutations";
 
-const TextInput = ({ input, setInput, onRemoveActiveInput, headingId }) => {
+const TextInput = ({
+  input,
+  setInput,
+  onRemoveActiveInput,
+  headingId,
+  width,
+  height,
+}) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
-    width: 100,
-    height: 100,
+    width: width,
+    height: height,
   });
   const dispatch = useDispatch();
 
@@ -17,6 +26,18 @@ const TextInput = ({ input, setInput, onRemoveActiveInput, headingId }) => {
       inputRef.current.focus();
     }
   }, [inputRef.current]);
+
+  const updateWidthAndHeightDynamoDB = async (newWidth, newHeight) => {
+    await API.graphql(
+      graphqlOperation(updateHeading, {
+        input: {
+          id: headingId,
+          width: newWidth,
+          height: newHeight,
+        },
+      })
+    );
+  };
 
   return (
     <Rnd
@@ -34,6 +55,8 @@ const TextInput = ({ input, setInput, onRemoveActiveInput, headingId }) => {
             newHeight: ref.style.height,
           })
         );
+
+        updateWidthAndHeightDynamoDB(ref.style.width, ref.style.height);
       }}
       disableDragging={true}
     >

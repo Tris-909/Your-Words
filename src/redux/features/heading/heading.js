@@ -22,8 +22,6 @@ export const createHeadingThunk = createAsyncThunk(
       graphqlOperation(createHeading, { input: heading })
     );
 
-    console.log("create HEADING", data.createHeading);
-
     return data.createHeading;
   }
 );

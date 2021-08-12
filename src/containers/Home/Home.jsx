@@ -65,6 +65,8 @@ const Home = () => {
               id={singleHeading.id}
               positionX={singleHeading.x}
               positionY={singleHeading.y}
+              headingWidth={singleHeading.width}
+              headingHeight={singleHeading.height}
             />
           );
         })}
