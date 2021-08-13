@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
-import { Input } from "@chakra-ui/react";
+import { Input, Button } from "@chakra-ui/react";
 import { updateLocalWidthHeight } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
@@ -13,12 +13,15 @@ const TextInput = ({
   headingId,
   width,
   height,
+  positionx,
+  positiony,
 }) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
     width: width,
     height: height,
   });
+  const [mock, setMock] = useState(input);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,9 +42,16 @@ const TextInput = ({
     );
   };
 
+  const changeValue = (e) => {
+    setInput(e.target.value);
+    setMock(e.target.value);
+  };
+
   return (
     <Rnd
       size={{ width: size.width, height: size.height }}
+      position={{ x: positionx, y: positiony }}
+      bounds="parent"
       onResizeStop={(e, direction, ref, delta, position) => {
         setSize({
           width: ref.style.width,
@@ -63,15 +73,16 @@ const TextInput = ({
       <Input
         ref={inputRef}
         value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onBlur={(e) => onRemoveActiveInput(e)}
+        onChange={(e) => changeValue(e)}
+        // onBlur={(e) => onRemoveActiveInput(e)}
         border="2px solid white"
         width="100%"
         height="100%"
         bg="white"
         color="black"
-        fontSize={`${(size.width.split("p")[0] * 1) / 8}px `}
+        fontSize={`${(size.width.split("p")[0] * 1) / 2.5}px `}
       />
+      <Button onClick={() => onRemoveActiveInput(mock)}>save</Button>
     </Rnd>
   );
 };

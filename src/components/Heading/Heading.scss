@@ -1,0 +1,13 @@
+.hoverEffect {
+  .editButton {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &:hover {
+    .editButton {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

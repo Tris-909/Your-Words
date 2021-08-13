@@ -67,6 +67,8 @@ const Home = () => {
               positionY={singleHeading.y}
               headingWidth={singleHeading.width}
               headingHeight={singleHeading.height}
+              headingX={singleHeading.x}
+              headingY={singleHeading.y}
             />
           );
         })}

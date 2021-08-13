@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Icon } from "@chakra-ui/react";
 import TexInput from "./Input";
 import {
   updateHeadingContent,
   updateLocalXYPosition,
 } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
+import { BiPen } from "react-icons/bi";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
 import Draggable from "react-draggable";
+import "./Heading.scss";
 
 const Heading = ({
   id,
@@ -17,27 +19,26 @@ const Heading = ({
   positionY,
   headingWidth,
   headingHeight,
+  headingX,
+  headingY,
 }) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState(content);
-  // const [isEditting, setIsEditting] = useState(content === "");
-  const [isEditting, setIsEditting] = useState(true);
+  const [isEditting, setIsEditting] = useState(content === "");
 
   const ActiveInput = () => {
     setIsEditting(true);
   };
 
-  const onRemoveActiveInput = async (e) => {
-    // setIsEditting(false);
-    setIsEditting(true);
-    setInput(e.target.value);
-    dispatch(updateHeadingContent(id, e.target.value));
+  const onRemoveActiveInput = async (mock) => {
+    setIsEditting(false);
+    dispatch(updateHeadingContent(id, mock));
 
     await API.graphql(
       graphqlOperation(updateHeading, {
         input: {
           id: id,
-          content: e.target.value,
+          content: mock,
         },
       })
     );
@@ -59,48 +60,49 @@ const Heading = ({
   return (
     <>
       {isEditting ? (
-        // <Draggable
-        //   onStop={(e, data) => savePositionToDatabases(data)}
-        //   defaultPosition={{ x: positionX, y: positionY }}
-        //   bounds="parent"
-        // >
-        //   <Box width="fit-content" color="white">
-        //     <TexInput
-        //       input={input}
-        //       setInput={setInput}
-        //       onRemoveActiveInput={onRemoveActiveInput}
-        //     />
-        //   </Box>
-        // </Draggable>
-        <Box width="fit-content" color="white">
-          <TexInput
-            input={input}
-            setInput={setInput}
-            onRemoveActiveInput={onRemoveActiveInput}
-            headingId={id}
-            width={headingWidth}
-            height={headingHeight}
-          />
-        </Box>
+        <TexInput
+          input={input}
+          setInput={setInput}
+          onRemoveActiveInput={onRemoveActiveInput}
+          headingId={id}
+          width={headingWidth}
+          height={headingHeight}
+          positionx={headingX}
+          positiony={headingY}
+        />
       ) : (
         <Draggable
           onStop={(e, data) => savePositionToDatabases(data)}
           defaultPosition={{ x: positionX, y: positionY }}
           bounds="parent"
-          disabled={true}
         >
-          <Text
-            onClick={() => ActiveInput()}
-            height="40px"
-            width="fit-content"
-            display="flex"
-            justifyContent="flex-start"
-            px={"16px"}
-            alignItems="center"
+          <Box
+            height={headingHeight}
+            width={headingWidth}
+            fontSize={`${(headingWidth.split("p")[0] * 1) / 2.5}px `}
             color="white"
+            cursor="move"
+            display="flex"
+            alignItems="flex-start"
+            className="hoverEffect"
           >
             {input}
-          </Text>
+            <Icon
+              as={BiPen}
+              onClick={() => ActiveInput()}
+              width="32px"
+              height="32px"
+              marginLeft={3}
+              p={1}
+              borderRadius="full"
+              bg="white"
+              color="black"
+              zIndex="5"
+              cursor="pointer"
+              className="editButton"
+              transition="visibility 0s, opacity 0.25s"
+            />
+          </Box>
         </Draggable>
       )}
     </>
