@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
-import { Input, Button, Box, Icon, VStack } from "@chakra-ui/react";
-import { updateLocalWidthHeight } from "redux/features/heading/heading";
+import { Input } from "@chakra-ui/react";
+import {
+  updateLocalWidthHeight,
+  updateEditHeading,
+} from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
-import { BiCheck } from "react-icons/bi";
-import ColorPicker from "./ColorPicker";
 import "./Heading.scss";
+
+export const EditHeadingContext = React.createContext();
 
 const TextInput = ({
   input,
@@ -24,7 +27,6 @@ const TextInput = ({
     width: width,
     height: height,
   });
-  const [mock, setMock] = useState(input);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,7 +49,7 @@ const TextInput = ({
 
   const changeValue = (e) => {
     setInput(e.target.value);
-    setMock(e.target.value);
+    dispatch(updateEditHeading({ content: e.target.value }));
   };
 
   return (

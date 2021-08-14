@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { ChromePicker } from "react-color";
 import { useOutsideClick } from "@chakra-ui/react";
+import { updateEditHeading } from "redux/features/heading/heading";
+import { useDispatch } from "react-redux";
 
 const ColorPicker = ({ color, setColor }) => {
   const [isChoosingColor, setIsChoosingColor] = useState(false);
+  const dispatch = useDispatch();
   const ref = React.useRef();
   useOutsideClick({
     ref: ref,
@@ -13,6 +16,7 @@ const ColorPicker = ({ color, setColor }) => {
 
   const handlerChange = (color, e) => {
     setColor(color.hex);
+    dispatch(updateEditHeading({ color: color.hex }));
   };
 
   return (

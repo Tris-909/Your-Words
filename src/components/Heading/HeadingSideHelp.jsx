@@ -12,6 +12,7 @@ import { useLockBodyScroll } from "libs/lockScrollBar";
 import {
   updateHeadingContent,
   updateHeadingColor,
+  updateEditHeading,
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
@@ -22,18 +23,23 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
 
   const dispatch = useDispatch();
   const { editHeading } = useSelector((state) => state.headings);
-  const [color, setColor] = useState("fffffff");
+  const [color, setColor] = useState(editHeading.color);
 
-  const onRemoveActiveInput = async (mock, color) => {
+  const onRemoveActiveInput = async () => {
     setShowEditHeading(false);
-    dispatch(updateHeadingContent({ id: editHeading[0].id, editValue: mock }));
-    dispatch(updateHeadingColor({ id: editHeading[0].id, newColor: color }));
+    dispatch(
+      updateHeadingContent({
+        id: editHeading.id,
+        editValue: editHeading.content,
+      })
+    );
+    dispatch(updateHeadingColor({ id: editHeading.id, newColor: color }));
 
     await API.graphql(
       graphqlOperation(updateHeading, {
         input: {
-          id: editHeading[0].id,
-          content: mock,
+          id: editHeading.id,
+          content: editHeading.content,
           color: color,
         },
       })
@@ -66,7 +72,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
         <Box fontSize="18px" fontWeight="bold" marginBottom="2">
           Color
         </Box>
-        <ColorPicker />
+        <ColorPicker color={color} setColor={setColor} />
       </Box>
       <Box
         w="100%"
@@ -130,7 +136,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
         alignItems="center"
         fontSize="20px"
         cursor="pointer"
-        onClick={() => setShowEditHeading(false)}
+        onClick={() => onRemoveActiveInput()}
       >
         Save
       </Box>

@@ -7,7 +7,7 @@ import {
   updateHeadingColor,
   getEditHeading,
 } from "redux/features/heading/heading";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BiPen } from "react-icons/bi";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
@@ -29,6 +29,7 @@ const Heading = ({
 }) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState(content);
+  const { editHeading } = useSelector((state) => state.headings);
 
   const ActiveInput = () => {
     setShowEditHeading(true);
@@ -75,7 +76,8 @@ const Heading = ({
           height={headingHeight}
           positionx={headingX}
           positiony={headingY}
-          headingColor={headingColor}
+          headingColor={editHeading.color}
+          showEditHeading={showEditHeading}
         />
       ) : (
         <Draggable

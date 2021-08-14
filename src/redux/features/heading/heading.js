@@ -132,7 +132,16 @@ export const headings = createSlice({
       const editHeading = currentHeadingList.filter(
         (item) => item.id === headingId
       );
-      state.editHeading = editHeading;
+      state.editHeading = editHeading[0];
+    },
+    updateEditHeading: (state, action) => {
+      const { content, color } = action.payload;
+
+      state.editHeading = {
+        ...state.editHeading,
+        content: content ? content : state.editHeading.content,
+        color: color ? color : state.editHeading.color,
+      };
     },
   },
 
@@ -190,6 +199,7 @@ export const {
   updateHeadingColor,
   //Edit Heading
   getEditHeading,
+  updateEditHeading,
 } = headings.actions;
 
 export default headings.reducer;
