@@ -4,6 +4,7 @@ import TexInput from "./Input";
 import {
   updateHeadingContent,
   updateLocalXYPosition,
+  updateHeadingColor,
 } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
 import { BiPen } from "react-icons/bi";
@@ -21,6 +22,7 @@ const Heading = ({
   headingHeight,
   headingX,
   headingY,
+  headingColor,
 }) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState(content);
@@ -30,18 +32,20 @@ const Heading = ({
     setIsEditting(true);
   };
 
-  const onRemoveActiveInput = async (mock) => {
+  const onRemoveActiveInput = async (mock, color) => {
     setIsEditting(false);
-    dispatch(updateHeadingContent(id, mock));
+    // dispatch(updateHeadingContent({ id: id, editValue: mock }));
+    console.log("color", color);
+    dispatch(updateHeadingColor({ id: id, newColor: color }));
 
-    await API.graphql(
-      graphqlOperation(updateHeading, {
-        input: {
-          id: id,
-          content: mock,
-        },
-      })
-    );
+    // await API.graphql(
+    //   graphqlOperation(updateHeading, {
+    //     input: {
+    //       id: id,
+    //       content: mock,
+    //     },
+    //   })
+    // );
   };
 
   const savePositionToDatabases = async (data) => {
@@ -80,7 +84,7 @@ const Heading = ({
             height={`${headingHeight.split("p")[0] * 1 + 40}px `}
             width={`${headingWidth.split("p")[0] * 1 + 55}px `}
             fontSize={`${(headingWidth.split("p")[0] * 1) / 2.5}px `}
-            color="white"
+            color={headingColor}
             cursor="move"
             display="flex"
             justifyContent="flex-start"

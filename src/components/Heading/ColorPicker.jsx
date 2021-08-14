@@ -13,7 +13,6 @@ const ColorPicker = ({ color, setColor }) => {
 
   const handlerChange = (color, e) => {
     setColor(color.hex);
-    console.log("color", color);
   };
 
   return (

@@ -104,7 +104,7 @@ const TextInput = ({
       >
         <Icon
           as={BiCheck}
-          onClick={() => onRemoveActiveInput(mock)}
+          onClick={() => onRemoveActiveInput(mock, color)}
           width="32px"
           height="32px"
           p={1}

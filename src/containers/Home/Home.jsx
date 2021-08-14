@@ -69,6 +69,7 @@ const Home = () => {
               headingHeight={singleHeading.height}
               headingX={singleHeading.x}
               headingY={singleHeading.y}
+              headingColor={singleHeading.color}
             />
           );
         })}
