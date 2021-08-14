@@ -12,6 +12,11 @@ const ColorPicker = (currentColor) => {
     handler: () => setIsChoosingColor(false),
   });
 
+  const handlerChange = (color, e) => {
+    setColor(color.hex);
+    console.log("color", color);
+  };
+
   return (
     <Box
       width="100%"
@@ -29,12 +34,17 @@ const ColorPicker = (currentColor) => {
         onClick={() => setIsChoosingColor(true)}
       ></Box>
       <Box
+        ref={ref}
         position="absolute"
         right="-160%"
         top="45%"
         display={isChoosingColor ? "initial" : "none"}
       >
-        <ChromePicker disableAlpha={false} />
+        <ChromePicker
+          disableAlpha={false}
+          color={color}
+          onChange={handlerChange}
+        />
       </Box>
     </Box>
   );
