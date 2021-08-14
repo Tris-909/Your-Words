@@ -25,7 +25,7 @@ const TextInput = ({
     height: height,
   });
   const [mock, setMock] = useState(input);
-  const [isChoosingColor, setIsChoosingColor] = useState(false);
+  const [color, setColor] = useState("#ffffff");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const TextInput = ({
         width="100%"
         height="100%"
         bg="transparent"
-        color="white"
+        color={color}
         padding="2"
         border="none"
         fontSize={`${(size.width.split("p")[0] * 1) / 2.5}px `}
@@ -116,7 +116,7 @@ const TextInput = ({
           className="editButton"
           transition="visibility 0s, opacity 0.25s"
         />
-        <ColorPicker currentColor="white" />
+        <ColorPicker color={color} setColor={setColor} />
       </VStack>
     </Rnd>
   );

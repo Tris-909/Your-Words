@@ -171,6 +171,7 @@ export const createHeading = /* GraphQL */ `
       y
       width
       height
+      color
       createdAt
       updatedAt
     }
@@ -190,6 +191,7 @@ export const updateHeading = /* GraphQL */ `
       y
       width
       height
+      color
       createdAt
       updatedAt
     }
@@ -209,6 +211,7 @@ export const deleteHeading = /* GraphQL */ `
       y
       width
       height
+      color
       createdAt
       updatedAt
     }

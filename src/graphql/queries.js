@@ -107,6 +107,7 @@ export const getHeading = /* GraphQL */ `
       y
       width
       height
+      color
       createdAt
       updatedAt
     }
@@ -128,6 +129,7 @@ export const listHeadings = /* GraphQL */ `
         y
         width
         height
+        color
         createdAt
         updatedAt
       }

@@ -3,8 +3,7 @@ import { Box } from "@chakra-ui/react";
 import { ChromePicker } from "react-color";
 import { useOutsideClick } from "@chakra-ui/react";
 
-const ColorPicker = (currentColor) => {
-  const [color, setColor] = useState(currentColor);
+const ColorPicker = ({ color, setColor }) => {
   const [isChoosingColor, setIsChoosingColor] = useState(false);
   const ref = React.useRef();
   useOutsideClick({
@@ -28,7 +27,7 @@ const ColorPicker = (currentColor) => {
       <Box
         width="32px"
         height="32px"
-        bg="white"
+        bg={color}
         border="2px solid gray"
         borderRadius="5px"
         onClick={() => setIsChoosingColor(true)}

@@ -28,6 +28,7 @@ type Heading @model {
   y: Int
   width: String
   height: String
+  color: String
 }
 
 type Label {
