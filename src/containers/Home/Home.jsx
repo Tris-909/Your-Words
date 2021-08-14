@@ -16,6 +16,7 @@ const Home = () => {
   const { headings } = useSelector((state) => state.headings);
   const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
+  const [showEditHeading, setShowEditHeading] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -71,6 +72,8 @@ const Home = () => {
               headingX={singleHeading.x}
               headingY={singleHeading.y}
               headingColor={singleHeading.color}
+              showEditHeading={showEditHeading}
+              setShowEditHeading={setShowEditHeading}
             />
           );
         })}
@@ -80,7 +83,9 @@ const Home = () => {
         onClose={onClose}
         fetchLists={fetchLists}
       />
-      <HeadingSideHelp />
+      {showEditHeading && (
+        <HeadingSideHelp setShowEditHeading={setShowEditHeading} />
+      )}
     </>
   );
 };

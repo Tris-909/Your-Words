@@ -5,6 +5,7 @@ import {
   updateHeadingContent,
   updateLocalXYPosition,
   updateHeadingColor,
+  getEditHeading,
 } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
 import { BiPen } from "react-icons/bi";
@@ -23,30 +24,32 @@ const Heading = ({
   headingX,
   headingY,
   headingColor,
+  showEditHeading,
+  setShowEditHeading,
 }) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState(content);
-  const [isEditting, setIsEditting] = useState(content === "");
 
   const ActiveInput = () => {
-    setIsEditting(true);
+    setShowEditHeading(true);
+    dispatch(getEditHeading({ headingId: id }));
   };
 
-  const onRemoveActiveInput = async (mock, color) => {
-    setIsEditting(false);
-    dispatch(updateHeadingContent({ id: id, editValue: mock }));
-    dispatch(updateHeadingColor({ id: id, newColor: color }));
+  // const onRemoveActiveInput = async (mock, color) => {
+  //   setIsEditting(false);
+  //   dispatch(updateHeadingContent({ id: id, editValue: mock }));
+  //   dispatch(updateHeadingColor({ id: id, newColor: color }));
 
-    await API.graphql(
-      graphqlOperation(updateHeading, {
-        input: {
-          id: id,
-          content: mock,
-          color: color,
-        },
-      })
-    );
-  };
+  //   await API.graphql(
+  //     graphqlOperation(updateHeading, {
+  //       input: {
+  //         id: id,
+  //         content: mock,
+  //         color: color,
+  //       },
+  //     })
+  //   );
+  // };
 
   const savePositionToDatabases = async (data) => {
     await API.graphql(
@@ -63,11 +66,10 @@ const Heading = ({
 
   return (
     <>
-      {isEditting ? (
+      {showEditHeading ? (
         <TexInput
           input={input}
           setInput={setInput}
-          onRemoveActiveInput={onRemoveActiveInput}
           headingId={id}
           width={headingWidth}
           height={headingHeight}

@@ -49,6 +49,11 @@ const initialState = {
     status: false,
     error: {},
   },
+  editHeading: {
+    data: {},
+    status: false,
+    error: {},
+  },
 };
 
 export const headings = createSlice({
@@ -106,9 +111,6 @@ export const headings = createSlice({
     },
     updateHeadingColor: (state, action) => {
       const { id, newColor } = action.payload;
-
-      console.log("redux", id, newColor);
-
       const currentDataList = state.headings.data;
 
       currentDataList.forEach((item, index) => {
@@ -121,6 +123,16 @@ export const headings = createSlice({
       });
 
       state.headings.data = currentDataList;
+    },
+    // EDIT HEADING
+    getEditHeading: (state, action) => {
+      const { headingId } = action.payload;
+      const currentHeadingList = state.headings.data;
+
+      const editHeading = currentHeadingList.filter(
+        (item) => item.id === headingId
+      );
+      state.editHeading = editHeading;
     },
   },
 
@@ -171,10 +183,13 @@ export const headings = createSlice({
 });
 
 export const {
+  // Heading
   updateHeadingContent,
   updateLocalXYPosition,
   updateLocalWidthHeight,
   updateHeadingColor,
+  //Edit Heading
+  getEditHeading,
 } = headings.actions;
 
 export default headings.reducer;

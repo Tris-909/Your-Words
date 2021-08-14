@@ -12,7 +12,6 @@ import "./Heading.scss";
 const TextInput = ({
   input,
   setInput,
-  onRemoveActiveInput,
   headingId,
   width,
   height,
@@ -26,7 +25,6 @@ const TextInput = ({
     height: height,
   });
   const [mock, setMock] = useState(input);
-  const [color, setColor] = useState(headingColor);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -88,37 +86,12 @@ const TextInput = ({
         width="100%"
         height="100%"
         bg="transparent"
-        color={color}
+        color={headingColor}
         padding="2"
         border="none"
         fontSize={`${(size.width.split("p")[0] * 1) / 2.5}px `}
         className="noHoverEffect"
       />
-
-      <VStack
-        gridGap="1"
-        position="absolute"
-        right="-50%"
-        bg="red"
-        height="200px"
-        width="100px"
-      >
-        <Icon
-          as={BiCheck}
-          onClick={() => onRemoveActiveInput(mock, color)}
-          width="32px"
-          height="32px"
-          p={1}
-          borderRadius="full"
-          bg="white"
-          color="black"
-          zIndex="5"
-          cursor="pointer"
-          className="editButton"
-          transition="visibility 0s, opacity 0.25s"
-        />
-        <ColorPicker color={color} setColor={setColor} />
-      </VStack>
     </Rnd>
   );
 };

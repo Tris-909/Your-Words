@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Icon, HStack } from "@chakra-ui/react";
 import {
   BiChevronsLeft,
@@ -7,8 +7,39 @@ import {
   BiChevronRight,
 } from "react-icons/bi";
 import ColorPicker from "components/Heading/ColorPicker";
+import { useSelector, useDispatch } from "react-redux";
+import { useLockBodyScroll } from "libs/lockScrollBar";
+import {
+  updateHeadingContent,
+  updateHeadingColor,
+} from "redux/features/heading/heading";
+import { API, graphqlOperation } from "aws-amplify";
+import { updateHeading } from "graphql/mutations";
 
-const HeadingSideHelp = () => {
+const HeadingSideHelp = ({ setShowEditHeading }) => {
+  // While using HeadingEditSideHelp, scrollbar will be locked to avoid weird behaviour
+  useLockBodyScroll();
+
+  const dispatch = useDispatch();
+  const { editHeading } = useSelector((state) => state.headings);
+  const [color, setColor] = useState("fffffff");
+
+  const onRemoveActiveInput = async (mock, color) => {
+    setShowEditHeading(false);
+    dispatch(updateHeadingContent({ id: editHeading[0].id, editValue: mock }));
+    dispatch(updateHeadingColor({ id: editHeading[0].id, newColor: color }));
+
+    await API.graphql(
+      graphqlOperation(updateHeading, {
+        input: {
+          id: editHeading[0].id,
+          content: mock,
+          color: color,
+        },
+      })
+    );
+  };
+
   return (
     <Box
       width="150px"
@@ -91,7 +122,7 @@ const HeadingSideHelp = () => {
         w="100%"
         position="relative"
         height="fit-content"
-        paddingBottom="4"
+        padding="3"
         bg="black"
         color="white"
         display="flex"
@@ -99,6 +130,7 @@ const HeadingSideHelp = () => {
         alignItems="center"
         fontSize="20px"
         cursor="pointer"
+        onClick={() => setShowEditHeading(false)}
       >
         Save
       </Box>
