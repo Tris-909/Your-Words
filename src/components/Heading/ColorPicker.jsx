@@ -34,8 +34,7 @@ const ColorPicker = ({ color, setColor }) => {
       <Box
         ref={ref}
         position="absolute"
-        right="-160%"
-        top="45%"
+        left="-125%"
         display={isChoosingColor ? "initial" : "none"}
       >
         <ChromePicker

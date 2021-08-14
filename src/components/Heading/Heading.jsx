@@ -34,18 +34,18 @@ const Heading = ({
 
   const onRemoveActiveInput = async (mock, color) => {
     setIsEditting(false);
-    // dispatch(updateHeadingContent({ id: id, editValue: mock }));
-    console.log("color", color);
+    dispatch(updateHeadingContent({ id: id, editValue: mock }));
     dispatch(updateHeadingColor({ id: id, newColor: color }));
 
-    // await API.graphql(
-    //   graphqlOperation(updateHeading, {
-    //     input: {
-    //       id: id,
-    //       content: mock,
-    //     },
-    //   })
-    // );
+    await API.graphql(
+      graphqlOperation(updateHeading, {
+        input: {
+          id: id,
+          content: mock,
+          color: color,
+        },
+      })
+    );
   };
 
   const savePositionToDatabases = async (data) => {
@@ -73,6 +73,7 @@ const Heading = ({
           height={headingHeight}
           positionx={headingX}
           positiony={headingY}
+          headingColor={headingColor}
         />
       ) : (
         <Draggable

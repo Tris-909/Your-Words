@@ -8,6 +8,7 @@ import { Auth } from "aws-amplify";
 import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import Heading from "components/Heading/Heading";
+import HeadingSideHelp from "components/Heading/HeadingSideHelp";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -79,6 +80,7 @@ const Home = () => {
         onClose={onClose}
         fetchLists={fetchLists}
       />
+      <HeadingSideHelp />
     </>
   );
 };

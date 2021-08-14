@@ -18,6 +18,7 @@ const TextInput = ({
   height,
   positionx,
   positiony,
+  headingColor,
 }) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
@@ -25,7 +26,7 @@ const TextInput = ({
     height: height,
   });
   const [mock, setMock] = useState(input);
-  const [color, setColor] = useState("#ffffff");
+  const [color, setColor] = useState(headingColor);
   const dispatch = useDispatch();
 
   useEffect(() => {
