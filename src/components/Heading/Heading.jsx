@@ -77,12 +77,13 @@ const Heading = ({
           bounds="parent"
         >
           <Box
-            height={headingHeight}
-            width={headingWidth}
+            height={`${headingHeight.split("p")[0] * 1 + 40}px `}
+            width={`${headingWidth.split("p")[0] * 1 + 55}px `}
             fontSize={`${(headingWidth.split("p")[0] * 1) / 2.5}px `}
             color="white"
             cursor="move"
             display="flex"
+            justifyContent="flex-start"
             alignItems="flex-start"
             className="hoverEffect"
           >
@@ -92,7 +93,6 @@ const Heading = ({
               onClick={() => ActiveInput()}
               width="32px"
               height="32px"
-              marginLeft={3}
               p={1}
               borderRadius="full"
               bg="white"
