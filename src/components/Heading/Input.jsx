@@ -122,6 +122,10 @@ const TextInput = ({
         transform={`rotate(${headingRotateDegree}deg)`}
         fontFamily={headingFontFamily}
         className="noHoverEffect"
+        // fontWeight="bold"
+        // fontStyle="italic"
+        // textDecoration="line-through"
+        // textDecoration="underline"
       />
     </Rnd>
   );

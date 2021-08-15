@@ -14,6 +14,10 @@ import {
   BiChevronsRight,
   BiChevronLeft,
   BiChevronRight,
+  BiBold,
+  BiItalic,
+  BiUnderline,
+  BiStrikethrough,
 } from "react-icons/bi";
 import ColorPicker from "components/Heading/ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
@@ -311,6 +315,66 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             </Box>
           </Box>
         )}
+      </Box>
+      <Box
+        w="100%"
+        textAlign="center"
+        position="relative"
+        height="fit-content"
+        paddingTop="2"
+        paddingBottom="4"
+        borderBottom="1px solid gray"
+      >
+        <HStack w="100%" marginTop={2}>
+          <Box width="50%">
+            <Icon
+              as={BiBold}
+              width="26px"
+              height="26px"
+              bg="#f7faf9"
+              // color="white"
+              // bg="black"
+              border="1px"
+              borderRadius="4px"
+              cursor="pointer"
+            />
+          </Box>
+          <Box width="50%">
+            <Icon
+              as={BiItalic}
+              width="26px"
+              height="26px"
+              bg="#f7faf9"
+              border="1px"
+              borderRadius="4px"
+              cursor="pointer"
+            />
+          </Box>
+        </HStack>
+        <HStack w="100%" marginTop={3}>
+          <Box width="100%">
+            <Icon
+              as={BiUnderline}
+              width="26px"
+              height="26px"
+              bg="#f7faf9"
+              border="1px"
+              borderRadius="4px"
+              cursor="pointer"
+            />
+          </Box>
+          <Box width="100%">
+            <Icon
+              as={BiStrikethrough}
+              width="26px"
+              height="26px"
+              bg="#f7faf9"
+              border="1px"
+              borderRadius="4px"
+              cursor="pointer"
+            />
+          </Box>
+        </HStack>
       </Box>
       <Box
         w="100%"
