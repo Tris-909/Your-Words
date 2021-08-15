@@ -174,6 +174,7 @@ export const createHeading = /* GraphQL */ `
       color
       fontSize
       rotateDegree
+      fontFamily
       createdAt
       updatedAt
     }
@@ -196,6 +197,7 @@ export const updateHeading = /* GraphQL */ `
       color
       fontSize
       rotateDegree
+      fontFamily
       createdAt
       updatedAt
     }
@@ -218,6 +220,7 @@ export const deleteHeading = /* GraphQL */ `
       color
       fontSize
       rotateDegree
+      fontFamily
       createdAt
       updatedAt
     }

@@ -79,6 +79,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           color: color,
           fontSize: fontSize,
           rotateDegree: rotateDegree,
+          fontFamily: fontFamily,
         },
       })
     );
