@@ -29,6 +29,8 @@ type Heading @model {
   width: String
   height: String
   color: String
+  fontSize: Int
+  rotateDegree: Int
 }
 
 type Label {

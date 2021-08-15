@@ -108,6 +108,8 @@ export const getHeading = /* GraphQL */ `
       width
       height
       color
+      fontSize
+      rotateDegree
       createdAt
       updatedAt
     }
@@ -130,6 +132,8 @@ export const listHeadings = /* GraphQL */ `
         width
         height
         color
+        fontSize
+        rotateDegree
         createdAt
         updatedAt
       }
