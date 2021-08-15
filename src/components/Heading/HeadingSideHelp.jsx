@@ -1,5 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Box, Icon, HStack } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+  Box,
+  Icon,
+  HStack,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from "@chakra-ui/react";
 import {
   BiChevronsLeft,
   BiChevronsRight,
@@ -12,7 +21,6 @@ import { useLockBodyScroll } from "libs/lockScrollBar";
 import {
   updateHeadingContent,
   updateHeadingColor,
-  updateEditHeading,
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
@@ -81,6 +89,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
         height="fit-content"
         paddingTop="2"
         paddingBottom="4"
+        borderBottom="1px solid gray"
       >
         <Box fontSize="18px" fontWeight="bold" marginBottom="2">
           Rotation
@@ -123,6 +132,25 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             cursor="pointer"
           />
         </HStack>
+      </Box>
+      <Box
+        w="100%"
+        textAlign="center"
+        position="relative"
+        height="fit-content"
+        paddingTop="2"
+        borderBottom="1px solid gray"
+      >
+        <Box fontSize="18px" fontWeight="bold" marginBottom="2">
+          Font size
+        </Box>
+        <NumberInput defaultValue={15} min={10} max={20} border="1px">
+          <NumberInputField borderRadius="0px" />
+          <NumberInputStepper border="1px">
+            <NumberIncrementStepper borderBottom="1px" />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
       </Box>
       <Box
         w="100%"
