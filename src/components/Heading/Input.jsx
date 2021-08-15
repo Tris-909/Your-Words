@@ -24,6 +24,7 @@ const TextInput = ({
   headingColor,
   headingFontsize,
   headingRotateDegree,
+  headingFontFamily,
 }) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
@@ -100,7 +101,6 @@ const TextInput = ({
 
         updateWidthAndHeightDynamoDB(ref.style.width, ref.style.height);
       }}
-      // disableDragging={true}
       style={{
         display: "flex",
         border: "2px solid white",
@@ -120,6 +120,7 @@ const TextInput = ({
         border="none"
         fontSize={`${headingFontsize}px`}
         transform={`rotate(${headingRotateDegree}deg)`}
+        fontFamily={headingFontFamily}
         className="noHoverEffect"
       />
     </Rnd>

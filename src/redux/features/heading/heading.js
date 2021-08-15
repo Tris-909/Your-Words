@@ -156,6 +156,21 @@ export const headings = createSlice({
 
       state.headings.data = currentDataList;
     },
+    updateHeadingFontFamily: (state, action) => {
+      const { id, fontFamily } = action.payload;
+      const currentDataList = state.headings.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === id) {
+          currentDataList[index] = {
+            ...currentDataList[index],
+            fontFamily: fontFamily,
+          };
+        }
+      });
+
+      state.headings.data = currentDataList;
+    },
     // EDIT HEADING
     getEditHeading: (state, action) => {
       const { headingId } = action.payload;
@@ -167,7 +182,8 @@ export const headings = createSlice({
       state.editHeading = editHeading[0];
     },
     updateEditHeading: (state, action) => {
-      const { content, color, fontSize, rotateDegree } = action.payload;
+      const { content, color, fontSize, rotateDegree, fontFamily } =
+        action.payload;
 
       state.editHeading = {
         ...state.editHeading,
@@ -177,6 +193,7 @@ export const headings = createSlice({
         rotateDegree: rotateDegree
           ? rotateDegree
           : state.editHeading.rotateDegree,
+        fontFamily: fontFamily ? fontFamily : state.editHeading.fontFamily,
       };
     },
   },
@@ -235,7 +252,8 @@ export const {
   updateHeadingColor,
   updateHeadingFontsize,
   updateHeadingRotationDegree,
-  //Edit Heading
+  updateHeadingFontFamily,
+  // Edit Heading
   getEditHeading,
   updateEditHeading,
 } = headings.actions;

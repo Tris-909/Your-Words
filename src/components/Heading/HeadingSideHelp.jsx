@@ -24,6 +24,7 @@ import {
   updateHeadingColor,
   updateHeadingFontsize,
   updateHeadingRotationDegree,
+  updateHeadingFontFamily,
   updateEditHeading,
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
@@ -38,7 +39,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   const [color, setColor] = useState(editHeading.color);
   const [rotateDegree, setRotateDegree] = useState(editHeading.rotateDegree);
   const [fontSize, setFontSize] = useState(editHeading.fontSize);
-  const [fontFamily, setFontFamily] = useState("Roboto");
+  const [fontFamily, setFontFamily] = useState(editHeading.fontFamily);
   const [showingFontFamilySelect, setShowingFontFamilySelect] = useState(false);
 
   const fontFamilyPanelRef = useRef();
@@ -61,6 +62,12 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
       updateHeadingRotationDegree({
         id: editHeading.id,
         rotateDegree: rotateDegree,
+      })
+    );
+    dispatch(
+      updateHeadingFontFamily({
+        id: editHeading.id,
+        fontFamily: fontFamily,
       })
     );
 
@@ -91,6 +98,11 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
       setRotateDegree(rotateDegree - 5);
       dispatch(updateEditHeading({ rotateDegree: rotateDegree - 5 }));
     }
+  };
+
+  const updatingFontFamily = (newFont) => {
+    setFontFamily(newFont);
+    dispatch(updateEditHeading({ fontFamily: newFont }));
   };
 
   return (
@@ -241,7 +253,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               bg={fontFamily === "Roboto" ? "black" : "white"}
               color={fontFamily === "Roboto" ? "white" : "black"}
               cursor="pointer"
-              onClick={() => setFontFamily("Roboto")}
+              onClick={() => updatingFontFamily("Roboto")}
             >
               {" "}
               Roboto{" "}
@@ -251,7 +263,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               cursor="pointer"
               bg={fontFamily === "Allan" ? "black" : "white"}
               color={fontFamily === "Allan" ? "white" : "black"}
-              onClick={() => setFontFamily("Allan")}
+              onClick={() => updatingFontFamily("Allan")}
             >
               {" "}
               Allan{" "}
@@ -261,7 +273,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               cursor="pointer"
               bg={fontFamily === "Shadows Into Light" ? "black" : "white"}
               color={fontFamily === "Shadows Into Light" ? "white" : "black"}
-              onClick={() => setFontFamily("Shadows Into Light")}
+              onClick={() => updatingFontFamily("Shadows Into Light")}
             >
               {" "}
               Shadows Into Light{" "}
@@ -271,7 +283,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               cursor="pointer"
               bg={fontFamily === "Caveat" ? "black" : "white"}
               color={fontFamily === "Caveat" ? "white" : "black"}
-              onClick={() => setFontFamily("Caveat")}
+              onClick={() => updatingFontFamily("Caveat")}
             >
               {" "}
               Caveat{" "}
@@ -281,7 +293,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               cursor="pointer"
               bg={fontFamily === "Courgette" ? "black" : "white"}
               color={fontFamily === "Courgette" ? "white" : "black"}
-              onClick={() => setFontFamily("Courgette")}
+              onClick={() => updatingFontFamily("Courgette")}
             >
               {" "}
               Courgette{" "}
@@ -291,7 +303,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               cursor="pointer"
               bg={fontFamily === "mono" ? "black" : "white"}
               color={fontFamily === "mono" ? "white" : "black"}
-              onClick={() => setFontFamily("mono")}
+              onClick={() => updatingFontFamily("mono")}
             >
               {" "}
               Mono{" "}

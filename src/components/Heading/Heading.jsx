@@ -16,6 +16,7 @@ const Heading = ({
   headingColor,
   headingFontsize,
   headingRotateDegree,
+  headingFontFamily,
   showEditHeading,
   setShowEditHeading,
 }) => {
@@ -42,6 +43,7 @@ const Heading = ({
           headingColor={editHeading.color}
           headingFontsize={editHeading.fontSize}
           headingRotateDegree={editHeading.rotateDegree}
+          headingFontFamily={editHeading.fontFamily}
           showEditHeading={showEditHeading}
         />
       ) : (
@@ -50,6 +52,7 @@ const Heading = ({
           width={`${headingWidth.split("p")[0] * 1 + 55}px `}
           fontSize={`${headingFontsize}px `}
           transform={`translate(${positionX}px, ${positionY}px) rotate(${headingRotateDegree}deg)`}
+          fontFamily={headingFontFamily}
           color={headingColor}
           cursor="move"
           display="flex"
