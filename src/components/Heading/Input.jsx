@@ -3,6 +3,7 @@ import { Rnd } from "react-rnd";
 import { Input } from "@chakra-ui/react";
 import {
   updateLocalWidthHeight,
+  updateLocalXYPosition,
   updateEditHeading,
 } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
@@ -22,11 +23,16 @@ const TextInput = ({
   positiony,
   headingColor,
   headingFontsize,
+  headingRotateDegree,
 }) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
     width: width,
     height: height,
+  });
+  const [position, setPosition] = useState({
+    x: positionx,
+    y: positiony,
   });
   const dispatch = useDispatch();
 
@@ -56,8 +62,28 @@ const TextInput = ({
   return (
     <Rnd
       size={{ width: size.width, height: size.height }}
-      position={{ x: positionx, y: positiony }}
+      position={{ x: position.x, y: position.y }}
       bounds="parent"
+      onDragStop={async (e, d) => {
+        setPosition({
+          x: d.x,
+          y: d.y,
+        });
+
+        await API.graphql(
+          graphqlOperation(updateHeading, {
+            input: {
+              id: headingId,
+              x: d.x,
+              y: d.y,
+            },
+          })
+        );
+
+        dispatch(
+          updateLocalXYPosition({ id: headingId, newY: d.y, newX: d.x })
+        );
+      }}
       onResizeStop={(e, direction, ref, delta, position) => {
         setSize({
           width: ref.style.width,
@@ -74,7 +100,7 @@ const TextInput = ({
 
         updateWidthAndHeightDynamoDB(ref.style.width, ref.style.height);
       }}
-      disableDragging={true}
+      // disableDragging={true}
       style={{
         display: "flex",
         border: "2px solid white",
@@ -92,7 +118,8 @@ const TextInput = ({
         color={headingColor}
         padding="2"
         border="none"
-        fontSize={`${headingFontsize}px `}
+        fontSize={`${headingFontsize}px`}
+        transform={`rotate(${headingRotateDegree}deg)`}
         className="noHoverEffect"
       />
     </Rnd>

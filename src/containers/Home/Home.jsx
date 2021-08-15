@@ -69,10 +69,9 @@ const Home = () => {
               positionY={singleHeading.y}
               headingWidth={singleHeading.width}
               headingHeight={singleHeading.height}
-              headingX={singleHeading.x}
-              headingY={singleHeading.y}
               headingColor={singleHeading.color}
               headingFontsize={singleHeading.fontSize}
+              headingRotateDegree={singleHeading.rotateDegree}
               showEditHeading={showEditHeading}
               setShowEditHeading={setShowEditHeading}
             />

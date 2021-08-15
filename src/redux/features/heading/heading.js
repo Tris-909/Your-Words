@@ -126,6 +126,21 @@ export const headings = createSlice({
 
       state.headings.data = currentDataList;
     },
+    updateHeadingRotationDegree: (state, action) => {
+      const { id, rotateDegree } = action.payload;
+      const currentDataList = state.headings.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === id) {
+          currentDataList[index] = {
+            ...currentDataList[index],
+            rotateDegree: rotateDegree,
+          };
+        }
+      });
+
+      state.headings.data = currentDataList;
+    },
     updateHeadingFontsize: (state, action) => {
       const { id, fontSize } = action.payload;
       const currentDataList = state.headings.data;
@@ -152,13 +167,16 @@ export const headings = createSlice({
       state.editHeading = editHeading[0];
     },
     updateEditHeading: (state, action) => {
-      const { content, color, fontSize } = action.payload;
+      const { content, color, fontSize, rotateDegree } = action.payload;
 
       state.editHeading = {
         ...state.editHeading,
         content: content ? content : state.editHeading.content,
         color: color ? color : state.editHeading.color,
         fontSize: fontSize ? fontSize : state.editHeading.fontSize,
+        rotateDegree: rotateDegree
+          ? rotateDegree
+          : state.editHeading.rotateDegree,
       };
     },
   },
@@ -216,6 +234,7 @@ export const {
   updateLocalWidthHeight,
   updateHeadingColor,
   updateHeadingFontsize,
+  updateHeadingRotationDegree,
   //Edit Heading
   getEditHeading,
   updateEditHeading,

@@ -22,6 +22,7 @@ import {
   updateHeadingContent,
   updateHeadingColor,
   updateHeadingFontsize,
+  updateHeadingRotationDegree,
   updateEditHeading,
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
@@ -34,6 +35,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   const dispatch = useDispatch();
   const { editHeading } = useSelector((state) => state.headings);
   const [color, setColor] = useState(editHeading.color);
+  const [rotateDegree, setRotateDegree] = useState(editHeading.rotateDegree);
   const [fontSize, setFontSize] = useState(editHeading.fontSize);
 
   const onRemoveActiveInput = async () => {
@@ -46,6 +48,12 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
     );
     dispatch(updateHeadingColor({ id: editHeading.id, newColor: color }));
     dispatch(updateHeadingFontsize({ id: editHeading.id, fontSize: fontSize }));
+    dispatch(
+      updateHeadingRotationDegree({
+        id: editHeading.id,
+        rotateDegree: rotateDegree,
+      })
+    );
 
     await API.graphql(
       graphqlOperation(updateHeading, {
@@ -54,9 +62,26 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           content: editHeading.content,
           color: color,
           fontSize: fontSize,
+          rotateDegree: rotateDegree,
         },
       })
     );
+  };
+
+  const updateRotateDegree = (option) => {
+    if (option === "+10") {
+      setRotateDegree(rotateDegree + 10);
+      dispatch(updateEditHeading({ rotateDegree: rotateDegree + 10 }));
+    } else if (option === "+5") {
+      setRotateDegree(rotateDegree + 5);
+      dispatch(updateEditHeading({ rotateDegree: rotateDegree + 5 }));
+    } else if (option === "-10") {
+      setRotateDegree(rotateDegree - 10);
+      dispatch(updateEditHeading({ rotateDegree: rotateDegree - 10 }));
+    } else if (option === "-5") {
+      setRotateDegree(rotateDegree - 5);
+      dispatch(updateEditHeading({ rotateDegree: rotateDegree - 5 }));
+    }
   };
 
   return (
@@ -108,6 +133,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             border="1px solid black"
             borderRadius="4px"
             cursor="pointer"
+            onClick={() => updateRotateDegree("-10")}
           />
           <Icon
             as={BiChevronLeft}
@@ -117,6 +143,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             border="1px solid black"
             borderRadius="4px"
             cursor="pointer"
+            onClick={() => updateRotateDegree("-5")}
           />
           <Icon
             as={BiChevronRight}
@@ -126,6 +153,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             border="1px solid black"
             borderRadius="4px"
             cursor="pointer"
+            onClick={() => updateRotateDegree("+5")}
           />
           <Icon
             as={BiChevronsRight}
@@ -135,6 +163,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             border="1px solid black"
             borderRadius="4px"
             cursor="pointer"
+            onClick={() => updateRotateDegree("+10")}
           />
         </HStack>
       </Box>
