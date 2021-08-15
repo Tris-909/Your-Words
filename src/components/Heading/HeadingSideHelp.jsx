@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Box,
   Icon,
@@ -18,6 +18,7 @@ import {
 import ColorPicker from "components/Heading/ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
 import { useLockBodyScroll } from "libs/lockScrollBar";
+import { useOutsideClick } from "@chakra-ui/react";
 import {
   updateHeadingContent,
   updateHeadingColor,
@@ -37,6 +38,14 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   const [color, setColor] = useState(editHeading.color);
   const [rotateDegree, setRotateDegree] = useState(editHeading.rotateDegree);
   const [fontSize, setFontSize] = useState(editHeading.fontSize);
+  const [fontFamily, setFontFamily] = useState("Roboto");
+  const [showingFontFamilySelect, setShowingFontFamilySelect] = useState(false);
+
+  const fontFamilyPanelRef = useRef();
+  useOutsideClick({
+    ref: fontFamilyPanelRef,
+    handler: () => setShowingFontFamilySelect(false),
+  });
 
   const onRemoveActiveInput = async () => {
     setShowEditHeading(false);
@@ -184,7 +193,6 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             setFontSize(valueAsNumber);
             dispatch(updateEditHeading({ fontSize: valueAsNumber }));
           }}
-          border="1px"
         >
           <NumberInputField borderRadius="0px" />
           <NumberInputStepper border="1px">
@@ -192,6 +200,104 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
+      </Box>
+      <Box
+        w="100%"
+        textAlign="center"
+        position="relative"
+        height="fit-content"
+        paddingTop="2"
+        paddingBottom="4"
+        borderBottom="1px solid gray"
+      >
+        <Box fontSize="18px" fontWeight="bold" marginBottom="2">
+          Font Family
+        </Box>
+        <Box
+          color="black"
+          border="2px solid black"
+          margin="5%"
+          padding="5px 0px"
+          cursor="pointer"
+          fontFamily={fontFamily}
+          onClick={() => setShowingFontFamilySelect(true)}
+        >
+          {fontFamily}
+        </Box>
+        {showingFontFamilySelect && (
+          <Box
+            ref={fontFamilyPanelRef}
+            position="absolute"
+            left="-83%"
+            top="20%"
+            zIndex="10"
+            bg="white"
+            border="2px solid black"
+            borderRadius="5px"
+            padding={2}
+          >
+            <Box
+              fontFamily="Roboto"
+              bg={fontFamily === "Roboto" ? "black" : "white"}
+              color={fontFamily === "Roboto" ? "white" : "black"}
+              cursor="pointer"
+              onClick={() => setFontFamily("Roboto")}
+            >
+              {" "}
+              Roboto{" "}
+            </Box>
+            <Box
+              fontFamily="Allan"
+              cursor="pointer"
+              bg={fontFamily === "Allan" ? "black" : "white"}
+              color={fontFamily === "Allan" ? "white" : "black"}
+              onClick={() => setFontFamily("Allan")}
+            >
+              {" "}
+              Allan{" "}
+            </Box>
+            <Box
+              fontFamily="Shadows Into Light"
+              cursor="pointer"
+              bg={fontFamily === "Shadows Into Light" ? "black" : "white"}
+              color={fontFamily === "Shadows Into Light" ? "white" : "black"}
+              onClick={() => setFontFamily("Shadows Into Light")}
+            >
+              {" "}
+              Shadows Into Light{" "}
+            </Box>
+            <Box
+              fontFamily="Caveat"
+              cursor="pointer"
+              bg={fontFamily === "Caveat" ? "black" : "white"}
+              color={fontFamily === "Caveat" ? "white" : "black"}
+              onClick={() => setFontFamily("Caveat")}
+            >
+              {" "}
+              Caveat{" "}
+            </Box>
+            <Box
+              fontFamily="Courgette"
+              cursor="pointer"
+              bg={fontFamily === "Courgette" ? "black" : "white"}
+              color={fontFamily === "Courgette" ? "white" : "black"}
+              onClick={() => setFontFamily("Courgette")}
+            >
+              {" "}
+              Courgette{" "}
+            </Box>
+            <Box
+              fontFamily="mono"
+              cursor="pointer"
+              bg={fontFamily === "mono" ? "black" : "white"}
+              color={fontFamily === "mono" ? "white" : "black"}
+              onClick={() => setFontFamily("mono")}
+            >
+              {" "}
+              Mono{" "}
+            </Box>
+          </Box>
+        )}
       </Box>
       <Box
         w="100%"
