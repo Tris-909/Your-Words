@@ -21,6 +21,7 @@ const TextInput = ({
   positionx,
   positiony,
   headingColor,
+  headingFontsize,
 }) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
@@ -91,7 +92,7 @@ const TextInput = ({
         color={headingColor}
         padding="2"
         border="none"
-        fontSize={`${(size.width.split("p")[0] * 1) / 2.5}px `}
+        fontSize={`${headingFontsize}px `}
         className="noHoverEffect"
       />
     </Rnd>

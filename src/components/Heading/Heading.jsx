@@ -24,6 +24,7 @@ const Heading = ({
   headingX,
   headingY,
   headingColor,
+  headingFontsize,
   showEditHeading,
   setShowEditHeading,
 }) => {
@@ -77,6 +78,7 @@ const Heading = ({
           positionx={headingX}
           positiony={headingY}
           headingColor={editHeading.color}
+          headingFontsize={editHeading.fontSize}
           showEditHeading={showEditHeading}
         />
       ) : (
@@ -88,7 +90,7 @@ const Heading = ({
           <Box
             height={`${headingHeight.split("p")[0] * 1 + 40}px `}
             width={`${headingWidth.split("p")[0] * 1 + 55}px `}
-            fontSize={`${(headingWidth.split("p")[0] * 1) / 2.5}px `}
+            fontSize={`${headingFontsize}px `}
             color={headingColor}
             cursor="move"
             display="flex"

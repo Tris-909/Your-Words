@@ -16,6 +16,8 @@ export const createHeadingThunk = createAsyncThunk(
       y: 0,
       width: 200,
       height: 100,
+      fontSize: 20,
+      rotateDegree: 0,
     };
 
     const { data } = await API.graphql(
@@ -124,6 +126,21 @@ export const headings = createSlice({
 
       state.headings.data = currentDataList;
     },
+    updateHeadingFontsize: (state, action) => {
+      const { id, fontSize } = action.payload;
+      const currentDataList = state.headings.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === id) {
+          currentDataList[index] = {
+            ...currentDataList[index],
+            fontSize: fontSize,
+          };
+        }
+      });
+
+      state.headings.data = currentDataList;
+    },
     // EDIT HEADING
     getEditHeading: (state, action) => {
       const { headingId } = action.payload;
@@ -135,12 +152,13 @@ export const headings = createSlice({
       state.editHeading = editHeading[0];
     },
     updateEditHeading: (state, action) => {
-      const { content, color } = action.payload;
+      const { content, color, fontSize } = action.payload;
 
       state.editHeading = {
         ...state.editHeading,
         content: content ? content : state.editHeading.content,
         color: color ? color : state.editHeading.color,
+        fontSize: fontSize ? fontSize : state.editHeading.fontSize,
       };
     },
   },
@@ -197,6 +215,7 @@ export const {
   updateLocalXYPosition,
   updateLocalWidthHeight,
   updateHeadingColor,
+  updateHeadingFontsize,
   //Edit Heading
   getEditHeading,
   updateEditHeading,

@@ -21,6 +21,8 @@ import { useLockBodyScroll } from "libs/lockScrollBar";
 import {
   updateHeadingContent,
   updateHeadingColor,
+  updateHeadingFontsize,
+  updateEditHeading,
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
@@ -32,6 +34,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   const dispatch = useDispatch();
   const { editHeading } = useSelector((state) => state.headings);
   const [color, setColor] = useState(editHeading.color);
+  const [fontSize, setFontSize] = useState(editHeading.fontSize);
 
   const onRemoveActiveInput = async () => {
     setShowEditHeading(false);
@@ -42,6 +45,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
       })
     );
     dispatch(updateHeadingColor({ id: editHeading.id, newColor: color }));
+    dispatch(updateHeadingFontsize({ id: editHeading.id, fontSize: fontSize }));
 
     await API.graphql(
       graphqlOperation(updateHeading, {
@@ -49,6 +53,7 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           id: editHeading.id,
           content: editHeading.content,
           color: color,
+          fontSize: fontSize,
         },
       })
     );
@@ -144,7 +149,14 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
         <Box fontSize="18px" fontWeight="bold" marginBottom="2">
           Font size
         </Box>
-        <NumberInput defaultValue={15} min={10} max={20} border="1px">
+        <NumberInput
+          defaultValue={fontSize}
+          onChange={(valueAsString, valueAsNumber) => {
+            setFontSize(valueAsNumber);
+            dispatch(updateEditHeading({ fontSize: valueAsNumber }));
+          }}
+          border="1px"
+        >
           <NumberInputField borderRadius="0px" />
           <NumberInputStepper border="1px">
             <NumberIncrementStepper borderBottom="1px" />
