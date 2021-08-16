@@ -32,6 +32,10 @@ type Heading @model {
   fontSize: Int
   rotateDegree: Int
   fontFamily: String
+  bold: Boolean
+  italic: Boolean 
+  underline: Boolean
+  strikeThrough: Boolean
 }
 
 type Label {

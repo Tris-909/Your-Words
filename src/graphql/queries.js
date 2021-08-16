@@ -111,6 +111,10 @@ export const getHeading = /* GraphQL */ `
       fontSize
       rotateDegree
       fontFamily
+      bold
+      italic
+      underline
+      strikeThrough
       createdAt
       updatedAt
     }
@@ -136,6 +140,10 @@ export const listHeadings = /* GraphQL */ `
         fontSize
         rotateDegree
         fontFamily
+        bold
+        italic
+        underline
+        strikeThrough
         createdAt
         updatedAt
       }

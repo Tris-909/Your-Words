@@ -175,6 +175,10 @@ export const createHeading = /* GraphQL */ `
       fontSize
       rotateDegree
       fontFamily
+      bold
+      italic
+      underline
+      strikeThrough
       createdAt
       updatedAt
     }
@@ -198,6 +202,10 @@ export const updateHeading = /* GraphQL */ `
       fontSize
       rotateDegree
       fontFamily
+      bold
+      italic
+      underline
+      strikeThrough
       createdAt
       updatedAt
     }
@@ -221,6 +229,10 @@ export const deleteHeading = /* GraphQL */ `
       fontSize
       rotateDegree
       fontFamily
+      bold
+      italic
+      underline
+      strikeThrough
       createdAt
       updatedAt
     }

@@ -18,6 +18,10 @@ export const createHeadingThunk = createAsyncThunk(
       height: 100,
       fontSize: 20,
       rotateDegree: 0,
+      bold: false,
+      italic: false,
+      underline: false,
+      strikeThrough: false,
     };
 
     const { data } = await API.graphql(
