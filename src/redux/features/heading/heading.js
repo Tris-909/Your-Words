@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, strike } from "aws-amplify";
 import { createHeading } from "graphql/mutations";
 import { listHeadings } from "graphql/queries";
 import * as uuid from "uuid";
@@ -66,40 +66,23 @@ export const headings = createSlice({
   name: "headings",
   initialState,
   reducers: {
-    updateHeadingContent: (state, action) => {
-      const { id, editValue } = action.payload;
-      const currentDataList = state.headings.data;
-
-      currentDataList.forEach((item, index) => {
-        if (item.id === id) {
-          currentDataList[index] = {
-            ...currentDataList[index],
-            content: editValue,
-          };
-        }
-      });
-
-      state.headings.data = currentDataList;
-    },
-    updateLocalXYPosition: (state, action) => {
-      const { id, newX, newY } = action.payload;
-
-      const currentDataList = state.headings.data;
-
-      currentDataList.forEach((item, index) => {
-        if (item.id === id) {
-          currentDataList[index] = {
-            ...currentDataList[index],
-            y: newY,
-            x: newX,
-          };
-        }
-      });
-
-      state.headings.data = currentDataList;
-    },
-    updateLocalWidthHeight: (state, action) => {
-      const { id, newWidth, newHeight } = action.payload;
+    updateHeadingLocally: (state, action) => {
+      const {
+        id,
+        editValue,
+        newX,
+        newY,
+        newWidth,
+        newHeight,
+        newColor,
+        rotateDegree,
+        fontSize,
+        fontFamily,
+        bold,
+        italic,
+        underline,
+        strikeThrough,
+      } = action.payload;
 
       const currentDataList = state.headings.data;
 
@@ -107,68 +90,25 @@ export const headings = createSlice({
         if (item.id === id) {
           currentDataList[index] = {
             ...currentDataList[index],
-            width: newWidth,
-            height: newHeight,
-          };
-        }
-      });
-
-      state.headings.data = currentDataList;
-    },
-    updateHeadingColor: (state, action) => {
-      const { id, newColor } = action.payload;
-      const currentDataList = state.headings.data;
-
-      currentDataList.forEach((item, index) => {
-        if (item.id === id) {
-          currentDataList[index] = {
-            ...currentDataList[index],
-            color: newColor,
-          };
-        }
-      });
-
-      state.headings.data = currentDataList;
-    },
-    updateHeadingRotationDegree: (state, action) => {
-      const { id, rotateDegree } = action.payload;
-      const currentDataList = state.headings.data;
-
-      currentDataList.forEach((item, index) => {
-        if (item.id === id) {
-          currentDataList[index] = {
-            ...currentDataList[index],
-            rotateDegree: rotateDegree,
-          };
-        }
-      });
-
-      state.headings.data = currentDataList;
-    },
-    updateHeadingFontsize: (state, action) => {
-      const { id, fontSize } = action.payload;
-      const currentDataList = state.headings.data;
-
-      currentDataList.forEach((item, index) => {
-        if (item.id === id) {
-          currentDataList[index] = {
-            ...currentDataList[index],
-            fontSize: fontSize,
-          };
-        }
-      });
-
-      state.headings.data = currentDataList;
-    },
-    updateHeadingFontFamily: (state, action) => {
-      const { id, fontFamily } = action.payload;
-      const currentDataList = state.headings.data;
-
-      currentDataList.forEach((item, index) => {
-        if (item.id === id) {
-          currentDataList[index] = {
-            ...currentDataList[index],
-            fontFamily: fontFamily,
+            content: editValue ? editValue : currentDataList[index].content,
+            x: newX ? newX : currentDataList[index].x,
+            y: newY ? newY : currentDataList[index].y,
+            width: newWidth ? newWidth : currentDataList[index].width,
+            height: newHeight ? newHeight : currentDataList[index].height,
+            color: newColor ? newColor : currentDataList[index].color,
+            rotateDegree: rotateDegree
+              ? rotateDegree
+              : currentDataList[index].rotateDegree,
+            fontSize: fontSize ? fontSize : currentDataList[index].fontSize,
+            fontFamily: fontFamily
+              ? fontFamily
+              : currentDataList[index].fontFamily,
+            bold: bold ? bold : currentDataList[index].bold,
+            italic: italic ? italic : currentDataList[index].italic,
+            underline: underline ? underline : currentDataList[index].underline,
+            strikeThrough: strikeThrough
+              ? strikeThrough
+              : currentDataList[index].strikeThrough,
           };
         }
       });
@@ -186,8 +126,17 @@ export const headings = createSlice({
       state.editHeading = editHeading[0];
     },
     updateEditHeading: (state, action) => {
-      const { content, color, fontSize, rotateDegree, fontFamily } =
-        action.payload;
+      const {
+        content,
+        color,
+        fontSize,
+        rotateDegree,
+        fontFamily,
+        bold,
+        italic,
+        underline,
+        strikeThrough,
+      } = action.payload;
 
       state.editHeading = {
         ...state.editHeading,
@@ -198,6 +147,12 @@ export const headings = createSlice({
           ? rotateDegree
           : state.editHeading.rotateDegree,
         fontFamily: fontFamily ? fontFamily : state.editHeading.fontFamily,
+        bold: bold ? bold : state.editHeading.bold,
+        italic: italic ? italic : state.editHeading.italic,
+        underline: underline ? underline : state.editHeading.underline,
+        strikeThrough: strikeThrough
+          ? strikeThrough
+          : state.editHeading.strikeThrough,
       };
     },
   },
@@ -250,13 +205,7 @@ export const headings = createSlice({
 
 export const {
   // Heading
-  updateHeadingContent,
-  updateLocalXYPosition,
-  updateLocalWidthHeight,
-  updateHeadingColor,
-  updateHeadingFontsize,
-  updateHeadingRotationDegree,
-  updateHeadingFontFamily,
+  updateHeadingLocally,
   // Edit Heading
   getEditHeading,
   updateEditHeading,

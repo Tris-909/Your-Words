@@ -24,11 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLockBodyScroll } from "libs/lockScrollBar";
 import { useOutsideClick } from "@chakra-ui/react";
 import {
-  updateHeadingContent,
-  updateHeadingColor,
-  updateHeadingFontsize,
-  updateHeadingRotationDegree,
-  updateHeadingFontFamily,
+  updateHeadingLocally,
   updateEditHeading,
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
@@ -55,22 +51,12 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   const onRemoveActiveInput = async () => {
     setShowEditHeading(false);
     dispatch(
-      updateHeadingContent({
+      updateHeadingLocally({
         id: editHeading.id,
         editValue: editHeading.content,
-      })
-    );
-    dispatch(updateHeadingColor({ id: editHeading.id, newColor: color }));
-    dispatch(updateHeadingFontsize({ id: editHeading.id, fontSize: fontSize }));
-    dispatch(
-      updateHeadingRotationDegree({
-        id: editHeading.id,
+        newColor: color,
         rotateDegree: rotateDegree,
-      })
-    );
-    dispatch(
-      updateHeadingFontFamily({
-        id: editHeading.id,
+        fontSize: fontSize,
         fontFamily: fontFamily,
       })
     );

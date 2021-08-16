@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Rnd } from "react-rnd";
 import { Input } from "@chakra-ui/react";
 import {
-  updateLocalWidthHeight,
-  updateLocalXYPosition,
+  updateHeadingLocally,
   updateEditHeading,
 } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
@@ -81,9 +80,10 @@ const TextInput = ({
           })
         );
 
-        dispatch(
-          updateLocalXYPosition({ id: headingId, newY: d.y, newX: d.x })
-        );
+        dispatch(updateHeadingLocally({ id: headingId, newY: d.y, newX: d.x }));
+        // dispatch(
+        //   updateLocalXYPosition({ id: headingId, newY: d.y, newX: d.x })
+        // );
       }}
       onResizeStop={(e, direction, ref, delta, position) => {
         setSize({
@@ -92,7 +92,7 @@ const TextInput = ({
         });
 
         dispatch(
-          updateLocalWidthHeight({
+          updateHeadingLocally({
             id: headingId,
             newWidth: ref.style.width,
             newHeight: ref.style.height,
