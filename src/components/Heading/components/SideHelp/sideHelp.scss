@@ -1,0 +1,79 @@
+.sidehelp--container {
+  width: 150px;
+  background: #f0f0f0;
+  border-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  position: fixed;
+  right: 0;
+  top: 15%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  .sidehelp--section {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    height: fit-content;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid gray;
+
+    .sidehelp--section--header {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .sidehelp--section--rotationButton {
+      background: #f0f0f0;
+      width: 25px;
+      height: 25px;
+      border: 1px solid black;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .sidehelp--section--fontFamilyReview {
+      color: black;
+      border: 2px solid black;
+      margin: 5%;
+      padding: 5px 0px;
+      cursor: pointer;
+    }
+
+    .sidehelp--section--fontFamilySelectPanel {
+      position: absolute;
+      left: -83%;
+      top: 20%;
+      z-index: 10;
+      background: white;
+      border: 2px solid black;
+      border-radius: 5px;
+      padding: 8px;
+    }
+
+    .sidehelp--section--textOptionsButton {
+      width: 26px;
+      height: 26px;
+      border: 1px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+  .sidehelp--section--saveButton {
+    width: 100%;
+    position: relative;
+    height: fit-content;
+    padding: 12px;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+  }
+}

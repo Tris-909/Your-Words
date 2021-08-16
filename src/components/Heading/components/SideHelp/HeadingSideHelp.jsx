@@ -29,6 +29,7 @@ import {
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
+import "./sideHelp.scss";
 
 const HeadingSideHelp = ({ setShowEditHeading }) => {
   // While using HeadingEditSideHelp, scrollbar will be locked to avoid weird behaviour
@@ -109,99 +110,38 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   };
 
   return (
-    <Box
-      width="150px"
-      bg="#f0f0f0"
-      borderRadius="5px"
-      borderTopRightRadius="0px"
-      borderBottomRightRadius="0px"
-      position="fixed"
-      right="0"
-      top="15%"
-      display="flex"
-      justifyContent="flex-start"
-      flexDirection="column"
-    >
-      <Box
-        w="100%"
-        textAlign="center"
-        position="relative"
-        height="fit-content"
-        paddingTop="2"
-        paddingBottom="4"
-        borderBottom="1px solid gray"
-      >
-        <Box fontSize="18px" fontWeight="bold" marginBottom="2">
-          Color
-        </Box>
+    <Box className="sidehelp--container">
+      <Box className="sidehelp--section">
+        <Box className="sidehelp--section--header">Color</Box>
         <ColorPicker color={color} setColor={setColor} />
       </Box>
-      <Box
-        w="100%"
-        textAlign="center"
-        position="relative"
-        height="fit-content"
-        paddingTop="2"
-        paddingBottom="4"
-        borderBottom="1px solid gray"
-      >
-        <Box fontSize="18px" fontWeight="bold" marginBottom="2">
-          Rotation
-        </Box>
+      <Box className="sidehelp--section">
+        <Box className="sidehelp--section--header">Rotation</Box>
         <HStack justifyContent="center" alignItems="center">
           <Icon
             as={BiChevronsLeft}
-            bg="#f0f0f0"
-            width="25px"
-            height="25px"
-            border="1px solid black"
-            borderRadius="4px"
-            cursor="pointer"
             onClick={() => updateRotateDegree("-10")}
+            className="sidehelp--section--rotationButton"
           />
           <Icon
             as={BiChevronLeft}
-            bg="#f0f0f0"
-            width="25px"
-            height="25px"
-            border="1px solid black"
-            borderRadius="4px"
-            cursor="pointer"
             onClick={() => updateRotateDegree("-5")}
+            className="sidehelp--section--rotationButton"
           />
           <Icon
             as={BiChevronRight}
-            bg="#f0f0f0"
-            width="25px"
-            height="25px"
-            border="1px solid black"
-            borderRadius="4px"
-            cursor="pointer"
             onClick={() => updateRotateDegree("+5")}
+            className="sidehelp--section--rotationButton"
           />
           <Icon
             as={BiChevronsRight}
-            bg="#f0f0f0"
-            width="25px"
-            height="25px"
-            border="1px solid black"
-            borderRadius="4px"
-            cursor="pointer"
             onClick={() => updateRotateDegree("+10")}
+            className="sidehelp--section--rotationButton"
           />
         </HStack>
       </Box>
-      <Box
-        w="100%"
-        textAlign="center"
-        position="relative"
-        height="fit-content"
-        paddingTop="2"
-        borderBottom="1px solid gray"
-      >
-        <Box fontSize="18px" fontWeight="bold" marginBottom="2">
-          Font size
-        </Box>
+      <Box className="sidehelp--section">
+        <Box className="sidehelp--section--header">Font size</Box>
         <NumberInput
           defaultValue={fontSize}
           onChange={(valueAsString, valueAsNumber) => {
@@ -216,40 +156,19 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           </NumberInputStepper>
         </NumberInput>
       </Box>
-      <Box
-        w="100%"
-        textAlign="center"
-        position="relative"
-        height="fit-content"
-        paddingTop="2"
-        paddingBottom="4"
-        borderBottom="1px solid gray"
-      >
-        <Box fontSize="18px" fontWeight="bold" marginBottom="2">
-          Font Family
-        </Box>
+      <Box className="sidehelp--section">
+        <Box className="sidehelp--section--header">Font Family</Box>
         <Box
-          color="black"
-          border="2px solid black"
-          margin="5%"
-          padding="5px 0px"
-          cursor="pointer"
           fontFamily={fontFamily}
           onClick={() => setShowingFontFamilySelect(true)}
+          className="sidehelp--section--fontFamilyReview"
         >
           {fontFamily}
         </Box>
         {showingFontFamilySelect && (
           <Box
             ref={fontFamilyPanelRef}
-            position="absolute"
-            left="-83%"
-            top="20%"
-            zIndex="10"
-            bg="white"
-            border="2px solid black"
-            borderRadius="5px"
-            padding={2}
+            className="sidehelp--section--fontFamilySelectPanel"
           >
             <Box
               fontFamily="Roboto"
@@ -314,46 +233,30 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           </Box>
         )}
       </Box>
-      <Box
-        w="100%"
-        textAlign="center"
-        position="relative"
-        height="fit-content"
-        paddingTop="2"
-        paddingBottom="4"
-        borderBottom="1px solid gray"
-      >
+      <Box className="sidehelp--section">
         <HStack w="100%" marginTop={2}>
           <Box width="50%">
             <Icon
               as={BiBold}
-              width="26px"
-              height="26px"
               bg={bold ? "black" : "#f7faf9"}
               color={bold ? "#f7faf9" : "black"}
-              border="1px"
-              borderRadius="4px"
-              cursor="pointer"
               onClick={() => {
                 setBold(!bold);
                 dispatch(updateEditHeading({ bold: !bold }));
               }}
+              className="sidehelp--section--textOptionsButton"
             />
           </Box>
           <Box width="50%">
             <Icon
               as={BiItalic}
-              width="26px"
-              height="26px"
               bg={italic ? "black" : "#f7faf9"}
               color={italic ? "#f7faf9" : "black"}
-              border="1px"
-              borderRadius="4px"
-              cursor="pointer"
               onClick={() => {
                 setItalic(!italic);
                 dispatch(updateEditHeading({ italic: !italic }));
               }}
+              className="sidehelp--section--textOptionsButton"
             />
           </Box>
         </HStack>
@@ -361,13 +264,8 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           <Box width="100%">
             <Icon
               as={BiUnderline}
-              width="26px"
-              height="26px"
               bg={underline ? "black" : "#f7faf9"}
               color={underline ? "#f7faf9" : "black"}
-              border="1px"
-              borderRadius="4px"
-              cursor="pointer"
               onClick={() => {
                 if (!underline) {
                   setUnderline(true);
@@ -378,18 +276,14 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
                   dispatch(updateEditHeading({ underline: false }));
                 }
               }}
+              className="sidehelp--section--textOptionsButton"
             />
           </Box>
           <Box width="100%">
             <Icon
               as={BiStrikethrough}
-              width="26px"
-              height="26px"
               bg={strikeThrough ? "black" : "#f7faf9"}
               color={strikeThrough ? "#f7faf9" : "black"}
-              border="1px"
-              borderRadius="4px"
-              cursor="pointer"
               onClick={() => {
                 if (!strikeThrough) {
                   setUnderline(false);
@@ -400,23 +294,14 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
                   dispatch(updateEditHeading({ strikeThrough: false }));
                 }
               }}
+              className="sidehelp--section--textOptionsButton"
             />
           </Box>
         </HStack>
       </Box>
       <Box
-        w="100%"
-        position="relative"
-        height="fit-content"
-        padding="3"
-        bg="black"
-        color="white"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        fontSize="20px"
-        cursor="pointer"
         onClick={() => onRemoveActiveInput()}
+        className="sidehelp--section--saveButton"
       >
         Save
       </Box>

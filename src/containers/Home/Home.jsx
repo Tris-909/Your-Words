@@ -8,7 +8,7 @@ import { Auth } from "aws-amplify";
 import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import Heading from "components/Heading/Heading";
-import HeadingSideHelp from "components/Heading/HeadingSideHelp";
+import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideHelp";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
