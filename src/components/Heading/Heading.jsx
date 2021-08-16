@@ -18,6 +18,10 @@ const Heading = ({
   headingRotateDegree,
   headingFontFamily,
   showEditHeading,
+  headingBold,
+  headingItalic,
+  headingUnderline,
+  headingStrikethrough,
   setShowEditHeading,
 }) => {
   const dispatch = useDispatch();
@@ -44,6 +48,10 @@ const Heading = ({
           headingFontsize={editHeading.fontSize}
           headingRotateDegree={editHeading.rotateDegree}
           headingFontFamily={editHeading.fontFamily}
+          headingBold={editHeading.bold}
+          headingItalic={editHeading.italic}
+          headingUnderline={editHeading.underline}
+          headingStrikethrough={editHeading.strikeThrough}
           showEditHeading={showEditHeading}
         />
       ) : (
@@ -58,6 +66,15 @@ const Heading = ({
           display="flex"
           justifyContent="flex-start"
           alignItems="flex-start"
+          fontWeight={headingBold ? "bold" : "normal"}
+          fontStyle={headingItalic ? "italic" : "initial"}
+          textDecoration={
+            headingUnderline
+              ? "underline"
+              : headingStrikethrough
+              ? "line-through"
+              : "initial"
+          }
           className="hoverEffect"
         >
           {input}

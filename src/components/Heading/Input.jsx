@@ -24,6 +24,10 @@ const TextInput = ({
   headingFontsize,
   headingRotateDegree,
   headingFontFamily,
+  headingBold,
+  headingItalic,
+  headingUnderline,
+  headingStrikethrough,
 }) => {
   const inputRef = useRef(null);
   const [size, setSize] = useState({
@@ -122,10 +126,15 @@ const TextInput = ({
         transform={`rotate(${headingRotateDegree}deg)`}
         fontFamily={headingFontFamily}
         className="noHoverEffect"
-        // fontWeight="bold"
-        // fontStyle="italic"
-        // textDecoration="line-through"
-        // textDecoration="underline"
+        fontWeight={headingBold ? "bold" : "normal"}
+        fontStyle={headingItalic ? "italic" : "initial"}
+        textDecoration={
+          headingUnderline
+            ? "underline"
+            : headingStrikethrough
+            ? "line-through"
+            : "initial"
+        }
       />
     </Rnd>
   );

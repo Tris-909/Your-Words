@@ -41,6 +41,10 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   const [fontSize, setFontSize] = useState(editHeading.fontSize);
   const [fontFamily, setFontFamily] = useState(editHeading.fontFamily);
   const [showingFontFamilySelect, setShowingFontFamilySelect] = useState(false);
+  const [bold, setBold] = useState(editHeading.bold);
+  const [italic, setItalic] = useState(editHeading.italic);
+  const [underline, setUnderline] = useState(editHeading.underline);
+  const [strikeThrough, setStrikeThrough] = useState(editHeading.strikeThrough);
 
   const fontFamilyPanelRef = useRef();
   useOutsideClick({
@@ -58,6 +62,10 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
         rotateDegree: rotateDegree,
         fontSize: fontSize,
         fontFamily: fontFamily,
+        bold: bold,
+        italic: italic,
+        underline: underline,
+        strikeThrough: strikeThrough,
       })
     );
 
@@ -70,6 +78,10 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           fontSize: fontSize,
           rotateDegree: rotateDegree,
           fontFamily: fontFamily,
+          bold: bold,
+          italic: italic,
+          underline: underline,
+          strikeThrough: strikeThrough,
         },
       })
     );
@@ -317,12 +329,15 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               as={BiBold}
               width="26px"
               height="26px"
-              bg="#f7faf9"
-              // color="white"
-              // bg="black"
+              bg={bold ? "black" : "#f7faf9"}
+              color={bold ? "#f7faf9" : "black"}
               border="1px"
               borderRadius="4px"
               cursor="pointer"
+              onClick={() => {
+                setBold(!bold);
+                dispatch(updateEditHeading({ bold: !bold }));
+              }}
             />
           </Box>
           <Box width="50%">
@@ -330,10 +345,15 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               as={BiItalic}
               width="26px"
               height="26px"
-              bg="#f7faf9"
+              bg={italic ? "black" : "#f7faf9"}
+              color={italic ? "#f7faf9" : "black"}
               border="1px"
               borderRadius="4px"
               cursor="pointer"
+              onClick={() => {
+                setItalic(!italic);
+                dispatch(updateEditHeading({ italic: !italic }));
+              }}
             />
           </Box>
         </HStack>
@@ -343,10 +363,21 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               as={BiUnderline}
               width="26px"
               height="26px"
-              bg="#f7faf9"
+              bg={underline ? "black" : "#f7faf9"}
+              color={underline ? "#f7faf9" : "black"}
               border="1px"
               borderRadius="4px"
               cursor="pointer"
+              onClick={() => {
+                if (!underline) {
+                  setUnderline(true);
+                  setStrikeThrough(false);
+                  dispatch(updateEditHeading({ underline: true }));
+                } else {
+                  setUnderline(false);
+                  dispatch(updateEditHeading({ underline: false }));
+                }
+              }}
             />
           </Box>
           <Box width="100%">
@@ -354,10 +385,21 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               as={BiStrikethrough}
               width="26px"
               height="26px"
-              bg="#f7faf9"
+              bg={strikeThrough ? "black" : "#f7faf9"}
+              color={strikeThrough ? "#f7faf9" : "black"}
               border="1px"
               borderRadius="4px"
               cursor="pointer"
+              onClick={() => {
+                if (!strikeThrough) {
+                  setUnderline(false);
+                  setStrikeThrough(true);
+                  dispatch(updateEditHeading({ strikeThrough: true }));
+                } else {
+                  setStrikeThrough(false);
+                  dispatch(updateEditHeading({ strikeThrough: false }));
+                }
+              }}
             />
           </Box>
         </HStack>
