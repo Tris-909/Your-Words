@@ -19,7 +19,7 @@ import {
   BiUnderline,
   BiStrikethrough,
 } from "react-icons/bi";
-import ColorPicker from "components/Heading/ColorPicker";
+import ColorPicker from "components/Heading/components/ColorPicker/ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
 import { useLockBodyScroll } from "libs/lockScrollBar";
 import { useOutsideClick } from "@chakra-ui/react";
