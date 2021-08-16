@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Icon } from "@chakra-ui/react";
-import TexInput from "./Input";
+import TexInput from "./components/EditInput/Input";
 import { getEditHeading } from "redux/features/heading/heading";
 import { useDispatch, useSelector } from "react-redux";
 import { BiPen } from "react-icons/bi";

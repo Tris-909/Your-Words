@@ -8,9 +8,6 @@ import {
 import { useDispatch } from "react-redux";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
-import "./Heading.scss";
-
-export const EditHeadingContext = React.createContext();
 
 const TextInput = ({
   input,
@@ -85,9 +82,6 @@ const TextInput = ({
         );
 
         dispatch(updateHeadingLocally({ id: headingId, newY: d.y, newX: d.x }));
-        // dispatch(
-        //   updateLocalXYPosition({ id: headingId, newY: d.y, newX: d.x })
-        // );
       }}
       onResizeStop={(e, direction, ref, delta, position) => {
         setSize({
@@ -116,16 +110,10 @@ const TextInput = ({
         ref={inputRef}
         value={input}
         onChange={(e) => changeValue(e)}
-        width="100%"
-        height="100%"
-        bg="transparent"
         color={headingColor}
-        padding="2"
-        border="none"
         fontSize={`${headingFontsize}px`}
         transform={`rotate(${headingRotateDegree}deg)`}
         fontFamily={headingFontFamily}
-        className="noHoverEffect"
         fontWeight={headingBold ? "bold" : "normal"}
         fontStyle={headingItalic ? "italic" : "initial"}
         textDecoration={
@@ -135,6 +123,11 @@ const TextInput = ({
             ? "line-through"
             : "initial"
         }
+        width="100%"
+        height="100%"
+        background="transparent"
+        padding="8px"
+        border="none"
       />
     </Rnd>
   );
