@@ -16,3 +16,20 @@ Learning Amplify by going thourgh many tutorials
 - Pushing new changes to dev env backend: **amplify push**
 - Checkout to prod env: **amplify env checkout <env-name>**
 - Pushing new changes to prod: **amplify push**
+
+  3. Features 
+  - Notes with :
+    - Color Picker
+    - Labels 
+    - Image 
+    - Text Editor
+    - Emoji 
+    - Ability to drag & drop 
+  - Headings with : 
+    - Ability to drag & drop 
+    - Ability to resize 
+    - Color Picker 
+    - Rotation 
+    - Different font-family of choices
+    - Font-size as will 
+    - Bold / Italic / Underline / Strikethrough options
