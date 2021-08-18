@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { API, graphqlOperation, strike } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { createHeading } from "graphql/mutations";
 import { listHeadings } from "graphql/queries";
 import * as uuid from "uuid";
@@ -10,13 +10,15 @@ export const createHeadingThunk = createAsyncThunk(
     const heading = {
       id: uuid.v1(),
       userId: userId,
-      content: "",
+      content: "TEXT",
       type: "HEADING",
-      x: 0,
-      y: 0,
+      x: Math.round(window.innerWidth / 2),
+      y: Math.round(window.pageYOffset + window.outerHeight / 2),
       width: 200,
       height: 100,
+      color: "#ffffff",
       fontSize: 20,
+      fontFamily: "Roboto",
       rotateDegree: 0,
       bold: false,
       italic: false,
@@ -28,7 +30,7 @@ export const createHeadingThunk = createAsyncThunk(
       graphqlOperation(createHeading, { input: heading })
     );
 
-    return data.createHeading;
+    return [...data.createHeading];
   }
 );
 
@@ -123,6 +125,7 @@ export const headings = createSlice({
       const editHeading = currentHeadingList.filter(
         (item) => item.id === headingId
       );
+
       state.editHeading = editHeading[0];
     },
     updateEditHeading: (state, action) => {
@@ -153,6 +156,9 @@ export const headings = createSlice({
         strikeThrough: strikeThrough,
       };
     },
+    clearEditHeading: (state, action) => {
+      state.editHeading = {};
+    },
   },
 
   extraReducers: {
@@ -166,7 +172,7 @@ export const headings = createSlice({
     [createHeadingThunk.fulfilled.type]: (state, action) => {
       state.headings = {
         status: false,
-        data: action.payload,
+        data: [...state.headings.data, action.payload],
         error: {},
       };
     },
@@ -207,6 +213,7 @@ export const {
   // Edit Heading
   getEditHeading,
   updateEditHeading,
+  clearEditHeading,
 } = headings.actions;
 
 export default headings.reducer;

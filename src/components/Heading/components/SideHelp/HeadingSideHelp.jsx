@@ -21,20 +21,17 @@ import {
 } from "react-icons/bi";
 import ColorPicker from "components/Heading/components/ColorPicker/ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
-import { useLockBodyScroll } from "libs/lockScrollBar";
 import { useOutsideClick } from "@chakra-ui/react";
 import {
   updateHeadingLocally,
   updateEditHeading,
+  clearEditHeading,
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
 import "./sideHelp.scss";
 
 const HeadingSideHelp = ({ setShowEditHeading }) => {
-  // While using HeadingEditSideHelp, scrollbar will be locked to avoid weird behaviour
-  useLockBodyScroll();
-
   const dispatch = useDispatch();
   const { editHeading } = useSelector((state) => state.headings);
   const [color, setColor] = useState(editHeading.color);
@@ -86,6 +83,8 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
         },
       })
     );
+
+    dispatch(clearEditHeading({}));
   };
 
   const updateRotateDegree = (option) => {

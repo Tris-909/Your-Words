@@ -14,6 +14,7 @@ const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { list } = useSelector((state) => state.notes);
   const { headings } = useSelector((state) => state.headings);
+  const { editHeading } = useSelector((state) => state.headings);
   const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const [showEditHeading, setShowEditHeading] = useState(false);
@@ -77,7 +78,7 @@ const Home = () => {
               headingItalic={singleHeading.italic}
               headingUnderline={singleHeading.underline}
               headingStrikethrough={singleHeading.strikeThrough}
-              showEditHeading={showEditHeading}
+              showEditHeading={singleHeading.id === editHeading?.id}
               setShowEditHeading={setShowEditHeading}
             />
           );
