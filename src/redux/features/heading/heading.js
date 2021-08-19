@@ -150,10 +150,10 @@ export const headings = createSlice({
           ? rotateDegree
           : state.editHeading.rotateDegree,
         fontFamily: fontFamily ? fontFamily : state.editHeading.fontFamily,
-        bold: bold,
-        italic: italic,
-        underline: underline,
-        strikeThrough: strikeThrough,
+        bold: bold ? bold : state.editHeading.bold,
+        italic: italic ? italic : state.editHeading.italic,
+        underline: underline ? underline : state.editHeading.underline,
+        strikeThrough: strikeThrough ? strikeThrough : state.editHeading.strikeThrough,
       };
     },
     clearEditHeading: (state, action) => {
