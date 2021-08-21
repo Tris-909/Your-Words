@@ -162,12 +162,10 @@ export const headings = createSlice({
           ? rotateDegree
           : state.editHeading.rotateDegree,
         fontFamily: fontFamily ? fontFamily : state.editHeading.fontFamily,
-        bold: bold ? bold : state.editHeading.bold,
-        italic: italic ? italic : state.editHeading.italic,
-        underline: underline ? underline : state.editHeading.underline,
-        strikeThrough: strikeThrough
-          ? strikeThrough
-          : state.editHeading.strikeThrough,
+        bold: bold,
+        italic: italic,
+        underline: underline,
+        strikeThrough: strikeThrough,
       };
     },
     clearEditHeading: (state, action) => {
@@ -184,7 +182,6 @@ export const headings = createSlice({
       };
     },
     [createHeadingThunk.fulfilled.type]: (state, action) => {
-      console.log("...state.headings.data", current(state));
       state.headings = {
         status: false,
         data: [...state.headings.data, action.payload],

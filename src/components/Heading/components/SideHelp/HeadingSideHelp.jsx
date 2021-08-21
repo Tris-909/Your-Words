@@ -248,7 +248,14 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               color={bold ? "#f7faf9" : "black"}
               onClick={() => {
                 setBold(!bold);
-                dispatch(updateEditHeading({ bold: !bold }));
+                dispatch(
+                  updateEditHeading({
+                    bold: !bold,
+                    italic,
+                    underline,
+                    strikeThrough,
+                  })
+                );
               }}
               className="sidehelp--section--textOptionsButton"
             />
@@ -260,7 +267,14 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
               color={italic ? "#f7faf9" : "black"}
               onClick={() => {
                 setItalic(!italic);
-                dispatch(updateEditHeading({ italic: !italic }));
+                dispatch(
+                  updateEditHeading({
+                    italic: !italic,
+                    bold,
+                    underline,
+                    strikeThrough,
+                  })
+                );
               }}
               className="sidehelp--section--textOptionsButton"
             />
@@ -276,10 +290,24 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
                 if (!underline) {
                   setUnderline(true);
                   setStrikeThrough(false);
-                  dispatch(updateEditHeading({ underline: true }));
+                  dispatch(
+                    updateEditHeading({
+                      underline: true,
+                      strikeThrough: false,
+                      bold,
+                      italic,
+                    })
+                  );
                 } else {
                   setUnderline(false);
-                  dispatch(updateEditHeading({ underline: false }));
+                  dispatch(
+                    updateEditHeading({
+                      underline: false,
+                      strikeThrough: false,
+                      bold,
+                      italic,
+                    })
+                  );
                 }
               }}
               className="sidehelp--section--textOptionsButton"
@@ -294,10 +322,24 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
                 if (!strikeThrough) {
                   setUnderline(false);
                   setStrikeThrough(true);
-                  dispatch(updateEditHeading({ strikeThrough: true }));
+                  dispatch(
+                    updateEditHeading({
+                      strikeThrough: true,
+                      underline: false,
+                      bold,
+                      italic,
+                    })
+                  );
                 } else {
                   setStrikeThrough(false);
-                  dispatch(updateEditHeading({ strikeThrough: false }));
+                  dispatch(
+                    updateEditHeading({
+                      strikeThrough: false,
+                      underline: false,
+                      bold,
+                      italic,
+                    })
+                  );
                 }
               }}
               className="sidehelp--section--textOptionsButton"
