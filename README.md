@@ -1,6 +1,4 @@
-# Amplify
-
-Learning Amplify by going thourgh many tutorials
+# Your Words Application
 
 1. Amplify Docs
 
