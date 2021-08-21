@@ -48,7 +48,7 @@
       left: -83%;
       top: 20%;
       z-index: 10;
-      background: white;
+      background: #f0f0f0;
       border: 2px solid black;
       border-radius: 5px;
       padding: 8px;
@@ -68,12 +68,19 @@
     position: relative;
     height: fit-content;
     padding: 12px;
-    background: black;
-    color: white;
+    background: #f0f0f0;
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 20px;
     cursor: pointer;
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 }

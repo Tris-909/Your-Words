@@ -18,6 +18,8 @@ import {
   BiItalic,
   BiUnderline,
   BiStrikethrough,
+  BiCheck,
+  BiX,
 } from "react-icons/bi";
 import ColorPicker from "components/Heading/components/ColorPicker/ColorPicker";
 import { useSelector, useDispatch } from "react-redux";
@@ -49,6 +51,11 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
     ref: fontFamilyPanelRef,
     handler: () => setShowingFontFamilySelect(false),
   });
+
+  const onCancelEdit = () => {
+    setShowEditHeading(false);
+    dispatch(clearEditHeading({}));
+  };
 
   const onRemoveActiveInput = async () => {
     setShowEditHeading(false);
@@ -298,11 +305,17 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
           </Box>
         </HStack>
       </Box>
-      <Box
-        onClick={() => onRemoveActiveInput()}
-        className="sidehelp--section--saveButton"
-      >
-        Save
+      <Box className="sidehelp--section--saveButton">
+        <Box className="center" onClick={() => onCancelEdit()}>
+          <Icon as={BiX} width="2rem" height="2rem" />
+        </Box>
+        <Box
+          borderLeft="2px solid gray"
+          className="center"
+          onClick={() => onRemoveActiveInput()}
+        >
+          <Icon as={BiCheck} width="2rem" height="2rem" />
+        </Box>
       </Box>
     </Box>
   );
