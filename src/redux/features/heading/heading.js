@@ -117,6 +117,18 @@ export const headings = createSlice({
 
       state.headings.data = currentDataList;
     },
+    deleteHeadingLocally: (state, action) => {
+      const { headingId } = action.payload;
+
+      const currentDataList = state.headings.data;
+
+      const deletePosition = currentDataList.findIndex(
+        (item) => item.id === headingId
+      );
+      currentDataList.splice(deletePosition, 1);
+
+      state.headings.data = currentDataList;
+    },
     // EDIT HEADING
     getEditHeading: (state, action) => {
       const { headingId } = action.payload;
@@ -212,6 +224,7 @@ export const headings = createSlice({
 export const {
   // Heading
   updateHeadingLocally,
+  deleteHeadingLocally,
   // Edit Heading
   getEditHeading,
   updateEditHeading,

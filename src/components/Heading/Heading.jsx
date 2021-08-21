@@ -3,7 +3,10 @@ import { Box, Icon } from "@chakra-ui/react";
 import TexInput from "./components/EditInput/Input";
 import { getEditHeading } from "redux/features/heading/heading";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteHeadingLocally } from "redux/features/heading/heading";
+import { deleteHeading } from "graphql/mutations";
 import { BiPen, BiTrash } from "react-icons/bi";
+import { API, graphqlOperation } from "aws-amplify";
 import "./Heading.scss";
 
 const Heading = ({
@@ -28,9 +31,21 @@ const Heading = ({
   const [input, setInput] = useState(content);
   const { editHeading } = useSelector((state) => state.headings);
 
-  const ActiveInput = () => {
+  const activeInput = () => {
     setShowEditHeading(true);
     dispatch(getEditHeading({ headingId: id }));
+  };
+
+  const deleteHeadingHandler = async () => {
+    await API.graphql(
+      graphqlOperation(deleteHeading, {
+        input: {
+          id: id,
+        },
+      })
+    );
+
+    dispatch(deleteHeadingLocally({ headingId: id }));
   };
 
   return (
@@ -81,12 +96,12 @@ const Heading = ({
           <Box display="flex" flexDirection="column" gridGap="4">
             <Icon
               as={BiPen}
-              onClick={() => ActiveInput()}
+              onClick={() => activeInput()}
               className="actionButton"
             />
             <Icon
               as={BiTrash}
-              onClick={() => ActiveInput()}
+              onClick={() => deleteHeadingHandler()}
               className="actionButton"
             />
           </Box>
