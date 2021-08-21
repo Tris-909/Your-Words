@@ -62,7 +62,6 @@ const Heading = ({
           transform={`translate(${positionX}px, ${positionY}px) rotate(${headingRotateDegree}deg)`}
           fontFamily={headingFontFamily}
           color={headingColor}
-          cursor="move"
           display="flex"
           justifyContent="flex-start"
           alignItems="flex-start"
