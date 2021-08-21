@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { createHeading } from "graphql/mutations";
 import { listHeadings } from "graphql/queries";
@@ -13,7 +13,7 @@ export const createHeadingThunk = createAsyncThunk(
       content: "TEXT",
       type: "HEADING",
       x: Math.round(window.innerWidth / 2),
-      y: Math.round(window.pageYOffset + window.outerHeight / 2),
+      y: Math.round(window.pageYOffset),
       width: 200,
       height: 100,
       color: "#ffffff",
@@ -30,7 +30,7 @@ export const createHeadingThunk = createAsyncThunk(
       graphqlOperation(createHeading, { input: heading })
     );
 
-    return [...data.createHeading];
+    return data.createHeading;
   }
 );
 
@@ -153,7 +153,9 @@ export const headings = createSlice({
         bold: bold ? bold : state.editHeading.bold,
         italic: italic ? italic : state.editHeading.italic,
         underline: underline ? underline : state.editHeading.underline,
-        strikeThrough: strikeThrough ? strikeThrough : state.editHeading.strikeThrough,
+        strikeThrough: strikeThrough
+          ? strikeThrough
+          : state.editHeading.strikeThrough,
       };
     },
     clearEditHeading: (state, action) => {
@@ -165,11 +167,12 @@ export const headings = createSlice({
     [createHeadingThunk.pending.type]: (state, action) => {
       state.headings = {
         status: true,
-        data: [],
+        data: [...state.headings.data],
         error: {},
       };
     },
     [createHeadingThunk.fulfilled.type]: (state, action) => {
+      console.log("...state.headings.data", current(state));
       state.headings = {
         status: false,
         data: [...state.headings.data, action.payload],
@@ -179,7 +182,6 @@ export const headings = createSlice({
     [createHeadingThunk.rejected.type]: (state, action) => {
       state.headings = {
         status: false,
-        data: [],
         error: action.payload,
       };
     },

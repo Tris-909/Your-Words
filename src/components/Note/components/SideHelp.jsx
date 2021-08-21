@@ -20,7 +20,10 @@ import { API, graphqlOperation } from "aws-amplify";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "graphql/mutations";
 import { getUserInfo } from "redux/features/user/userInfo";
-import { createHeadingThunk } from "redux/features/heading/heading";
+import {
+  createHeadingThunk,
+  fetchHeadings,
+} from "redux/features/heading/heading";
 import "./SideHelp.scss";
 
 const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
