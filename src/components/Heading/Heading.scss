@@ -1,11 +1,21 @@
 .hoverEffect {
-  .editButton {
+  .actionButton {
     opacity: 0;
     visibility: hidden;
+
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 50%;
+    background: white;
+    color: black;
+    z-index: 5;
+    cursor: pointer;
+    transition: visibility 0s, opacity 0.25s;
   }
 
   &:hover {
-    .editButton {
+    .actionButton {
       opacity: 1;
       visibility: visible;
     }
