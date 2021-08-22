@@ -33,9 +33,23 @@ type Heading @model {
   rotateDegree: Int
   fontFamily: String
   bold: Boolean
-  italic: Boolean 
+  italic: Boolean
   underline: Boolean
   strikeThrough: Boolean
+}
+
+type Images @model {
+  id: ID!
+  userId: ID!
+  list: [Image]
+  type: String
+  x: Int
+  y: Int
+}
+
+type Image {
+  id: ID!
+  source: String!
 }
 
 type Label {

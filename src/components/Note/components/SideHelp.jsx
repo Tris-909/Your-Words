@@ -13,6 +13,7 @@ import {
   BiMessageSquareMinus,
   BiError,
   BiText,
+  BiImageAdd,
 } from "react-icons/bi";
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
 import { ToastBody } from "components/Toast";
@@ -20,10 +21,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "graphql/mutations";
 import { getUserInfo } from "redux/features/user/userInfo";
-import {
-  createHeadingThunk,
-  fetchHeadings,
-} from "redux/features/heading/heading";
+import { createHeadingThunk } from "redux/features/heading/heading";
 import "./SideHelp.scss";
 
 const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
@@ -117,6 +115,12 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
           onClick={() => addHeading()}
         >
           Add Heading
+        </MenuItem>
+        <MenuItem
+          icon={<BiImageAdd viewBox="0 0 22 22" wdith="1rem" height="1rem" />}
+          // onClick={() => addHeading()}
+        >
+          Add Images
         </MenuItem>
         <MenuItem
           icon={

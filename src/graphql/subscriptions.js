@@ -211,3 +211,54 @@ export const onDeleteHeading = /* GraphQL */ `
     }
   }
 `;
+export const onCreateImages = /* GraphQL */ `
+  subscription OnCreateImages {
+    onCreateImages {
+      id
+      userId
+      list {
+        id
+        source
+      }
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateImages = /* GraphQL */ `
+  subscription OnUpdateImages {
+    onUpdateImages {
+      id
+      userId
+      list {
+        id
+        source
+      }
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteImages = /* GraphQL */ `
+  subscription OnDeleteImages {
+    onDeleteImages {
+      id
+      userId
+      list {
+        id
+        source
+      }
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;

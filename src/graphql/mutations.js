@@ -238,3 +238,63 @@ export const deleteHeading = /* GraphQL */ `
     }
   }
 `;
+export const createImages = /* GraphQL */ `
+  mutation CreateImages(
+    $input: CreateImagesInput!
+    $condition: ModelImagesConditionInput
+  ) {
+    createImages(input: $input, condition: $condition) {
+      id
+      userId
+      list {
+        id
+        source
+      }
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateImages = /* GraphQL */ `
+  mutation UpdateImages(
+    $input: UpdateImagesInput!
+    $condition: ModelImagesConditionInput
+  ) {
+    updateImages(input: $input, condition: $condition) {
+      id
+      userId
+      list {
+        id
+        source
+      }
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteImages = /* GraphQL */ `
+  mutation DeleteImages(
+    $input: DeleteImagesInput!
+    $condition: ModelImagesConditionInput
+  ) {
+    deleteImages(input: $input, condition: $condition) {
+      id
+      userId
+      list {
+        id
+        source
+      }
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;

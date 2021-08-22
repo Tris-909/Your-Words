@@ -151,6 +151,47 @@ export const listHeadings = /* GraphQL */ `
     }
   }
 `;
+export const getImages = /* GraphQL */ `
+  query GetImages($id: ID!) {
+    getImages(id: $id) {
+      id
+      userId
+      list {
+        id
+        source
+      }
+      type
+      x
+      y
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listImages = /* GraphQL */ `
+  query ListImages(
+    $filter: ModelImagesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listImages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        list {
+          id
+          source
+        }
+        type
+        x
+        y
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const byUsername = /* GraphQL */ `
   query ByUsername(
     $username: String
