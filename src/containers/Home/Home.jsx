@@ -8,6 +8,7 @@ import { Auth } from "aws-amplify";
 import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import Heading from "components/Heading/Heading";
+import Images from "components/Images/Images";
 import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideHelp";
 
 const Home = () => {
@@ -83,6 +84,7 @@ const Home = () => {
             />
           );
         })}
+      <Images />
       <SideHelp
         isOpen={isOpen}
         onOpen={onOpen}
