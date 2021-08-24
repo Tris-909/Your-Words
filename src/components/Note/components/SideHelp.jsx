@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Menu,
   MenuButton,
@@ -13,9 +13,9 @@ import {
   BiMessageSquareMinus,
   BiError,
   BiText,
-  BiImageAdd,
 } from "react-icons/bi";
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
+import CreateImagesModal from "components/Images/components/Modal/createImageModal";
 import { ToastBody } from "components/Toast";
 import { API, graphqlOperation } from "aws-amplify";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,6 +27,7 @@ import "./SideHelp.scss";
 const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
   const { userInfo } = useSelector((state) => state.user);
   const { list } = useSelector((state) => state.notes);
+  const [modalState, setModalState] = useState("");
   const dispatch = useDispatch();
   const toast = useToast();
 
@@ -109,6 +110,8 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
           onOpen={onOpen}
           onClose={onClose}
           fetchLists={fetchLists}
+          modalState={modalState}
+          setModalState={setModalState}
         />
         <MenuItem
           icon={<BiText viewBox="0 0 22 22" wdith="1rem" height="1rem" />}
@@ -116,12 +119,13 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
         >
           Add Heading
         </MenuItem>
-        <MenuItem
-          icon={<BiImageAdd viewBox="0 0 22 22" wdith="1rem" height="1rem" />}
-          // onClick={() => addHeading()}
-        >
-          Add Images
-        </MenuItem>
+        <CreateImagesModal
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          modalState={modalState}
+          setModalState={setModalState}
+        />
         <MenuItem
           icon={
             <BiMessageSquareAdd

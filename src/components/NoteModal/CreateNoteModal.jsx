@@ -26,7 +26,14 @@ import { createTodo } from "graphql/mutations";
 import { useSelector } from "react-redux";
 import * as uuid from "uuid";
 
-const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
+const CreateNoteModal = ({
+  isOpen,
+  onOpen,
+  onClose,
+  fetchLists,
+  modalState,
+  setModalState,
+}) => {
   const [header, setHeader] = useState("");
   const [content, setContent] = useState("");
   const [previewImage, setPreviewImage] = useState(null);
@@ -89,79 +96,87 @@ const CreateNoteModal = ({ isOpen, onOpen, onClose, fetchLists }) => {
 
   return (
     <>
-      <MenuItem icon={<BiNote />} onClick={onOpen}>
+      <MenuItem
+        icon={<BiNote />}
+        onClick={() => {
+          onOpen();
+          setModalState("createNote");
+        }}
+      >
         New Note
       </MenuItem>
 
-      <CommonModal
-        isOpen={isOpen}
-        onClose={onClose}
-        customeMaxWContent="60rem"
-        scrollBehavior="outside"
-      >
-        <ModalHeader>Create a new note</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody pb={6}>
-          <form>
-            <FormControl>
-              <FormLabel>Header</FormLabel>
-              <Input
-                value={header}
-                onChange={(e) => setHeader(e.target.value)}
-                placeholder="Note Header"
-              />
-            </FormControl>
+      {modalState === "createNote" && (
+        <CommonModal
+          isOpen={isOpen}
+          onClose={onClose}
+          customeMaxWContent="60rem"
+          scrollBehavior="outside"
+        >
+          <ModalHeader>Create a new note</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <form>
+              <FormControl>
+                <FormLabel>Header</FormLabel>
+                <Input
+                  value={header}
+                  onChange={(e) => setHeader(e.target.value)}
+                  placeholder="Note Header"
+                />
+              </FormControl>
 
-            <FormControl mt={25}>
-              <FormLabel>Content</FormLabel>
-              <BodyNoteEditor content={content} setContent={setContent} />
-            </FormControl>
+              <FormControl mt={25}>
+                <FormLabel>Content</FormLabel>
+                <BodyNoteEditor content={content} setContent={setContent} />
+              </FormControl>
 
-            <FormControl mt={50}>
-              <FormLabel>Image</FormLabel>
-              {previewImage && (
-                <HStack alignItems="flex-start">
-                  <Image
-                    src={previewImage}
-                    alt="previewImage"
-                    border="1px solid #e2e8f0"
-                    width="350px"
-                    height="200px"
-                    marginBottom={3}
-                  />
-                  <Box
-                    cursor="pointer"
-                    marginInlineStart={0}
-                    p={4}
-                    border="1px solid #e2e8f0"
-                    onClick={() => clearFileHandler()}
-                  >
-                    <CloseIcon width="16px" height="16px" />
-                  </Box>
-                </HStack>
-              )}
-              <input
-                onChange={handleFileChange}
-                type="file"
-                id="file"
-                ref={inputRef}
-              />
-            </FormControl>
-          </form>
-        </ModalBody>
+              <FormControl mt={50}>
+                <FormLabel>Image</FormLabel>
+                {previewImage && (
+                  <HStack alignItems="flex-start">
+                    <Image
+                      src={previewImage}
+                      alt="previewImage"
+                      border="1px solid #e2e8f0"
+                      width="350px"
+                      height="200px"
+                      marginBottom={3}
+                    />
+                    <Box
+                      cursor="pointer"
+                      marginInlineStart={0}
+                      p={4}
+                      border="1px solid #e2e8f0"
+                      onClick={() => clearFileHandler()}
+                    >
+                      <CloseIcon width="16px" height="16px" />
+                    </Box>
+                  </HStack>
+                )}
+                <input
+                  onChange={handleFileChange}
+                  type="file"
+                  id="file"
+                  ref={inputRef}
+                />
+              </FormControl>
+            </form>
+          </ModalBody>
 
-        <ModalFooter>
-          <Button
-            bg="black"
-            color="white"
-            mr={3}
-            onClick={(e) => handleSubmit(e)}
-          >
-            Save
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
-        </ModalFooter>
-      </CommonModal>
+          <ModalFooter>
+            <Button
+              bg="black"
+              color="white"
+              mr={3}
+              onClick={(e) => handleSubmit(e)}
+            >
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </CommonModal>
+      )}
     </>
   );
 };
