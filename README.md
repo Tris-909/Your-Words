@@ -15,7 +15,7 @@
 - Checkout to prod env: **amplify env checkout <env-name>**
 - Pushing new changes to prod: **amplify push**
 
-  3. Features 
+3. Features 
   - Notes with :
     - Color Picker
     - Labels 
@@ -31,3 +31,7 @@
     - Different font-family of choices
     - Font-size as will 
     - Bold / Italic / Underline / Strikethrough options
+  
+4. Roadmap 
+  
+**Current Roadmap** : [https://www.notion.so/dfa784e617de4e218f66c148ee616b60?v=f9a55949f1b24b809e2b3e0f2c466fcf](https://www.notion.so/dfa784e617de4e218f66c148ee616b60?v=f9a55949f1b24b809e2b3e0f2c466fcf)
