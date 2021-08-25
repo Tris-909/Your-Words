@@ -17,7 +17,12 @@ import {
   BiRotateLeft,
   BiX,
 } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import ImageUploading from "react-images-uploading";
+import { uploadToS3 } from "libs/awsLib";
+import { API, graphqlOperation } from "aws-amplify";
+import { createImages } from "graphql/mutations";
+import * as uuid from "uuid";
 
 const CreateImagesModal = ({
   isOpen,
@@ -27,6 +32,7 @@ const CreateImagesModal = ({
   setModalState,
 }) => {
   const [images, setImages] = useState([]);
+  const { userInfo } = useSelector((state) => state.user);
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
@@ -36,6 +42,30 @@ const CreateImagesModal = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const imagesForDynamoDB = {
+      id: uuid.v1(),
+      userId: userInfo.data.id,
+      list: [],
+      type: "IMAGE",
+      x: 0,
+      y: 0,
+    };
+
+    for (let i = 0; i < images.length; i++) {
+      const attachment = await uploadToS3(images[i].file);
+
+      const currentImage = {
+        id: uuid.v1(),
+        source: attachment,
+      };
+
+      imagesForDynamoDB.list.push(currentImage);
+    }
+
+    await API.graphql(
+      graphqlOperation(createImages, { input: imagesForDynamoDB })
+    );
   };
 
   return (
@@ -132,6 +162,7 @@ const CreateImagesModal = ({
                       key={index}
                       display="flex"
                       gridGap={2}
+                      mt={4}
                       className="image-item"
                     >
                       <img src={image["data_url"]} alt="" width="500" />
