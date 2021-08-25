@@ -10,7 +10,13 @@ import {
   Box,
   Icon,
 } from "@chakra-ui/react";
-import { BiImageAdd, BiUpload, BiTrash } from "react-icons/bi";
+import {
+  BiImageAdd,
+  BiUpload,
+  BiTrash,
+  BiRotateLeft,
+  BiX,
+} from "react-icons/bi";
 import ImageUploading from "react-images-uploading";
 
 const CreateImagesModal = ({
@@ -122,17 +128,43 @@ const CreateImagesModal = ({
                   </Box>
                   &nbsp;
                   {imageList.map((image, index) => (
-                    <div key={index} className="image-item">
-                      <img src={image["data_url"]} alt="" width="100" />
-                      <div className="image-item__btn-wrapper">
-                        <button onClick={() => onImageUpdate(index)}>
-                          Update
-                        </button>
-                        <button onClick={() => onImageRemove(index)}>
-                          Remove
-                        </button>
-                      </div>
-                    </div>
+                    <Box
+                      key={index}
+                      display="flex"
+                      gridGap={2}
+                      className="image-item"
+                    >
+                      <img src={image["data_url"]} alt="" width="500" />
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        gridGap={2}
+                        className="image-item__btn-wrapper"
+                      >
+                        <Icon
+                          as={BiRotateLeft}
+                          onClick={() => onImageUpdate(index)}
+                          bg="#2c3333"
+                          borderRadius="full"
+                          color="white"
+                          width="36px"
+                          height="36px"
+                          cursor="pointer"
+                          p={2}
+                        />
+                        <Icon
+                          as={BiX}
+                          onClick={() => onImageRemove(index)}
+                          bg="#2c3333"
+                          borderRadius="full"
+                          color="white"
+                          width="36px"
+                          height="36px"
+                          cursor="pointer"
+                          p={2}
+                        />
+                      </Box>
+                    </Box>
                   ))}
                 </div>
               )}
