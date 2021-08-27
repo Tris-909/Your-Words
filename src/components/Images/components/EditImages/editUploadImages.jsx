@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import ImageUploading from "react-images-uploading";
 import { Box, Icon, Image, Button } from "@chakra-ui/react";
 import { BiRightArrowAlt } from "react-icons/bi";
+import { deleteSingleImageInImagesLocally } from "redux/features/images/images";
+import { useDispatch } from "react-redux";
 
-const PreviewEditImage = () => {
+const PreviewEditImage = ({ parentId, id }) => {
   const [images, setImages] = useState([]);
+  const dispatch = useDispatch();
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
@@ -40,7 +43,14 @@ const PreviewEditImage = () => {
               Update
             </Button>
             <Button
-              onClick={() => onImageRemove(0)}
+              onClick={() => {
+                dispatch(
+                  deleteSingleImageInImagesLocally({
+                    imagesId: parentId,
+                    id: id,
+                  })
+                );
+              }}
               bg="black"
               color="white"
               _hover={{

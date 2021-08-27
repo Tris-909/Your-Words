@@ -25,6 +25,11 @@ const initialState = {
     status: false,
     error: {},
   },
+  editImage: {
+    data: {},
+    status: false,
+    error: {},
+  },
 };
 
 export const images = createSlice({
@@ -64,6 +69,29 @@ export const images = createSlice({
 
       state.images.data = currentDataList;
     },
+    deleteSingleImageInImagesLocally: (state, action) => {
+      const { id, imagesId } = action.payload;
+      const currentDataList = state.images.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === imagesId) {
+          const deletePosition = item.list.findIndex((item) => item.id === id);
+
+          item.list.splice(deletePosition, 1);
+        }
+      });
+
+      state.images.data = currentDataList;
+    },
+    // Edit Image
+    loadEditImage: (state, action) => {
+      const { id } = action.payload;
+      const currentDataList = state.images.data;
+
+      const selectedImage = currentDataList.filter((item) => item.id === id);
+
+      state.editImage.data = selectedImage[0];
+    },
   },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
@@ -90,7 +118,13 @@ export const images = createSlice({
   },
 });
 
-export const { createImagesLocally, updateImagesLocally, deleteImagesLocally } =
-  images.actions;
+export const {
+  createImagesLocally,
+  updateImagesLocally,
+  deleteImagesLocally,
+  deleteSingleImageInImagesLocally,
+  // Edit Image
+  loadEditImage,
+} = images.actions;
 
 export default images.reducer;
