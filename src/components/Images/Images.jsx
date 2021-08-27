@@ -10,7 +10,7 @@ const ImageContainer = ({ src }) => {
   return <Image src={src} width="400px" height="400px" borderRadius="0px" />;
 };
 
-const Images = () => {
+const Images = ({ image }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [position, setPosition] = useState({
     x: 0,
@@ -79,13 +79,16 @@ const Images = () => {
           infiniteLoop={false}
           width="400px"
         >
-          <ImageContainer src="https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg" />
-          <ImageContainer src="https://www.maxpixel.net/static/photo/1x/Universe-Abstract-Galaxy-Gradient-Space-Background-5629007.jpg" />
-          <ImageContainer src="https://static.scientificamerican.com/sciam/cache/file/8B819851-2DAD-4B3D-AF5270EACE5A5361_source.jpg?w=590&h=800&4F27CC97-4819-4142-B97585EF39DC1761" />
-          <ImageContainer src="https://www.universetoday.com/wp-content/uploads/2018/08/cropped-delta_iv_heavy_streak_composite_edits.jpg" />
-          <ImageContainer src="https://www.travelmanagers.com.au/wp-content/uploads/2012/08/AdobeStock_254529936_Railroad-to-Denali-National-Park-Alaska_750x500.jpg" />
+          {image.list.map((singleImage) => {
+            return (
+              <ImageContainer
+                src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/ap-southeast-2%3A6f82b9fd-9b91-471a-850b-31f48b226aa7/${singleImage.source}`}
+                key={singleImage.id}
+              />
+            );
+          })}
         </Carousel>
-        {currentImageIndex !== 4 && (
+        {currentImageIndex !== image.list.length - 1 && (
           <Icon
             as={BiCaretRight}
             onClick={() => {

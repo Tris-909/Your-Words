@@ -3,6 +3,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchListNotes } from "redux/features/notes/note";
 import { fetchHeadings } from "redux/features/heading/heading";
+import { fetchImages } from "redux/features/images/images";
 import { getUserInfo, getAuth } from "redux/features/user/userInfo";
 import { Auth } from "aws-amplify";
 import Note from "components/Note/Note";
@@ -16,6 +17,7 @@ const Home = () => {
   const { list } = useSelector((state) => state.notes);
   const { headings } = useSelector((state) => state.headings);
   const { editHeading } = useSelector((state) => state.headings);
+  const { images } = useSelector((state) => state.images);
   const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const [showEditHeading, setShowEditHeading] = useState(false);
@@ -45,6 +47,7 @@ const Home = () => {
     if (userInfo.data) {
       dispatch(fetchListNotes(userInfo.data.id));
       dispatch(fetchHeadings(userInfo.data.id));
+      dispatch(fetchImages(userInfo.data.id));
     }
   };
 
@@ -84,7 +87,10 @@ const Home = () => {
             />
           );
         })}
-      <Images />
+      {images.data &&
+        images.data.map((image) => {
+          return <Images key={image.id} image={image} />;
+        })}
       <SideHelp
         isOpen={isOpen}
         onOpen={onOpen}
