@@ -7,6 +7,7 @@ import { updateImages } from "graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateImagesLocally } from "redux/features/images/images";
 import { useDispatch } from "react-redux";
+import IconButton from "components/Buttons/IconButton/IconButton";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Images.scss";
 
@@ -55,7 +56,7 @@ const Images = ({ image }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        className="gallery-carousel"
+        className="gallery-carousel hoverEffect"
       >
         {currentImageIndex !== 0 && (
           <Icon
@@ -110,6 +111,22 @@ const Images = ({ image }) => {
             top="50%"
           />
         )}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-end"
+          width="115%"
+          gridGap={4}
+          position="absolute"
+          top="0%"
+          right="-15%"
+          zIndex="-1"
+          cursor="initial"
+          className="hoverEffect"
+        >
+          <IconButton icon={BiImages} />
+          <IconButton icon={BiTrash} />
+        </Box>
       </Box>
     </Rnd>
   );
