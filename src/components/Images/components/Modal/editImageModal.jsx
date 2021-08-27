@@ -14,6 +14,7 @@ import { BiUpload, BiTrash, BiRotateLeft, BiX, BiImages } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 import {
   createImagesLocally,
+  deleteSingleImageInImagesLocally,
   loadEditImage,
 } from "redux/features/images/images";
 import { uploadToS3 } from "libs/awsLib";
@@ -25,6 +26,7 @@ import * as uuid from "uuid";
 
 const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   const { userInfo } = useSelector((state) => state.user);
+  const { editImage } = useSelector((state) => state.images);
   const dispatch = useDispatch();
 
   const handleSubmit = async () => {};
@@ -48,16 +50,17 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <Box display="flex" flexDirection="column" gridGap={2}>
-            {image.list.map((currentImage) => (
-              <Box display="flex">
-                <Image
-                  key={currentImage.id}
-                  width="400px"
-                  src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/ap-southeast-2%3A6f82b9fd-9b91-471a-850b-31f48b226aa7/${currentImage.source}`}
-                />
-                <PreviewEditImage parentId={image.id} id={currentImage.id} />
-              </Box>
-            ))}
+            {editImage.data.list &&
+              editImage.data.list.map((currentImage) => (
+                <Box display="flex">
+                  <Image
+                    key={currentImage.id}
+                    width="400px"
+                    src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/ap-southeast-2%3A6f82b9fd-9b91-471a-850b-31f48b226aa7/${currentImage.source}`}
+                  />
+                  <PreviewEditImage id={currentImage.id} />
+                </Box>
+              ))}
           </Box>
         </ModalBody>
         <ModalFooter>

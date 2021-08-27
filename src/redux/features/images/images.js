@@ -92,6 +92,17 @@ export const images = createSlice({
 
       state.editImage.data = selectedImage[0];
     },
+    updateEditImage: (state, action) => {
+      const { imageID } = action.payload;
+      const currentEditImage = state.editImage.data;
+
+      const deletePosition = currentEditImage.list.map(
+        (item) => item.id === imageID
+      );
+      currentEditImage.list.splice(deletePosition, 1);
+
+      state.editImage.data = currentEditImage;
+    },
   },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
@@ -125,6 +136,7 @@ export const {
   deleteSingleImageInImagesLocally,
   // Edit Image
   loadEditImage,
+  updateEditImage,
 } = images.actions;
 
 export default images.reducer;
