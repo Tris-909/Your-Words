@@ -30,7 +30,13 @@ const initialState = {
 export const images = createSlice({
   name: "images",
   initialState,
-  reducers: {},
+  reducers: {
+    createImagesLocally: (state, action) => {
+      const { createdImages } = action.payload;
+
+      state.images.data = [...state.images.data, createdImages];
+    },
+  },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
       state.images = {
@@ -56,6 +62,6 @@ export const images = createSlice({
   },
 });
 
-export const {} = images.actions;
+export const { createImagesLocally } = images.actions;
 
 export default images.reducer;
