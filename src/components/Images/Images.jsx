@@ -3,11 +3,15 @@ import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
 import { Icon, Box, Image } from "@chakra-ui/react";
 import { BiCaretLeft, BiCaretRight, BiImages, BiTrash } from "react-icons/bi";
-import { updateImages } from "graphql/mutations";
+import { updateImages, deleteImages } from "graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
-import { updateImagesLocally } from "redux/features/images/images";
+import {
+  updateImagesLocally,
+  deleteImagesLocally,
+} from "redux/features/images/images";
 import { useDispatch } from "react-redux";
 import IconButton from "components/Buttons/IconButton/IconButton";
+import { deleteFromS3 } from "libs/awsLib";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Images.scss";
 
@@ -22,6 +26,22 @@ const Images = ({ image }) => {
     x: image.x,
     y: image.y,
   });
+
+  const deleteImagesHandler = async () => {
+    await API.graphql(
+      graphqlOperation(deleteImages, {
+        input: {
+          id: image.id,
+        },
+      })
+    );
+
+    for (let i = 0; i < image.list.length; i++) {
+      await deleteFromS3(image.list[i].source);
+    }
+
+    dispatch(deleteImagesLocally({ id: image.id }));
+  };
 
   return (
     <Rnd
@@ -125,7 +145,7 @@ const Images = ({ image }) => {
           className="hoverEffect"
         >
           <IconButton icon={BiImages} />
-          <IconButton icon={BiTrash} />
+          <IconButton icon={BiTrash} onClick={() => deleteImagesHandler()} />
         </Box>
       </Box>
     </Rnd>

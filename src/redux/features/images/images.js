@@ -53,6 +53,17 @@ export const images = createSlice({
 
       state.images.data = currentDataList;
     },
+    deleteImagesLocally: (state, action) => {
+      const { id } = action.payload;
+      const currentDataList = state.images.data;
+
+      const deletePosition = currentDataList.findIndex(
+        (item) => item.id === id
+      );
+      currentDataList.splice(deletePosition, 1);
+
+      state.images.data = currentDataList;
+    },
   },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
@@ -79,6 +90,7 @@ export const images = createSlice({
   },
 });
 
-export const { createImagesLocally, updateImagesLocally } = images.actions;
+export const { createImagesLocally, updateImagesLocally, deleteImagesLocally } =
+  images.actions;
 
 export default images.reducer;
