@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { createHeading } from "graphql/mutations";
 import { listHeadings } from "graphql/queries";

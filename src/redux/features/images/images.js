@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { listImages } from "graphql/queries";
 
@@ -36,6 +36,23 @@ export const images = createSlice({
 
       state.images.data = [...state.images.data, createdImages];
     },
+    updateImagesLocally: (state, action) => {
+      const { id, newX, newY } = action.payload;
+
+      const currentDataList = state.images.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === id) {
+          currentDataList[index] = {
+            ...currentDataList[index],
+            x: newX ? newX : currentDataList[index].x,
+            y: newY ? newY : currentDataList[index].y,
+          };
+        }
+      });
+
+      state.images.data = currentDataList;
+    },
   },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
@@ -62,6 +79,6 @@ export const images = createSlice({
   },
 });
 
-export const { createImagesLocally } = images.actions;
+export const { createImagesLocally, updateImagesLocally } = images.actions;
 
 export default images.reducer;

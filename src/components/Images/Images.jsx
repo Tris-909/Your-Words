@@ -3,6 +3,10 @@ import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
 import { Icon, Box, Image } from "@chakra-ui/react";
 import { BiCaretLeft, BiCaretRight } from "react-icons/bi";
+import { updateImages } from "graphql/mutations";
+import { API, graphqlOperation } from "aws-amplify";
+import { updateImagesLocally } from "redux/features/images/images";
+import { useDispatch } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Images.scss";
 
@@ -11,10 +15,11 @@ const ImageContainer = ({ src }) => {
 };
 
 const Images = ({ image }) => {
+  const dispatch = useDispatch();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [position, setPosition] = useState({
-    x: 0,
-    y: 0,
+    x: image.x,
+    y: image.y,
   });
 
   return (
@@ -27,17 +32,17 @@ const Images = ({ image }) => {
           y: d.y,
         });
 
-        //   await API.graphql(
-        //     graphqlOperation(updateHeading, {
-        //       input: {
-        //         id: headingId,
-        //         x: d.x,
-        //         y: d.y,
-        //       },
-        //     })
-        //   );
+        await API.graphql(
+          graphqlOperation(updateImages, {
+            input: {
+              id: image.id,
+              x: d.x,
+              y: d.y,
+            },
+          })
+        );
 
-        //   dispatch(updateHeadingLocally({ id: headingId, newY: d.y, newX: d.x }));
+        dispatch(updateImagesLocally({ id: image.id, newY: d.y, newX: d.x }));
       }}
     >
       <Box
