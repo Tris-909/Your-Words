@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
 import { Icon, Box, Image } from "@chakra-ui/react";
-import { BiCaretLeft, BiCaretRight, BiImages, BiTrash } from "react-icons/bi";
+import { BiCaretLeft, BiCaretRight, BiTrash } from "react-icons/bi";
 import { updateImages, deleteImages } from "graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import {
@@ -12,6 +12,8 @@ import {
 import { useDispatch } from "react-redux";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import { deleteFromS3 } from "libs/awsLib";
+import EditImagesModal from "components/Images/components/Modal/editImageModal";
+import { useDisclosure } from "@chakra-ui/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./Images.scss";
 
@@ -21,6 +23,7 @@ const ImageContainer = ({ src }) => {
 
 const Images = ({ image }) => {
   const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [position, setPosition] = useState({
     x: image.x,
@@ -144,7 +147,12 @@ const Images = ({ image }) => {
           cursor="initial"
           className="hoverEffect"
         >
-          <IconButton icon={BiImages} />
+          <EditImagesModal
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onClose={onClose}
+            image={image}
+          />
           <IconButton icon={BiTrash} onClick={() => deleteImagesHandler()} />
         </Box>
       </Box>
