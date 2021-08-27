@@ -1,5 +1,5 @@
 .hoverEffect {
-  .actionButton {
+  .iconButton {
     opacity: 0;
     visibility: hidden;
 
@@ -15,7 +15,7 @@
   }
 
   &:hover {
-    .actionButton {
+    .iconButton {
       opacity: 1;
       visibility: visible;
     }

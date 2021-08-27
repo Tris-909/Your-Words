@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Icon } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import TexInput from "./components/EditInput/Input";
 import { getEditHeading } from "redux/features/heading/heading";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { deleteHeadingLocally } from "redux/features/heading/heading";
 import { deleteHeading } from "graphql/mutations";
 import { BiPen, BiTrash } from "react-icons/bi";
 import { API, graphqlOperation } from "aws-amplify";
-import "./Heading.scss";
+import IconButton from "components/Buttons/IconButton/IconButton";
 
 const Heading = ({
   id,
@@ -94,16 +94,8 @@ const Heading = ({
         >
           {input}
           <Box display="flex" flexDirection="column" gridGap="4">
-            <Icon
-              as={BiPen}
-              onClick={() => activeInput()}
-              className="actionButton"
-            />
-            <Icon
-              as={BiTrash}
-              onClick={() => deleteHeadingHandler()}
-              className="actionButton"
-            />
+            <IconButton icon={BiPen} onClick={() => activeInput()} />
+            <IconButton icon={BiTrash} onClick={() => deleteHeadingHandler()} />
           </Box>
         </Box>
       )}

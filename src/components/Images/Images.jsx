@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
 import { Icon, Box, Image } from "@chakra-ui/react";
-import { BiCaretLeft, BiCaretRight } from "react-icons/bi";
+import { BiCaretLeft, BiCaretRight, BiImages, BiTrash } from "react-icons/bi";
 import { updateImages } from "graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateImagesLocally } from "redux/features/images/images";
