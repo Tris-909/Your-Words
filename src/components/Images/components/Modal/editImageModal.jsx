@@ -15,11 +15,13 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   createImagesLocally,
   deleteSingleImageInImagesLocally,
+  syncEditImageWithImages,
   loadEditImage,
+  updateEditImageListItem,
 } from "redux/features/images/images";
-import { uploadToS3 } from "libs/awsLib";
+import { uploadToS3, deleteFromS3 } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
-import { createImages } from "graphql/mutations";
+import { createImages, updateImages } from "graphql/mutations";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import PreviewEditImage from "components/Images/components/EditImages/editUploadImages";
 import * as uuid from "uuid";
@@ -35,22 +37,35 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   }, [previewImages]);
 
   const handleSubmit = async () => {
-    console.log("SUBMIT", previewImages);
-    // previewImages [] : NEW IMAGE
-    // editImage : OLD IMAGE
+    for (let i = 0; i < previewImages.length; i++) {
+      for (let u = 0; u < editImage.data.list.length; u++) {
+        if (previewImages[i].belongTo === editImage.data.list[u].id) {
+          const attachment = await uploadToS3(
+            previewImages[i].imageList[0].file
+          );
+          dispatch(
+            updateEditImageListItem({
+              imageID: previewImages[i].belongTo,
+              newSource: attachment,
+            })
+          );
+          await deleteFromS3(editImage.data.list[u].source);
+        }
+      }
+    }
 
-    // Looping through current EditImage.data.list to see if any of these previewImages.belongTo ===  EditImage.data.list[i].id
-    // If yes, then pushing this previewImage to S3 and change the EditImage.data.list[i].source
-    // to the new attachment coming back from S3
+    await API.graphql(
+      graphqlOperation(updateImages, {
+        input: {
+          id: image.id,
+          list: editImage.data.list,
+        },
+      })
+    );
 
-    // Submit EditImage to dynamoDB
-
-    // compare current EditImage with the main IMAGE in images to see what item from list get removed to delete it from S3
-    // update the image with changed list for redux/images so it can reflect newest changes
-
-    // delete the old one in S3
-
-    // Close Modal
+    dispatch(syncEditImageWithImages({ id: image.id }));
+    setPreviewImages([]);
+    onClose();
   };
 
   return (

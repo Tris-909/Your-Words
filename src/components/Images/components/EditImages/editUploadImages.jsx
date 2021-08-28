@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import ImageUploading from "react-images-uploading";
-import { Box, Icon, Image, Button } from "@chakra-ui/react";
-import { BiRightArrowAlt } from "react-icons/bi";
-import {
-  deleteSingleImageInImagesLocally,
-  updateEditImage,
-} from "redux/features/images/images";
+import { Box, Image, Button } from "@chakra-ui/react";
+import { updateEditImage } from "redux/features/images/images";
 import { useDispatch } from "react-redux";
 
 const PreviewEditImage = ({ id, previewImages, setPreviewImages }) => {

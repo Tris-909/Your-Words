@@ -83,6 +83,18 @@ export const images = createSlice({
 
       state.images.data = currentDataList;
     },
+    syncEditImageWithImages: (state, action) => {
+      const { id } = action.payload;
+      const currentDataList = state.images.data;
+
+      for (let i = 0; i < currentDataList.length; i++) {
+        if (currentDataList[i].id === id) {
+          currentDataList[i] = state.editImage.data;
+        }
+      }
+
+      state.images.data = currentDataList;
+    },
     // Edit Image
     loadEditImage: (state, action) => {
       const { id } = action.payload;
@@ -100,6 +112,18 @@ export const images = createSlice({
         (item) => item.id === imageID
       );
       currentEditImage.list.splice(deletePosition, 1);
+
+      state.editImage.data = currentEditImage;
+    },
+    updateEditImageListItem: (state, action) => {
+      const { imageID, newSource } = action.payload;
+      const currentEditImage = state.editImage.data;
+
+      for (let i = 0; i < currentEditImage.list.length; i++) {
+        if (currentEditImage.list[i].id === imageID) {
+          currentEditImage.list[i].source = newSource;
+        }
+      }
 
       state.editImage.data = currentEditImage;
     },
@@ -134,9 +158,11 @@ export const {
   updateImagesLocally,
   deleteImagesLocally,
   deleteSingleImageInImagesLocally,
+  syncEditImageWithImages,
   // Edit Image
   loadEditImage,
   updateEditImage,
+  updateEditImageListItem,
 } = images.actions;
 
 export default images.reducer;
