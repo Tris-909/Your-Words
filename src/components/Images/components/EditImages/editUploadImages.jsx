@@ -8,14 +8,33 @@ import {
 } from "redux/features/images/images";
 import { useDispatch } from "react-redux";
 
-const PreviewEditImage = ({ id }) => {
+const PreviewEditImage = ({ id, previewImages, setPreviewImages }) => {
   const [images, setImages] = useState([]);
   const dispatch = useDispatch();
 
   const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
+    if (imageList.length > 0) {
+      setPreviewImages([...previewImages, { imageList, belongTo: id }]);
+    }
+  };
+
+  const deleteImageHandler = () => {
+    dispatch(
+      updateEditImage({
+        imageID: id,
+      })
+    );
+    onChangePreviewImagesHandler();
+  };
+
+  const onChangePreviewImagesHandler = () => {
+    const deletePosition = previewImages.findIndex(
+      (item) => item.belongTo === id
+    );
+    const currentPreviewImages = Array.from(previewImages);
+    currentPreviewImages.splice(deletePosition, 1);
+    setPreviewImages(currentPreviewImages);
   };
 
   return (
@@ -29,7 +48,6 @@ const PreviewEditImage = ({ id }) => {
         isDragging,
         dragProps,
       }) => (
-        // write your building UI
         <Box display="flex" ml={4} className="upload__image-wrapper">
           <Box display="flex" flexDirection="column">
             <Button
@@ -47,11 +65,8 @@ const PreviewEditImage = ({ id }) => {
             </Button>
             <Button
               onClick={() => {
-                dispatch(
-                  updateEditImage({
-                    imageID: id,
-                  })
-                );
+                deleteImageHandler();
+                onImageRemove();
               }}
               bg="black"
               color="white"
@@ -66,7 +81,10 @@ const PreviewEditImage = ({ id }) => {
             </Button>
             {images.length > 0 && (
               <Button
-                onClick={() => onImageRemove(0)}
+                onClick={() => {
+                  onImageRemove(0);
+                  onChangePreviewImagesHandler();
+                }}
                 bg="black"
                 color="white"
                 _hover={{
