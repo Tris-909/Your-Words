@@ -153,7 +153,7 @@ const Images = ({ image }) => {
             onClose={onClose}
             image={image}
           />
-          <IconButton icon={BiTrash} onClick={() => deleteImagesHandler()} />
+          <IconButton as={BiTrash} onClick={() => deleteImagesHandler()} />
         </Box>
       </Box>
     </Rnd>

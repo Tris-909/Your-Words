@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CommonModal from "components/NoteModal/CommonModal";
 import {
   ModalHeader,
@@ -7,34 +7,26 @@ import {
   ModalFooter,
   Button,
   Box,
-  Icon,
   Image,
 } from "@chakra-ui/react";
-import { BiUpload, BiTrash, BiRotateLeft, BiX, BiImages } from "react-icons/bi";
+import { BiImages } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  createImagesLocally,
-  deleteSingleImageInImagesLocally,
   syncEditImageWithImages,
   loadEditImage,
   updateEditImageListItem,
 } from "redux/features/images/images";
 import { uploadToS3, deleteFromS3 } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
-import { createImages, updateImages } from "graphql/mutations";
+import { updateImages } from "graphql/mutations";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import PreviewEditImage from "components/Images/components/EditImages/editUploadImages";
-import * as uuid from "uuid";
 
 const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   const { userInfo } = useSelector((state) => state.user);
   const { editImage } = useSelector((state) => state.images);
   const dispatch = useDispatch();
   const [previewImages, setPreviewImages] = useState([]);
-
-  useEffect(() => {
-    console.log("previewImages", previewImages);
-  }, [previewImages]);
 
   const handleSubmit = async () => {
     for (let i = 0; i < previewImages.length; i++) {
@@ -71,7 +63,7 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   return (
     <>
       <IconButton
-        icon={BiImages}
+        as={BiImages}
         onClick={() => {
           dispatch(loadEditImage({ id: image.id }));
           onOpen();

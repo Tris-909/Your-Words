@@ -94,8 +94,8 @@ const Heading = ({
         >
           {input}
           <Box display="flex" flexDirection="column" gridGap="4">
-            <IconButton icon={BiPen} onClick={() => activeInput()} />
-            <IconButton icon={BiTrash} onClick={() => deleteHeadingHandler()} />
+            <IconButton as={BiPen} onClick={() => activeInput()} />
+            <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
           </Box>
         </Box>
       )}
