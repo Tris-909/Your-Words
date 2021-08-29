@@ -21,6 +21,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { updateImages } from "graphql/mutations";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import PreviewEditImage from "components/Images/components/EditImages/editUploadImages";
+import AddMoreEditImages from "components/Images/components/EditImages/editAddImages";
 
 const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   const { userInfo } = useSelector((state) => state.user);
@@ -95,6 +96,9 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
                 </Box>
               ))}
           </Box>
+          {editImage.data.list && (
+            <AddMoreEditImages editImage={editImage.data} />
+          )}
         </ModalBody>
         <ModalFooter>
           <Button
