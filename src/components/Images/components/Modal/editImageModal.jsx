@@ -36,45 +36,49 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   const handleSubmit = async () => {
     setIsLoading(true);
 
-    for (let i = 0; i < previewImages.length; i++) {
-      for (let u = 0; u < editImage.data.list.length; u++) {
-        if (previewImages[i].belongTo === editImage.data.list[u].id) {
-          const attachment = await uploadToS3(
-            previewImages[i].imageList[0].file
-          );
-          dispatch(
-            updateEditImageListItem({
-              imageID: previewImages[i].belongTo,
-              newSource: attachment,
-            })
-          );
-          await deleteFromS3(editImage.data.list[u].source);
+    if (previewImages.length >= 1) {
+      for (let i = 0; i < previewImages.length; i++) {
+        for (let u = 0; u < editImage.data.list.length; u++) {
+          if (previewImages[i].belongTo === editImage.data.list[u].id) {
+            const attachment = await uploadToS3(
+              previewImages[i].imageList[0].file
+            );
+            dispatch(
+              updateEditImageListItem({
+                imageID: previewImages[i].belongTo,
+                newSource: attachment,
+              })
+            );
+            await deleteFromS3(editImage.data.list[u].source);
+          }
         }
       }
     }
 
-    let newImagesList = [];
-    for (let i = 0; i < addImages.length; i++) {
-      const attachment = await uploadToS3(addImages[i].file);
+    if (addImages.length >= 1) {
+      let newImagesList = [];
+      for (let i = 0; i < addImages.length; i++) {
+        const attachment = await uploadToS3(addImages[i].file);
 
-      const newItem = {
-        id: uuid.v1(),
-        source: attachment,
-      };
+        const newItem = {
+          id: uuid.v1(),
+          source: attachment,
+        };
 
-      newImagesList.push(newItem);
+        newImagesList.push(newItem);
+      }
+
+      dispatch(addImagesforEditImage({ newImagesList: newImagesList }));
+
+      await API.graphql(
+        graphqlOperation(updateImages, {
+          input: {
+            id: image.id,
+            list: [...editImage.data.list, ...newImagesList],
+          },
+        })
+      );
     }
-
-    dispatch(addImagesforEditImage({ newImagesList: newImagesList }));
-
-    await API.graphql(
-      graphqlOperation(updateImages, {
-        input: {
-          id: image.id,
-          list: [...editImage.data.list, ...newImagesList],
-        },
-      })
-    );
 
     dispatch(syncEditImageWithImages({ id: image.id }));
     setPreviewImages([]);
