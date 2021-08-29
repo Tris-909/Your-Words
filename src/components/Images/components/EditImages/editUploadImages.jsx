@@ -62,7 +62,6 @@ const PreviewEditImage = ({ id, previewImages, setPreviewImages }) => {
             <Button
               onClick={() => {
                 deleteImageHandler();
-                onImageRemove();
               }}
               bg="black"
               color="white"

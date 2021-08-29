@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { listImages } from "graphql/queries";
 
@@ -108,9 +108,10 @@ export const images = createSlice({
       const { imageID } = action.payload;
       const currentEditImage = state.editImage.data;
 
-      const deletePosition = currentEditImage.list.map(
+      const deletePosition = currentEditImage.list.findIndex(
         (item) => item.id === imageID
       );
+
       currentEditImage.list.splice(deletePosition, 1);
 
       state.editImage.data = currentEditImage;

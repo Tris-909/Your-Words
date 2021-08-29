@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CommonModal from "components/NoteModal/CommonModal";
 import {
   ModalHeader,
@@ -32,10 +32,6 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   const [previewImages, setPreviewImages] = useState([]);
   const [addImages, setAddImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    console.log("addImages", addImages);
-  }, [addImages]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
