@@ -80,6 +80,15 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
       );
     }
 
+    await API.graphql(
+      graphqlOperation(updateImages, {
+        input: {
+          id: image.id,
+          list: [...editImage.data.list],
+        },
+      })
+    );
+
     dispatch(syncEditImageWithImages({ id: image.id }));
     setPreviewImages([]);
     setAddImages([]);
@@ -117,6 +126,7 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
                   />
                   <PreviewEditImage
                     id={currentImage.id}
+                    editImageList={editImage.data.list}
                     previewImages={previewImages}
                     setPreviewImages={setPreviewImages}
                   />

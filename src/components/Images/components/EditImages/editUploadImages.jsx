@@ -4,7 +4,12 @@ import { Box, Image, Button } from "@chakra-ui/react";
 import { updateEditImage } from "redux/features/images/images";
 import { useDispatch } from "react-redux";
 
-const PreviewEditImage = ({ id, previewImages, setPreviewImages }) => {
+const PreviewEditImage = ({
+  id,
+  editImageList,
+  previewImages,
+  setPreviewImages,
+}) => {
   const [images, setImages] = useState([]);
   const dispatch = useDispatch();
 
@@ -68,6 +73,7 @@ const PreviewEditImage = ({ id, previewImages, setPreviewImages }) => {
               _hover={{
                 bg: "#363533",
               }}
+              disabled={editImageList && editImageList.length === 1}
               mt={4}
               mr={4}
               {...dragProps}
