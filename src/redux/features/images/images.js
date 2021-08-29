@@ -127,6 +127,13 @@ export const images = createSlice({
 
       state.editImage.data = currentEditImage;
     },
+    addImagesforEditImage: (state, action) => {
+      const { newImagesList } = action.payload;
+      const currentEditImage = state.editImage.data;
+
+      currentEditImage.list = [...currentEditImage.list, ...newImagesList];
+      state.editImage.data = currentEditImage;
+    },
   },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
@@ -163,6 +170,7 @@ export const {
   loadEditImage,
   updateEditImage,
   updateEditImageListItem,
+  addImagesforEditImage,
 } = images.actions;
 
 export default images.reducer;

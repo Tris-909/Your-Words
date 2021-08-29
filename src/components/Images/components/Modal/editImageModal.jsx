@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CommonModal from "components/NoteModal/CommonModal";
 import {
   ModalHeader,
@@ -15,6 +15,7 @@ import {
   syncEditImageWithImages,
   loadEditImage,
   updateEditImageListItem,
+  addImagesforEditImage,
 } from "redux/features/images/images";
 import { uploadToS3, deleteFromS3 } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
@@ -22,14 +23,23 @@ import { updateImages } from "graphql/mutations";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import PreviewEditImage from "components/Images/components/EditImages/editUploadImages";
 import AddMoreEditImages from "components/Images/components/EditImages/editAddImages";
+import * as uuid from "uuid";
 
 const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
   const { userInfo } = useSelector((state) => state.user);
   const { editImage } = useSelector((state) => state.images);
   const dispatch = useDispatch();
   const [previewImages, setPreviewImages] = useState([]);
+  const [addImages, setAddImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    console.log("addImages", addImages);
+  }, [addImages]);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
+
     for (let i = 0; i < previewImages.length; i++) {
       for (let u = 0; u < editImage.data.list.length; u++) {
         if (previewImages[i].belongTo === editImage.data.list[u].id) {
@@ -47,17 +57,34 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
       }
     }
 
+    let newImagesList = [];
+    for (let i = 0; i < addImages.length; i++) {
+      const attachment = await uploadToS3(addImages[i].file);
+
+      const newItem = {
+        id: uuid.v1(),
+        source: attachment,
+      };
+
+      newImagesList.push(newItem);
+    }
+
+    dispatch(addImagesforEditImage({ newImagesList: newImagesList }));
+
     await API.graphql(
       graphqlOperation(updateImages, {
         input: {
           id: image.id,
-          list: editImage.data.list,
+          list: [...editImage.data.list, ...newImagesList],
         },
       })
     );
 
     dispatch(syncEditImageWithImages({ id: image.id }));
     setPreviewImages([]);
+    setAddImages([]);
+
+    setIsLoading(false);
     onClose();
   };
 
@@ -97,13 +124,21 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
               ))}
           </Box>
           {editImage.data.list && (
-            <AddMoreEditImages editImage={editImage.data} />
+            <AddMoreEditImages
+              editImage={editImage.data}
+              addImages={addImages}
+              setAddImages={setAddImages}
+            />
           )}
         </ModalBody>
         <ModalFooter>
           <Button
+            isLoading={isLoading}
             bg="black"
             color="white"
+            _hover={{
+              bg: "#363533",
+            }}
             mr={3}
             onClick={() => {
               handleSubmit();

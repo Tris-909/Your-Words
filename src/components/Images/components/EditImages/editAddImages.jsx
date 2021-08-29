@@ -4,13 +4,14 @@ import { Box, Image, Button, Icon, Tooltip } from "@chakra-ui/react";
 import { BiPlus } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 
-const AddMoreEditImages = ({ editImage }) => {
+const AddMoreEditImages = ({ editImage, addImages, setAddImages }) => {
   const [images, setImages] = useState([]);
   const maxCapImagesLength = 5;
   const currentMaxNumber = maxCapImagesLength - editImage.list.length;
 
   const onChange = (imageList, addUpdateIndex) => {
     setImages(imageList);
+    setAddImages([...addImages, ...imageList]);
   };
 
   return (
