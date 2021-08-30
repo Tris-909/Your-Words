@@ -8,6 +8,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import {
   updateImagesLocally,
   deleteImagesLocally,
+  loadViewFullSize,
 } from "redux/features/images/images";
 import { useDispatch } from "react-redux";
 import IconButton from "components/Buttons/IconButton/IconButton";
@@ -80,6 +81,10 @@ const Images = ({ image }) => {
         justifyContent="center"
         alignItems="center"
         className="gallery-carousel hoverEffect"
+        onClick={() => {
+          console.log("triggered");
+          dispatch(loadViewFullSize({ newImageList: image.list }));
+        }}
       >
         {currentImageIndex !== 0 && (
           <Icon

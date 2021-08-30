@@ -30,6 +30,11 @@ const initialState = {
     status: false,
     error: {},
   },
+  fullSizeImage: {
+    data: [],
+    status: false,
+    error: {},
+  },
 };
 
 export const images = createSlice({
@@ -135,6 +140,12 @@ export const images = createSlice({
       currentEditImage.list = [...currentEditImage.list, ...newImagesList];
       state.editImage.data = currentEditImage;
     },
+    // FullSize Image
+    loadViewFullSize: (state, action) => {
+      const { newImageList } = action.payload;
+
+      state.fullSizeImage.data = newImageList;
+    },
   },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
@@ -172,6 +183,8 @@ export const {
   updateEditImage,
   updateEditImageListItem,
   addImagesforEditImage,
+  // Full Size
+  loadViewFullSize,
 } = images.actions;
 
 export default images.reducer;
