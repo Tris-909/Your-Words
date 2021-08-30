@@ -146,6 +146,9 @@ export const images = createSlice({
 
       state.fullSizeImage.data = newImageList;
     },
+    clearViewFullSizeState: (state, action) => {
+      state.fullSizeImage.data = [];
+    },
   },
   extraReducers: {
     [fetchImages.pending.type]: (state, action) => {
@@ -185,6 +188,7 @@ export const {
   addImagesforEditImage,
   // Full Size
   loadViewFullSize,
+  clearViewFullSizeState,
 } = images.actions;
 
 export default images.reducer;
