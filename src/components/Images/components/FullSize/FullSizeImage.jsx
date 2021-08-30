@@ -5,6 +5,7 @@ import { useLockBodyScroll } from "libs/lockScrollBar";
 import { Carousel } from "react-responsive-carousel";
 import { BiCaretLeft, BiCaretRight, BiX } from "react-icons/bi";
 import { useDispatch } from "react-redux";
+import "./FullSizeImage.scss";
 
 const FullSizeImage = ({ images }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
