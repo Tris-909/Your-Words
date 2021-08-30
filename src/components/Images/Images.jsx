@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
 import { Icon, Box, Image } from "@chakra-ui/react";
-import { BiCaretLeft, BiCaretRight, BiTrash } from "react-icons/bi";
+import {
+  BiCaretLeft,
+  BiCaretRight,
+  BiTrash,
+  BiSearchAlt,
+} from "react-icons/bi";
 import { updateImages, deleteImages } from "graphql/mutations";
 import { API, graphqlOperation } from "aws-amplify";
 import {
@@ -81,10 +86,6 @@ const Images = ({ image }) => {
         justifyContent="center"
         alignItems="center"
         className="gallery-carousel hoverEffect"
-        onClick={() => {
-          console.log("triggered");
-          dispatch(loadViewFullSize({ newImageList: image.list }));
-        }}
       >
         {currentImageIndex !== 0 && (
           <Icon
@@ -122,6 +123,24 @@ const Images = ({ image }) => {
             );
           })}
         </Carousel>
+
+        <Icon
+          as={BiSearchAlt}
+          onClick={() => {
+            dispatch(loadViewFullSize({ newImageList: image.list }));
+          }}
+          className="zoom--hoverEffect"
+          color="white"
+          width="36px"
+          height="36px"
+          opacity={0}
+          position="absolute"
+          zIndex={5}
+          cursor="pointer"
+          left="47%"
+          top="45%"
+        />
+
         {currentImageIndex !== image.list.length - 1 && (
           <Icon
             as={BiCaretRight}

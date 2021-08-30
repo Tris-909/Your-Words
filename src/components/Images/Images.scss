@@ -1,3 +1,9 @@
 .gallery-carousel {
   display: flex;
+
+  &:hover {
+    .zoom--hoverEffect {
+      opacity: 0.6;
+    }
+  }
 }
