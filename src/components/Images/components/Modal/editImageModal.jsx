@@ -55,8 +55,8 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
       }
     }
 
+    let newImagesList = [];
     if (addImages.length >= 1) {
-      let newImagesList = [];
       for (let i = 0; i < addImages.length; i++) {
         const attachment = await uploadToS3(addImages[i].file);
 
@@ -69,22 +69,16 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
       }
 
       dispatch(addImagesforEditImage({ newImagesList: newImagesList }));
-
-      await API.graphql(
-        graphqlOperation(updateImages, {
-          input: {
-            id: image.id,
-            list: [...editImage.data.list, ...newImagesList],
-          },
-        })
-      );
     }
+
+    console.log("update Images", editImage.data.list);
+    console.log("new images", newImagesList);
 
     await API.graphql(
       graphqlOperation(updateImages, {
         input: {
           id: image.id,
-          list: [...editImage.data.list],
+          list: [...editImage.data.list, ...newImagesList],
         },
       })
     );
