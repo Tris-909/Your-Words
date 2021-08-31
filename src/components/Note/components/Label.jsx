@@ -4,6 +4,7 @@ import { BiX } from "react-icons/bi";
 import { updateSingleLabelContent } from "redux/features/notes/note";
 import { useDispatch, useSelector } from "react-redux";
 import { useClickOutside } from "react-click-outside-hook";
+import { executeGraphqlRequest } from "libs/awsLib";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateTodo } from "graphql/mutations";
 import "./Label.scss";
@@ -58,14 +59,10 @@ const Label = (props) => {
 
     newLabelList[changePosition] = newLabelItem;
 
-    await API.graphql(
-      graphqlOperation(updateTodo, {
-        input: {
-          id: noteId,
-          labels: newLabelList,
-        },
-      })
-    );
+    await executeGraphqlRequest(updateTodo, {
+      id: noteId,
+      labels: newLabelList,
+    });
   };
 
   return (

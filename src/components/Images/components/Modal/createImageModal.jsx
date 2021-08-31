@@ -20,8 +20,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { createImagesLocally } from "redux/features/images/images";
 import ImageUploading from "react-images-uploading";
-import { uploadToS3 } from "libs/awsLib";
-import { API, graphqlOperation } from "aws-amplify";
+import { uploadToS3, executeGraphqlRequest } from "libs/awsLib";
 import { createImages } from "graphql/mutations";
 import * as uuid from "uuid";
 
@@ -37,8 +36,6 @@ const CreateImagesModal = ({
   const dispatch = useDispatch();
 
   const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
@@ -63,9 +60,7 @@ const CreateImagesModal = ({
       imagesForDynamoDB.list.push(currentImage);
     }
 
-    await API.graphql(
-      graphqlOperation(createImages, { input: imagesForDynamoDB })
-    );
+    await executeGraphqlRequest(createImages, imagesForDynamoDB);
 
     dispatch(createImagesLocally({ createdImages: imagesForDynamoDB }));
 

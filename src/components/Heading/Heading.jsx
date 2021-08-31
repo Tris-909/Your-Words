@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteHeadingLocally } from "redux/features/heading/heading";
 import { deleteHeading } from "graphql/mutations";
 import { BiPen, BiTrash } from "react-icons/bi";
-import { API, graphqlOperation } from "aws-amplify";
+import { executeGraphqlRequest } from "libs/awsLib";
 import IconButton from "components/Buttons/IconButton/IconButton";
 
 const Heading = ({
@@ -37,14 +37,7 @@ const Heading = ({
   };
 
   const deleteHeadingHandler = async () => {
-    await API.graphql(
-      graphqlOperation(deleteHeading, {
-        input: {
-          id: id,
-        },
-      })
-    );
-
+    await executeGraphqlRequest(deleteHeading, { id });
     dispatch(deleteHeadingLocally({ headingId: id }));
   };
 

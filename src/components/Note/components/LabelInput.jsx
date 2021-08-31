@@ -6,6 +6,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { updateTodo } from "graphql/mutations";
 import { addingNewLabel, removeALabel } from "redux/features/notes/note";
 import { useDispatch } from "react-redux";
+import { executeGraphqlRequest } from "libs/awsLib";
 import * as uuid from "uuid";
 
 const LabelInput = ({ note }) => {
@@ -20,14 +21,10 @@ const LabelInput = ({ note }) => {
       color: bg,
     };
 
-    await API.graphql(
-      graphqlOperation(updateTodo, {
-        input: {
-          id: note.id,
-          labels: [...note.labels, label],
-        },
-      })
-    );
+    await executeGraphqlRequest(updateTodo, {
+      id: note.id,
+      labels: [...note.labels, label],
+    });
 
     dispatch(addingNewLabel({ id: note.id, newLable: label }));
     setLabelValue("");
@@ -46,14 +43,10 @@ const LabelInput = ({ note }) => {
     );
     currentLabelList.splice(deletePosition, 1);
 
-    await API.graphql(
-      graphqlOperation(updateTodo, {
-        input: {
-          id: note.id,
-          labels: currentLabelList,
-        },
-      })
-    );
+    await executeGraphqlRequest(updateTodo, {
+      id: note.id,
+      labels: currentLabelList,
+    });
   };
 
   return (

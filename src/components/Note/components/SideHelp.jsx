@@ -17,7 +17,7 @@ import {
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
 import CreateImagesModal from "components/Images/components/Modal/createImageModal";
 import { ToastBody } from "components/Toast";
-import { API, graphqlOperation } from "aws-amplify";
+import { executeGraphqlRequest } from "libs/awsLib";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "graphql/mutations";
 import { getUserInfo } from "redux/features/user/userInfo";
@@ -54,11 +54,7 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
   };
 
   const updateBoardHeight = async (changes) => {
-    await API.graphql(
-      graphqlOperation(updateUser, {
-        input: changes,
-      })
-    );
+    await executeGraphqlRequest(updateUser, changes);
     dispatch(getUserInfo(userInfo.data.username));
   };
 

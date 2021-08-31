@@ -15,6 +15,7 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import { executeGraphqlRequest } from "libs/awsLib";
 import { createUser } from "graphql/mutations";
 import * as uuid from "uuid";
 import "./Login.scss";
@@ -75,7 +76,7 @@ const Login = () => {
       boardHeight: 100,
     };
 
-    await API.graphql(graphqlOperation(createUser, { input: user }));
+    await executeGraphqlRequest(createUser, user);
   };
 
   const handleSubmitSignUp = async (e) => {

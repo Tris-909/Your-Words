@@ -6,7 +6,7 @@ import {
   updateEditHeading,
 } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
-import { API, graphqlOperation } from "aws-amplify";
+import { executeGraphqlRequest } from "libs/awsLib";
 import { updateHeading } from "graphql/mutations";
 
 const TextInput = ({
@@ -44,15 +44,13 @@ const TextInput = ({
   }, [inputRef.current]);
 
   const updateWidthAndHeightDynamoDB = async (newWidth, newHeight) => {
-    await API.graphql(
-      graphqlOperation(updateHeading, {
-        input: {
-          id: headingId,
-          width: newWidth,
-          height: newHeight,
-        },
-      })
-    );
+    const input = {
+      id: headingId,
+      width: newWidth,
+      height: newHeight,
+    };
+
+    await executeGraphqlRequest(updateHeading, input);
   };
 
   const changeValue = (e) => {
@@ -71,15 +69,13 @@ const TextInput = ({
           y: d.y,
         });
 
-        await API.graphql(
-          graphqlOperation(updateHeading, {
-            input: {
-              id: headingId,
-              x: d.x,
-              y: d.y,
-            },
-          })
-        );
+        const input = {
+          id: headingId,
+          x: d.x,
+          y: d.y,
+        };
+
+        await executeGraphqlRequest(updateHeading, input);
 
         dispatch(updateHeadingLocally({ id: headingId, newY: d.y, newX: d.x }));
       }}

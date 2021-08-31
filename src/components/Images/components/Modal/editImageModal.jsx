@@ -17,8 +17,7 @@ import {
   updateEditImageListItem,
   addImagesforEditImage,
 } from "redux/features/images/images";
-import { uploadToS3, deleteFromS3 } from "libs/awsLib";
-import { API, graphqlOperation } from "aws-amplify";
+import { uploadToS3, deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import { updateImages } from "graphql/mutations";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import PreviewEditImage from "components/Images/components/EditImages/editUploadImages";
@@ -71,17 +70,10 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
       dispatch(addImagesforEditImage({ newImagesList: newImagesList }));
     }
 
-    console.log("update Images", editImage.data.list);
-    console.log("new images", newImagesList);
-
-    await API.graphql(
-      graphqlOperation(updateImages, {
-        input: {
-          id: image.id,
-          list: [...editImage.data.list, ...newImagesList],
-        },
-      })
-    );
+    await executeGraphqlRequest(updateImages, {
+      id: image.id,
+      list: [...editImage.data.list, ...newImagesList],
+    });
 
     dispatch(syncEditImageWithImages({ id: image.id }));
     setPreviewImages([]);

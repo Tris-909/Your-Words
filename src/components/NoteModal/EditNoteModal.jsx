@@ -20,7 +20,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { BsPencil } from "react-icons/bs";
 import { API, graphqlOperation } from "aws-amplify";
 import { onError } from "libs/error-libs";
-import { uploadToS3 } from "libs/awsLib";
+import { uploadToS3, executeGraphqlRequest } from "libs/awsLib";
 import config from "config";
 import { updateTodo } from "graphql/mutations";
 import { useSelector } from "react-redux";
@@ -69,16 +69,15 @@ const EditNoteModal = ({
         attachment = await uploadToS3(file.current);
       }
 
-      await API.graphql(
-        graphqlOperation(updateTodo, {
-          input: {
-            id: note.id,
-            name: header,
-            description: content,
-            image: attachment || note.image,
-          },
-        })
-      );
+      const input = {
+        id: note.id,
+        name: header,
+        description: content,
+        image: attachment || note.image,
+      };
+
+      await executeGraphqlRequest(updateTodo, input);
+
       onClose();
       fetchLists();
     } catch (e) {

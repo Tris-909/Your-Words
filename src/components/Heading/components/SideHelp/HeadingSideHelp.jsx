@@ -29,7 +29,6 @@ import {
   updateEditHeading,
   clearEditHeading,
 } from "redux/features/heading/heading";
-import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
 import { executeGraphqlRequest } from "libs/awsLib";
 import "./sideHelp.scss";

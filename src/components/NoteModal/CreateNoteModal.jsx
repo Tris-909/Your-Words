@@ -16,11 +16,9 @@ import {
 } from "@chakra-ui/react";
 import { BiNote } from "react-icons/bi";
 import BodyNoteEditor from "components/Note/components/BodyNoteEditor";
-
 import { CloseIcon } from "@chakra-ui/icons";
 import config from "config";
-import { API, graphqlOperation } from "aws-amplify";
-import { uploadToS3 } from "libs/awsLib";
+import { executeGraphqlRequest, uploadToS3 } from "libs/awsLib";
 import { onError } from "libs/error-libs";
 import { createTodo } from "graphql/mutations";
 import { useSelector } from "react-redux";
@@ -84,7 +82,8 @@ const CreateNoteModal = ({
         y: 0,
       };
 
-      await API.graphql(graphqlOperation(createTodo, { input: note }));
+      await executeGraphqlRequest(createTodo, note);
+
       clearInputState();
       fetchLists();
       onClose();

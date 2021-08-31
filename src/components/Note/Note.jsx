@@ -14,8 +14,7 @@ import EditNoteModal from "components/NoteModal/EditNoteModal";
 import DetailNoteModal from "components/NoteModal/DetailNoteModal";
 import Label from "components/Note/components/Label";
 import Draggable from "react-draggable";
-import { deleteFromS3 } from "libs/awsLib";
-import { API, graphqlOperation } from "aws-amplify";
+import { deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
 import { deleteTodo, updateTodo } from "graphql/mutations";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,27 +30,19 @@ const Note = ({ note, fetchLists }) => {
   const dispatch = useDispatch();
 
   const deleteNote = async (objectKey) => {
-    await API.graphql(
-      graphqlOperation(deleteTodo, {
-        input: {
-          id: note.id,
-        },
-      })
-    );
+    await executeGraphqlRequest(deleteTodo, {
+      id: note.id,
+    });
     await deleteFromS3(objectKey);
     fetchLists();
   };
 
   const savePositionToDatabases = async (data) => {
-    await API.graphql(
-      graphqlOperation(updateTodo, {
-        input: {
-          id: note.id,
-          x: data.x,
-          y: data.y,
-        },
-      })
-    );
+    await executeGraphqlRequest(updateTodo, {
+      id: note.id,
+      x: data.x,
+      y: data.y,
+    });
     dispatch(
       updateLocalXYPosition({ id: note.id, newY: data.y, newX: data.x })
     );

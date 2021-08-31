@@ -9,7 +9,6 @@ import {
   BiSearchAlt,
 } from "react-icons/bi";
 import { updateImages, deleteImages } from "graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
 import {
   updateImagesLocally,
   deleteImagesLocally,
@@ -17,7 +16,7 @@ import {
 } from "redux/features/images/images";
 import { useDispatch } from "react-redux";
 import IconButton from "components/Buttons/IconButton/IconButton";
-import { deleteFromS3 } from "libs/awsLib";
+import { deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import EditImagesModal from "components/Images/components/Modal/editImageModal";
 import { useDisclosure } from "@chakra-ui/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -37,13 +36,9 @@ const Images = ({ image }) => {
   });
 
   const deleteImagesHandler = async () => {
-    await API.graphql(
-      graphqlOperation(deleteImages, {
-        input: {
-          id: image.id,
-        },
-      })
-    );
+    await executeGraphqlRequest(deleteImages, {
+      id: image.id,
+    });
 
     for (let i = 0; i < image.list.length; i++) {
       await deleteFromS3(image.list[i].source);
@@ -62,15 +57,11 @@ const Images = ({ image }) => {
           y: d.y,
         });
 
-        await API.graphql(
-          graphqlOperation(updateImages, {
-            input: {
-              id: image.id,
-              x: d.x,
-              y: d.y,
-            },
-          })
-        );
+        await executeGraphqlRequest(updateImages, {
+          id: image.id,
+          x: d.x,
+          y: d.y,
+        });
 
         dispatch(updateImagesLocally({ id: image.id, newY: d.y, newX: d.x }));
       }}
