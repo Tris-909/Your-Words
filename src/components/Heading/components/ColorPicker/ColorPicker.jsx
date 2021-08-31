@@ -6,7 +6,14 @@ import { updateEditHeading } from "redux/features/heading/heading";
 import { useDispatch } from "react-redux";
 import "./colorPicker.scss";
 
-const ColorPicker = ({ color, setColor }) => {
+const ColorPicker = ({
+  color,
+  setColor,
+  bold,
+  italic,
+  underline,
+  strikeThrough,
+}) => {
   const [isChoosingColor, setIsChoosingColor] = useState(false);
   const dispatch = useDispatch();
   const ref = React.useRef();
@@ -17,7 +24,15 @@ const ColorPicker = ({ color, setColor }) => {
 
   const handlerChange = (color, e) => {
     setColor(color.hex);
-    dispatch(updateEditHeading({ color: color.hex }));
+    dispatch(
+      updateEditHeading({
+        color: color.hex,
+        bold: bold,
+        italic: italic,
+        underline: underline,
+        strikeThrough: strikeThrough,
+      })
+    );
   };
 
   return (

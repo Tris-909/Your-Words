@@ -119,7 +119,14 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
     <Box className="sidehelp--container">
       <Box className="sidehelp--section">
         <Box className="sidehelp--section--header">Color</Box>
-        <ColorPicker color={color} setColor={setColor} />
+        <ColorPicker
+          color={color}
+          setColor={setColor}
+          bold={bold}
+          italic={italic}
+          underline={underline}
+          strikeThrough={strikeThrough}
+        />
       </Box>
       <Box className="sidehelp--section">
         <Box className="sidehelp--section--header">Rotation</Box>
