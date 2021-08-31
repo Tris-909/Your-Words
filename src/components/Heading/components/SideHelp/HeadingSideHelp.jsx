@@ -31,6 +31,7 @@ import {
 } from "redux/features/heading/heading";
 import { API, graphqlOperation } from "aws-amplify";
 import { updateHeading } from "graphql/mutations";
+import { executeGraphqlRequest } from "libs/awsLib";
 import "./sideHelp.scss";
 
 const HeadingSideHelp = ({ setShowEditHeading }) => {
@@ -59,37 +60,22 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
 
   const onRemoveActiveInput = async () => {
     setShowEditHeading(false);
-    dispatch(
-      updateHeadingLocally({
-        id: editHeading.id,
-        editValue: editHeading.content,
-        newColor: color,
-        rotateDegree: rotateDegree,
-        fontSize: fontSize,
-        fontFamily: fontFamily,
-        bold: bold,
-        italic: italic,
-        underline: underline,
-        strikeThrough: strikeThrough,
-      })
-    );
 
-    await API.graphql(
-      graphqlOperation(updateHeading, {
-        input: {
-          id: editHeading.id,
-          content: editHeading.content,
-          color: color,
-          fontSize: fontSize,
-          rotateDegree: rotateDegree,
-          fontFamily: fontFamily,
-          bold: bold,
-          italic: italic,
-          underline: underline,
-          strikeThrough: strikeThrough,
-        },
-      })
-    );
+    const input = {
+      id: editHeading.id,
+      content: editHeading.content,
+      color: color,
+      fontSize: fontSize,
+      rotateDegree: rotateDegree,
+      fontFamily: fontFamily,
+      bold: bold,
+      italic: italic,
+      underline: underline,
+      strikeThrough: strikeThrough,
+    };
+
+    dispatch(updateHeadingLocally(input));
+    await executeGraphqlRequest(updateHeading, input);
 
     dispatch(clearEditHeading({}));
   };
@@ -97,22 +83,62 @@ const HeadingSideHelp = ({ setShowEditHeading }) => {
   const updateRotateDegree = (option) => {
     if (option === "+10") {
       setRotateDegree(rotateDegree + 10);
-      dispatch(updateEditHeading({ rotateDegree: rotateDegree + 10 }));
+      dispatch(
+        updateEditHeading({
+          rotateDegree: rotateDegree + 10,
+          bold,
+          italic,
+          underline,
+          strikeThrough,
+        })
+      );
     } else if (option === "+5") {
       setRotateDegree(rotateDegree + 5);
-      dispatch(updateEditHeading({ rotateDegree: rotateDegree + 5 }));
+      dispatch(
+        updateEditHeading({
+          rotateDegree: rotateDegree + 5,
+          bold,
+          italic,
+          underline,
+          strikeThrough,
+        })
+      );
     } else if (option === "-10") {
       setRotateDegree(rotateDegree - 10);
-      dispatch(updateEditHeading({ rotateDegree: rotateDegree - 10 }));
+      dispatch(
+        updateEditHeading({
+          rotateDegree: rotateDegree - 10,
+          bold,
+          italic,
+          underline,
+          strikeThrough,
+        })
+      );
     } else if (option === "-5") {
       setRotateDegree(rotateDegree - 5);
-      dispatch(updateEditHeading({ rotateDegree: rotateDegree - 5 }));
+      dispatch(
+        updateEditHeading({
+          rotateDegree: rotateDegree - 5,
+          bold,
+          italic,
+          underline,
+          strikeThrough,
+        })
+      );
     }
   };
 
   const updatingFontFamily = (newFont) => {
     setFontFamily(newFont);
-    dispatch(updateEditHeading({ fontFamily: newFont }));
+    dispatch(
+      updateEditHeading({
+        fontFamily: newFont,
+        bold,
+        italic,
+        underline,
+        strikeThrough,
+      })
+    );
   };
 
   return (

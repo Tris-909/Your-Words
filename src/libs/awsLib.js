@@ -1,4 +1,5 @@
 import { Storage } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 
 export const uploadToS3 = async (file) => {
   const fileName = `${Date.now()}-${file.Name}`;
@@ -12,4 +13,12 @@ export const uploadToS3 = async (file) => {
 
 export const deleteFromS3 = async (attachmentKey) => {
   await Storage.vault.remove(attachmentKey);
+};
+
+export const executeGraphqlRequest = async (method, input) => {
+  return await API.graphql(
+    graphqlOperation(method, {
+      input: input,
+    })
+  );
 };
