@@ -7,7 +7,6 @@ import {
   ModalFooter,
   Button,
   Box,
-  Image,
 } from "@chakra-ui/react";
 import { BiImages } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,10 +21,10 @@ import { updateImages } from "graphql/mutations";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import PreviewEditImage from "components/Images/components/EditImages/editUploadImages";
 import AddMoreEditImages from "components/Images/components/EditImages/editAddImages";
+import CommonImage from "components/Common/Image/Image";
 import * as uuid from "uuid";
 
 const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
-  const { userInfo } = useSelector((state) => state.user);
   const { editImage } = useSelector((state) => state.images);
   const dispatch = useDispatch();
   const [previewImages, setPreviewImages] = useState([]);
@@ -105,11 +104,16 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
             {editImage.data.list &&
               editImage.data.list.map((currentImage) => (
                 <Box display="flex" key={currentImage.id}>
-                  <Image
+                  <CommonImage
+                    key={currentImage.id}
+                    width="400px"
+                    source={currentImage.source}
+                  />
+                  {/* <Image
                     key={currentImage.id}
                     width="400px"
                     src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/ap-southeast-2%3A6f82b9fd-9b91-471a-850b-31f48b226aa7/${currentImage.source}`}
-                  />
+                  /> */}
                   <PreviewEditImage
                     id={currentImage.id}
                     editImageList={editImage.data.list}

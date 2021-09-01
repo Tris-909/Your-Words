@@ -18,7 +18,6 @@ import LabelInput from "components/Note/components/LabelInput";
 import BodyNoteEditor from "components/Note/components/BodyNoteEditor";
 import { CloseIcon } from "@chakra-ui/icons";
 import { BsPencil } from "react-icons/bs";
-import { API, graphqlOperation } from "aws-amplify";
 import { onError } from "libs/error-libs";
 import { uploadToS3, executeGraphqlRequest } from "libs/awsLib";
 import config from "config";

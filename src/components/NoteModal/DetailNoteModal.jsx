@@ -1,8 +1,8 @@
 import React from "react";
 import CommonModal from "./CommonModal";
-import { ModalHeader, ModalBody, Box, Image } from "@chakra-ui/react";
+import { ModalHeader, ModalBody, Box } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
+import CommonImage from "components/Common/Image/Image";
 import Interweave from "interweave";
 
 const DetailNoteModal = ({
@@ -15,8 +15,6 @@ const DetailNoteModal = ({
   setCurrentModalState,
   currentModalState,
 }) => {
-  const { auth } = useSelector((state) => state.user);
-
   const onOpenDetailModal = () => {
     setOnHide(true);
     setCurrentModalState("detail");
@@ -53,11 +51,8 @@ const DetailNoteModal = ({
           customeMaxWContent="60rem"
           scrollBehavior="outside"
         >
-          <Image
-            src={
-              note.image &&
-              `https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${auth.data.id}/${note.image}`
-            }
+          <CommonImage
+            source={note.image}
             alt="previewImage"
             border="1px solid #e2e8f0"
             width="100%"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
-import { Icon, Box, Image } from "@chakra-ui/react";
+import { Icon, Box } from "@chakra-ui/react";
 import {
   BiCaretLeft,
   BiCaretRight,
@@ -20,10 +20,13 @@ import { deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import EditImagesModal from "components/Images/components/Modal/editImageModal";
 import { useDisclosure } from "@chakra-ui/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import CommonImage from "components/Common/Image/Image";
 import "./Images.scss";
 
 const ImageContainer = ({ src }) => {
-  return <Image src={src} width="400px" height="400px" borderRadius="0px" />;
+  return (
+    <CommonImage source={src} width="400px" height="400px" borderRadius="0px" />
+  );
 };
 
 const Images = ({ image }) => {
@@ -107,10 +110,7 @@ const Images = ({ image }) => {
         >
           {image.list.map((singleImage) => {
             return (
-              <ImageContainer
-                src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/ap-southeast-2%3A6f82b9fd-9b91-471a-850b-31f48b226aa7/${singleImage.source}`}
-                key={singleImage.id}
-              />
+              <ImageContainer src={singleImage.source} key={singleImage.id} />
             );
           })}
         </Carousel>

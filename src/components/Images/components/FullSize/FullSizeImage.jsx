@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, Image, Icon } from "@chakra-ui/react";
+import { Box, Icon } from "@chakra-ui/react";
 import { clearViewFullSizeState } from "redux/features/images/images";
 import { useLockBodyScroll } from "libs/lockScrollBar";
 import { Carousel } from "react-responsive-carousel";
 import { BiCaretLeft, BiCaretRight, BiX } from "react-icons/bi";
+import CommonImage from "components/Common/Image/Image";
 import { useDispatch } from "react-redux";
 import "./FullSizeImage.scss";
 
@@ -71,8 +72,8 @@ const FullSizeImage = ({ images }) => {
       >
         {images.map((singleImage) => {
           return (
-            <Image
-              src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/ap-southeast-2%3A6f82b9fd-9b91-471a-850b-31f48b226aa7/${singleImage.source}`}
+            <CommonImage
+              source={singleImage.source}
               width="75%"
               height="100%"
               key={singleImage.id}

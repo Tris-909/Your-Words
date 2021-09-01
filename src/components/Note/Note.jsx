@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Box,
-  Image,
   HStack,
   Menu,
   MenuButton,
@@ -17,16 +16,16 @@ import Draggable from "react-draggable";
 import { deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
 import { deleteTodo, updateTodo } from "graphql/mutations";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateLocalXYPosition } from "redux/features/notes/note";
 import Interweave from "interweave";
+import CommonImage from "components/Common/Image/Image";
 import "./Note.scss";
 
 const Note = ({ note, fetchLists }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [onHide, setOnHide] = useState(true);
   const [currentModalState, setCurrentModalState] = useState(null);
-  const { auth } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const deleteNote = async (objectKey) => {
@@ -124,12 +123,12 @@ const Note = ({ note, fetchLists }) => {
         >
           {note.image ? (
             <>
-              <Image
+              <CommonImage
                 position="absolute"
                 objectFit="cover"
                 width="100%"
                 height="100%"
-                src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/${auth.data.id}/${note.image}`}
+                source={note.image}
                 alt={note.id}
               />
               <Box
