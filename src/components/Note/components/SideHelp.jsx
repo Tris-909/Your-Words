@@ -18,6 +18,7 @@ import CreateNoteModal from "components/NoteModal/CreateNoteModal";
 import CreateImagesModal from "components/Images/components/Modal/createImageModal";
 import { ToastBody } from "components/Toast";
 import { executeGraphqlRequest } from "libs/awsLib";
+import { reduceBoardHeight } from "libs/reduceBoardHeight";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "graphql/mutations";
 import { getUserInfo } from "redux/features/user/userInfo";
@@ -27,9 +28,12 @@ import "./SideHelp.scss";
 const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
   const { userInfo } = useSelector((state) => state.user);
   const { list } = useSelector((state) => state.notes);
+  const { headings } = useSelector((state) => state.headings);
+  const { images } = useSelector((state) => state.images);
   const [modalState, setModalState] = useState("");
   const dispatch = useDispatch();
   const toast = useToast();
+  const oneBoardStep = 1400;
 
   const changeBoardHeight = async (action) => {
     let changes;
@@ -59,26 +63,28 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
   };
 
   const canReduceBoardHeight = () => {
-    const LIMIT = userInfo.data.boardHeight - 1000;
-    let result = true;
+    const limit = userInfo.data.boardHeight - oneBoardStep;
+    const { result, message } = reduceBoardHeight(
+      limit,
+      list.data,
+      headings.data,
+      images.data
+    );
 
-    list.data.forEach((item) => {
-      if (item.y > LIMIT) {
-        toast({
-          position: "top-right",
-          duration: "30000",
-          render: () => (
-            <ToastBody
-              color="white"
-              bg="#e85151"
-              icon={BiError}
-              content="There are notes on the zone you want to delete"
-            />
-          ),
-        });
-        result = false;
-      }
-    });
+    if (!result) {
+      toast({
+        position: "top-right",
+        duration: "30000",
+        render: () => (
+          <ToastBody
+            color="white"
+            bg="#e85151"
+            icon={BiError}
+            content={message}
+          />
+        ),
+      });
+    }
 
     return result;
   };
