@@ -20,7 +20,7 @@ const FullSizeImage = ({ images }) => {
   return (
     <Box
       width="100%"
-      top={0}
+      top={window.scrollY}
       height="100vh"
       position="absolute"
       zIndex="99"
