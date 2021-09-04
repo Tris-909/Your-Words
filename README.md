@@ -72,3 +72,9 @@
 # Images about the application :newspaper:
 
  ![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/currentstate.png)
+
+ ![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/image2.png)
+
+  ![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/image3.png)
+
+  ![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/image4.png)
