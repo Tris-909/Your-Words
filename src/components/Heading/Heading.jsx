@@ -79,16 +79,18 @@ const Heading = ({
               ? "line-through"
               : "initial"
           }
-          display="flex"
+          display="inline-block"
           justifyContent="flex-start"
           alignItems="center"
-          gridGap="4"
+          wordBreak="break-word"
           className="hoverEffect"
         >
-          {input}
-          <Box display="flex" flexDirection="column" gridGap="4">
-            <IconButton as={BiPen} onClick={() => activeInput()} />
-            <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
+          <Box display="flex" gridGap="6">
+            {input}
+            <Box display="flex" flexDirection="column" gridGap="4">
+              <IconButton as={BiPen} onClick={() => activeInput()} />
+              <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
+            </Box>
           </Box>
         </Box>
       )}

@@ -127,8 +127,10 @@ const TextInput = ({
             ? "line-through"
             : "initial"
         }
-        width="100%"
-        height="100%"
+        display="inline-block"
+        wordBreak="break-word"
+        width={width}
+        height={height}
         background="transparent"
         padding="8px"
         border="none"
