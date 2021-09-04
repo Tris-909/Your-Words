@@ -25,13 +25,7 @@
       "customAuth": false
     }
   },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "providerPlugin": "awscloudformation",
-      "type": "manual"
-    }
-  },
+  "hosting": {},
   "storage": {
     "s3a5802319": {
       "service": "S3",
