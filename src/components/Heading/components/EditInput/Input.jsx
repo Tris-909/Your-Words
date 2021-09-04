@@ -55,7 +55,15 @@ const TextInput = ({
 
   const changeValue = (e) => {
     setInput(e.target.value);
-    dispatch(updateEditHeading({ content: e.target.value }));
+    dispatch(
+      updateEditHeading({
+        content: e.target.value,
+        bold: headingBold,
+        italic: headingItalic,
+        underline: headingUnderline,
+        strikeThrough: headingStrikethrough,
+      })
+    );
   };
 
   return (
