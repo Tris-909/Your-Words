@@ -67,7 +67,7 @@ const FullSizeImage = ({ images }) => {
         showIndicators={false}
         showArrows={false}
         infiniteLoop={false}
-        width="60%"
+        width="75%"
         className="carousel"
       >
         {images.map((singleImage) => {
