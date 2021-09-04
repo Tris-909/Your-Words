@@ -68,6 +68,7 @@ const Images = ({ image }) => {
 
         dispatch(updateImagesLocally({ id: image.id, newY: d.y, newX: d.x }));
       }}
+      enableResizing={false}
     >
       <Box
         position="relative"
