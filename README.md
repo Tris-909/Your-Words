@@ -9,7 +9,6 @@
 
 ![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/roadmap.png)
 
-
 ### Environments : 
  - **FREI** env : used for development / testing and doing all sort of weird stuffs :stuck_out_tongue_closed_eyes:
  - **PROD** env : used for production :heartpulse:
@@ -30,7 +29,7 @@
 - Then you can add API / Storage / Hosting / Auth. Basically AWS services that we gonna use inside this project
 - After this step, inside your project should have a file called **aws-exports.js** This is the file contains credentials for your AWS services and shoult not be pushed to github
 
-# Some technologies I've used to built this project :gem: 
+# Some technologies I've used to build this project :gem: 
 - React 
 - AWS Amplify
 - Redux 
