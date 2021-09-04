@@ -5,7 +5,9 @@
  
 - I'm someone who like to write when I'm in emotional state :black_nib: and I also passionate about creating mine own software :computer:. The first 50% of the "Why" I built this application is something that I simply enjoy to build and improve on day by day, 50% other is because I want to learn more about development like new skills and apply what I've learned to this project.  
 
-- The application may not be perfect but is crafted with heart :raised_hands:
+- The application may not be perfect but is crafted with heart :raised_hands: and sometime bugs :fire: just sometime :satisfied:
+
+![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/roadmap.png)
 
 ### Environments : 
  - **FREI** env : used for development / testing and doing all sort of weird stuffs :stuck_out_tongue_closed_eyes:
@@ -27,7 +29,7 @@
 - Then you can add API / Storage / Hosting / Auth. Basically AWS services that we gonna use inside this project
 - After this step, inside your project should have a file called **aws-exports.js** This is the file contains credentials for your AWS services and shoult not be pushed to github
 
-# Some technologies I've used to built this project :gem: 
+# Some technologies I've used to build this project :gem: 
 - React 
 - AWS Amplify
 - Redux 
@@ -66,4 +68,7 @@
   - You can : 
   1. Add / Reduce the board height 
   2. On clicking on reduce board height. If there is at least 1 item, inside the board area you want to reduce, you will get the toast notification to warn you that you can't do that because [Note/Heading/Images] are inside the area you want to delete 
-  
+
+# Images about the application :newspaper:
+
+ ![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/currentstate.png)
