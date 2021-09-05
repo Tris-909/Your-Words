@@ -10,6 +10,7 @@ import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import Heading from "components/Heading/Heading";
 import Images from "components/Images/Images";
+import Sticker from "components/Stickers/Sticker";
 import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideHelp";
 
 const Home = () => {
@@ -91,6 +92,7 @@ const Home = () => {
         images.data.map((image) => {
           return <Images key={image.id} image={image} />;
         })}
+      <Sticker />
       <SideHelp
         isOpen={isOpen}
         onOpen={onOpen}
