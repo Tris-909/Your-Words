@@ -21,6 +21,8 @@ const DetailNoteModal = ({
     onOpen();
   };
 
+  console.log("log");
+
   return (
     <Box
       position="relative"
@@ -51,14 +53,17 @@ const DetailNoteModal = ({
           customeMaxWContent="60rem"
           scrollBehavior="outside"
         >
-          <CommonImage
-            source={note.image}
-            alt="previewImage"
-            border="1px solid #e2e8f0"
-            width="100%"
-            height="500px"
-            marginBottom={3}
-          />
+          {note.image && (
+            <CommonImage
+              source={note.image}
+              alt="previewImage"
+              border="1px solid #e2e8f0"
+              width="100%"
+              height="500px"
+              marginBottom={3}
+            />
+          )}
+
           <ModalHeader>{note.name}</ModalHeader>
           <ModalBody whiteSpace="pre-line">
             <Interweave content={note.description} />

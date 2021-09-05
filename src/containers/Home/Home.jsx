@@ -10,8 +10,10 @@ import Note from "components/Note/Note";
 import SideHelp from "components/Note/components/SideHelp";
 import Heading from "components/Heading/Heading";
 import Images from "components/Images/Images";
-import Sticker from "components/Stickers/Sticker";
 import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideHelp";
+
+// Under development
+import Sticker from "components/Stickers/Sticker";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -92,7 +94,7 @@ const Home = () => {
         images.data.map((image) => {
           return <Images key={image.id} image={image} />;
         })}
-      <Sticker />
+      {/* <Sticker /> */}
       <SideHelp
         isOpen={isOpen}
         onOpen={onOpen}

@@ -15,6 +15,7 @@ import Label from "components/Note/components/Label";
 import Draggable from "react-draggable";
 import { deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
+import { BiDetail } from "react-icons/bi";
 import { deleteTodo, updateTodo } from "graphql/mutations";
 import { useDispatch } from "react-redux";
 import { updateLocalXYPosition } from "redux/features/notes/note";
@@ -60,9 +61,10 @@ const Note = ({ note, fetchLists }) => {
         minHeight={note.image ? "250px" : "auto"}
         borderRadius="7px"
         background="white"
+        overflow="hidden"
         className="drag"
       >
-        <HStack my={2} paddingLeft={2} width="250px">
+        <HStack my={2} paddingLeft={2} width="250px" overflow="hidden">
           <Box fontWeight="bold" width="100%">
             {note.name}
           </Box>
@@ -74,6 +76,16 @@ const Note = ({ note, fetchLists }) => {
               variant="none"
             />
             <MenuList zIndex="2">
+              <MenuItem
+                icon={<BiDetail />}
+                onClick={() => {
+                  setOnHide(true);
+                  setCurrentModalState("detail");
+                  onOpen();
+                }}
+              >
+                View Note
+              </MenuItem>
               <EditNoteModal
                 note={note}
                 isOpen={isOpen}
@@ -155,6 +167,16 @@ const Note = ({ note, fetchLists }) => {
           ) : (
             <Box height="260px" p={2}>
               <Interweave content={note.description} />
+              <DetailNoteModal
+                note={note}
+                isOpen={isOpen}
+                onClose={onClose}
+                onOpen={onOpen}
+                onHide={onHide}
+                setOnHide={setOnHide}
+                currentModalState={currentModalState}
+                setCurrentModalState={setCurrentModalState}
+              />
             </Box>
           )}
         </Box>
