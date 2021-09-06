@@ -106,7 +106,6 @@ const TextInput = ({
       style={{
         display: "flex",
         border: "2px solid white",
-        position: "relative",
         borderRadius: "5px",
       }}
     >
@@ -129,8 +128,8 @@ const TextInput = ({
         }
         display="inline-block"
         wordBreak="break-word"
-        width={width}
-        height={height}
+        width={`${width}px`}
+        height={`${height}px`}
         background="transparent"
         padding="8px"
         border="none"

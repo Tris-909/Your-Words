@@ -64,10 +64,13 @@ const Heading = ({
         />
       ) : (
         <Box
-          height={`${headingHeight.split("p")[0] * 1 + 40}px `}
-          width={`${headingWidth.split("p")[0] * 1 + 55}px `}
+          position="absolute"
+          top={positionY}
+          left={positionX}
+          height={`${headingHeight.split("p")[0]}px `}
+          width={`${headingWidth.split("p")[0]}px `}
           fontSize={`${headingFontsize}px `}
-          transform={`translate(${positionX}px, ${positionY}px) rotate(${headingRotateDegree}deg)`}
+          transform={`rotate(${headingRotateDegree}deg)`}
           fontFamily={headingFontFamily}
           color={headingColor}
           fontWeight={headingBold ? "bold" : "normal"}
@@ -79,18 +82,18 @@ const Heading = ({
               ? "line-through"
               : "initial"
           }
-          display="inline-block"
+          display="inline-flex"
           justifyContent="flex-start"
           alignItems="center"
+          gridGap="6"
+          padding="8px"
           wordBreak="break-word"
           className="hoverEffect"
         >
-          <Box display="flex" gridGap="6">
-            {input}
-            <Box display="flex" flexDirection="column" gridGap="4">
-              <IconButton as={BiPen} onClick={() => activeInput()} />
-              <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
-            </Box>
+          {input}
+          <Box display="flex" flexDirection="column" gridGap="4">
+            <IconButton as={BiPen} onClick={() => activeInput()} />
+            <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
           </Box>
         </Box>
       )}
