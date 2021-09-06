@@ -21,8 +21,6 @@ const DetailNoteModal = ({
     onOpen();
   };
 
-  console.log("log");
-
   return (
     <Box
       position="relative"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
 import { Icon, Box } from "@chakra-ui/react";
@@ -21,6 +21,7 @@ import EditImagesModal from "components/Images/components/Modal/editImageModal";
 import { useDisclosure } from "@chakra-ui/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import CommonImage from "components/Common/Image/Image";
+import useWindowDimensions from "libs/useWindowDimensions";
 import "./Images.scss";
 
 const ImageContainer = ({ src }) => {
@@ -32,6 +33,7 @@ const ImageContainer = ({ src }) => {
 const Images = ({ image }) => {
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { width } = useWindowDimensions();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [position, setPosition] = useState({
     x: image.x,
@@ -158,10 +160,13 @@ const Images = ({ image }) => {
           gridGap={4}
           position="absolute"
           top="0%"
-          right="-15%"
+          right={position.x <= width / 2 ? "-15%" : "0%"}
           zIndex="-1"
           cursor="initial"
           className="hoverEffect"
+          transform={
+            position.x <= width / 2 ? "none" : "rotateZ(180deg) rotateX(180deg)"
+          }
         >
           <EditImagesModal
             isOpen={isOpen}
