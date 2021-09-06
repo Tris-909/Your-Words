@@ -28,3 +28,63 @@
   border-radius: 20px;
   border: 3px solid #b0b0b0;
 }
+
+h1 {
+  display: block;
+  font-size: 2em !important;
+  margin-top: 0.67em !important;
+  margin-bottom: 0.67em !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-weight: bold !important;
+}
+
+h2 {
+  display: block;
+  font-size: 1.5em !important;
+  margin-top: 0.83em !important;
+  margin-bottom: 0.83em !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-weight: bold !important;
+}
+
+h3 {
+  display: block;
+  font-size: 1.17em !important;
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-weight: bold !important;
+}
+
+h4 {
+  display: block;
+  font-size: 1em !important;
+  margin-top: 1.33em !important;
+  margin-bottom: 1.33em !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-weight: bold !important;
+}
+
+h5 {
+  display: block;
+  font-size: 0.83em !important;
+  margin-top: 1.67em !important;
+  margin-bottom: 1.67em !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-weight: bold !important;
+}
+
+h6 {
+  display: block;
+  font-size: 0.67em !important;
+  margin-top: 2.33em !important;
+  margin-bottom: 2.33em !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  font-weight: bold !important;
+}

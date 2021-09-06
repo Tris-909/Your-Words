@@ -3,7 +3,8 @@ import CommonModal from "./CommonModal";
 import { ModalHeader, ModalBody, Box } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import CommonImage from "components/Common/Image/Image";
-import Interweave from "interweave";
+import { Markup } from "interweave";
+import ReactHtmlParser from "react-html-parser";
 
 const DetailNoteModal = ({
   isOpen,
@@ -20,6 +21,8 @@ const DetailNoteModal = ({
     setCurrentModalState("detail");
     onOpen();
   };
+
+  console.log("note", note.description);
 
   return (
     <Box
@@ -64,7 +67,7 @@ const DetailNoteModal = ({
 
           <ModalHeader>{note.name}</ModalHeader>
           <ModalBody whiteSpace="pre-line">
-            <Interweave content={note.description} />
+            {ReactHtmlParser(note.description)}
           </ModalBody>
         </CommonModal>
       )}
