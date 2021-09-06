@@ -24,8 +24,8 @@ type Heading @model {
   userId: ID!
   content: String
   type: String
-  x: Int
-  y: Int
+  x: Float
+  y: Float
   width: String
   height: String
   color: String
@@ -43,8 +43,8 @@ type Images @model {
   userId: ID!
   list: [Image]
   type: String
-  x: Int
-  y: Int
+  x: Float
+  y: Float
 }
 
 type Image {
