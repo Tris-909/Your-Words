@@ -60,7 +60,9 @@ const DetailNoteModal = ({
               alt="previewImage"
               border="1px solid #e2e8f0"
               width="100%"
-              height="500px"
+              height="600px"
+              padding="10px"
+              objectFit="contain"
               marginBottom={3}
             />
           )}
