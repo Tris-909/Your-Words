@@ -78,8 +78,8 @@ const CreateNoteModal = ({
         name: header,
         image: attachment ? attachment : "",
         labels: [],
-        x: 0,
-        y: 0,
+        x: Math.round(window.innerWidth / 2),
+        y: Math.round(window.pageYOffset),
       };
 
       await executeGraphqlRequest(createTodo, note);
