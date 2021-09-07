@@ -38,6 +38,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "save": "git push origin HEAD",
     "push": "amplify push",
     "deploy": "amplify publish"
   },
