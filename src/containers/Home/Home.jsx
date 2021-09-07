@@ -14,6 +14,7 @@ import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideH
 
 // Under development
 import Sticker from "components/Stickers/Sticker";
+import ImageMovable from "components/Images/components/ImageMovable";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,6 +57,7 @@ const Home = () => {
 
   return (
     <>
+      <ImageMovable />
       {list.data &&
         list.data.map((singleTodo) => {
           return (

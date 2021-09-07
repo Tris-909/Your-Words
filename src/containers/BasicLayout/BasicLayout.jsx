@@ -29,7 +29,12 @@ const BasicLayout = (props) => {
         flexDirection="column"
       >
         <NavBar onOpen={onOpen} />
-        <Box flexGrow="1" position="relative" width="99%">
+        <Box
+          flexGrow="1"
+          position="relative"
+          width="99%"
+          className="movableParent"
+        >
           {props.children}
         </Box>
         <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
