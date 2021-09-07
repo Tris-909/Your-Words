@@ -3,7 +3,6 @@ import CommonModal from "./CommonModal";
 import { ModalHeader, ModalBody, Box } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 import CommonImage from "components/Common/Image/Image";
-import { Markup } from "interweave";
 import ReactHtmlParser from "react-html-parser";
 
 const DetailNoteModal = ({
@@ -21,8 +20,6 @@ const DetailNoteModal = ({
     setCurrentModalState("detail");
     onOpen();
   };
-
-  console.log("note", note.description);
 
   return (
     <Box

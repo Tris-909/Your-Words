@@ -11,18 +11,15 @@ import {
   Button,
   MenuItem,
   Box,
-  Image,
-  Icon,
-  Tooltip,
 } from "@chakra-ui/react";
 import LabelInput from "components/Note/components/LabelInput";
 import BodyNoteEditor from "components/Note/components/BodyNoteEditor";
 import { BsPencil } from "react-icons/bs";
-import { BiPlus, BiX } from "react-icons/bi";
 import { onError } from "libs/error-libs";
-import { uploadToS3, executeGraphqlRequest } from "libs/awsLib";
+import { uploadToS3, deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import { updateTodo } from "graphql/mutations";
-import ImageUploading from "react-images-uploading";
+import UploadImageNote from "components/Note/components/UploadImage";
+import CommonImage from "components/Common/Image/Image";
 
 // This is not a re-usable component, This is just a way to manage and swap between many different modals in the same page
 const EditNoteModal = ({
@@ -37,8 +34,9 @@ const EditNoteModal = ({
   const [header, setHeader] = useState(note.name);
   const [content, setContent] = useState(note.description);
   const [images, setImages] = useState([]);
+  const [currentImage, setCurrentImage] = useState(note.image);
 
-  const onChange = (imageList, addUpdateIndex) => {
+  const onChange = (imageList) => {
     setImages(imageList);
   };
 
@@ -46,16 +44,23 @@ const EditNoteModal = ({
     e.preventDefault();
 
     try {
-      let attachment;
-      if (images.length > 0) {
-        attachment = await uploadToS3(images[0].file);
+      let imageUploadResult;
+      if (currentImage) {
+        imageUploadResult = currentImage;
+      } else {
+        deleteFromS3(currentImage);
+        if (images.length > 0) {
+          imageUploadResult = await uploadToS3(images[0].file);
+        } else {
+          imageUploadResult = "";
+        }
       }
 
       const input = {
         id: note.id,
         name: header,
         description: content,
-        image: attachment || note.image,
+        image: imageUploadResult,
       };
 
       await executeGraphqlRequest(updateTodo, input);
@@ -71,6 +76,10 @@ const EditNoteModal = ({
     setCurrentModalState("edit");
     setImages([]);
     onOpen();
+  };
+
+  const deleteCurrentImage = () => {
+    setCurrentImage("");
   };
 
   return (
@@ -111,89 +120,32 @@ const EditNoteModal = ({
 
               <FormControl mt={4}>
                 <FormLabel>Image</FormLabel>
-                <ImageUploading
-                  multiple
-                  value={images}
-                  onChange={onChange}
-                  maxNumber={1}
-                  dataURLKey="data_url"
-                >
-                  {({
-                    imageList,
-                    onImageUpload,
-                    onImageRemoveAll,
-                    onImageUpdate,
-                    onImageRemove,
-                    isDragging,
-                    dragProps,
-                  }) => (
-                    <Box
-                      display="flex"
-                      width="100%"
-                      className="upload__image-wrapper"
+                {currentImage && (
+                  <Box display="flex" gridGap={4}>
+                    <CommonImage
+                      source={currentImage}
+                      alt="previewImage"
+                      border="1px solid #e2e8f0"
+                      width="95%"
+                      height="400px"
+                      padding="10px"
+                      marginBottom="20px"
+                      objectFit="contain"
+                    />
+                    <Button
+                      color="white"
+                      bg="black"
+                      p={4}
+                      onClick={() => deleteCurrentImage()}
                     >
-                      <Box display="flex" flexDirection="column" w="100%">
-                        <Tooltip
-                          label="Add more images"
-                          aria-label="A tooltip"
-                          placement="right-start"
-                        >
-                          <Button
-                            onClick={() => {
-                              if (images.length === 0) {
-                                onImageUpload();
-                              }
-                            }}
-                            bg={images.length === 1 ? "#adaaaa" : "black"}
-                            cursor={
-                              images.length === 1 ? "not-allowed" : "pointer"
-                            }
-                            color="white"
-                            alignSelf="center"
-                            width="80px"
-                            height="80px"
-                            clipPath="polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)"
-                            mb="8"
-                            {...dragProps}
-                          >
-                            <Icon as={BiPlus} width="36px" height="36px" />
-                          </Button>
-                        </Tooltip>
+                      Delete Image
+                    </Button>
+                  </Box>
+                )}
 
-                        <Box display="flex" flexDirection="column" gridGap="2">
-                          {imageList.map((image, index) => (
-                            <Box
-                              display="flex"
-                              key={index}
-                              className="image-item"
-                            >
-                              <Image
-                                src={image["data_url"]}
-                                alt=""
-                                width="100%"
-                                height="500px"
-                              />
-                              <Button
-                                onClick={() => {
-                                  onImageRemove(index);
-                                }}
-                                bg="black"
-                                color="white"
-                                _hover={{
-                                  bg: "#363533",
-                                }}
-                                ml={4}
-                                {...dragProps}
-                              >
-                                <Icon as={BiX} width="36px" height="36px" />
-                              </Button>
-                            </Box>
-                          ))}
-                        </Box>
-                      </Box>
-                    </Box>
-                  )}
-                </ImageUploading>
+                {!currentImage && (
+                  <UploadImageNote images={images} onChange={onChange} />
+                )}
               </FormControl>
             </form>
           </ModalBody>
