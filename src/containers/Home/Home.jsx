@@ -25,6 +25,7 @@ const Home = () => {
   const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const [showEditHeading, setShowEditHeading] = useState(false);
+  const [movable, setMovable] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,7 +58,17 @@ const Home = () => {
 
   return (
     <>
-      <ImageMovable />
+      {images.data &&
+        images.data.map((image) => {
+          return (
+            <ImageMovable
+              key={image.id}
+              image={image}
+              movable={movable}
+              setMovable={setMovable}
+            />
+          );
+        })}
       {list.data &&
         list.data.map((singleTodo) => {
           return (
@@ -92,10 +103,10 @@ const Home = () => {
             />
           );
         })}
-      {images.data &&
+      {/* {images.data &&
         images.data.map((image) => {
           return <Images key={image.id} image={image} />;
-        })}
+        })} */}
       {/* <Sticker /> */}
       <SideHelp
         isOpen={isOpen}
