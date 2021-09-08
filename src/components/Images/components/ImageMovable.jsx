@@ -46,7 +46,7 @@ const ImageMovable = ({ image, movable, setMovable }) => {
 
   useOutsideClick({
     ref: ref,
-    handler: () => setMovable(""),
+    handler: () => {},
   });
 
   const deleteImagesHandler = async () => {
@@ -183,7 +183,7 @@ const ImageMovable = ({ image, movable, setMovable }) => {
           draggable={true}
           throttleDrag={0}
           onDragStart={({ target, clientX, clientY }) => {
-            console.log("onDragStart", target);
+            // console.log("onDragStart", target);
           }}
           onDrag={({
             target,
@@ -199,19 +199,33 @@ const ImageMovable = ({ image, movable, setMovable }) => {
             clientX,
             clientY,
           }) => {
-            console.log("onDrag left, top", left, top);
+            // console.log("onDrag left, top", left, top);
             // setDiffTop(top);
             // setDiffLeft(left);
             // target!.style.left = `${left}px`;
             // target!.style.top = `${top}px`;
-            console.log("onDrag left, top", transform);
+            // console.log("onDrag left, top", transform);
 
-            console.log("onDrag translate", dist);
+            // console.log("onDrag translate", dist);
             target.style.transform = transform;
           }}
           onDragEnd={({ target, isDrag, clientX, clientY }) => {
-            console.log(", clientX, clientY", clientX, clientY);
-            console.log("onDragEnd", target, isDrag);
+            let x, y;
+            target.style.cssText
+              .split("translate")[1]
+              .split(" ")
+              .map((string, index) => {
+                if (index === 0) {
+                  x = string.replaceAll(/([(px,])/g, "");
+                  console.log("x", string, x);
+                }
+
+                if (index === 1) {
+                  y = string.replaceAll(/([px)])/g, "");
+                  console.log("y", string, y);
+                }
+              });
+            console.log("onDragEnd", x, y);
           }}
           resizable={false}
           rotatable={true}
