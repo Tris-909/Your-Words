@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Image } from "@chakra-ui/react";
+import PackContainer from "components/Stickers/components/PackContainer/PackContainer";
 import Sticker1 from "./creative.png";
 import Sticker2 from "./creativity(0).png";
 import Sticker3 from "./creativity(1).png";
@@ -19,23 +19,6 @@ import Sticker16 from "./notebook.png";
 import Sticker17 from "./paint-palette.png";
 import Sticker18 from "./paint-tube.png";
 import Sticker19 from "./think-outside-the-box.png";
-
-const StickerContainer = ({ key, src, onSubmitSticker }) => {
-  return (
-    <Image
-      id={key}
-      src={src}
-      width="23%"
-      margin="5px"
-      padding="10px"
-      cursor="pointer"
-      _hover={{
-        opacity: 0.5,
-      }}
-      onClick={() => onSubmitSticker(src)}
-    />
-  );
-};
 
 const PackOne = ({ onSubmitSticker }) => {
   const StickerArrays = [
@@ -61,19 +44,10 @@ const PackOne = ({ onSubmitSticker }) => {
   ];
 
   return (
-    <Box display="flex" flexDirection="column" width="100%">
-      <Box display="flex" flexWrap="wrap" justifyContent="center" w="100%">
-        {StickerArrays.map((item) => {
-          return (
-            <StickerContainer
-              key={item}
-              src={item}
-              onSubmitSticker={onSubmitSticker}
-            />
-          );
-        })}
-      </Box>
-    </Box>
+    <PackContainer
+      stickerArrays={StickerArrays}
+      onSubmitSticker={onSubmitSticker}
+    />
   );
 };
 
