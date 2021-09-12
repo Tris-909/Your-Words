@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchListNotes } from "redux/features/notes/note";
 import { fetchHeadings } from "redux/features/heading/heading";
 import { fetchImages } from "redux/features/images/images";
+import { fetchStickers } from "redux/features/stickers/sticker";
 import { getUserInfo, getAuth } from "redux/features/user/userInfo";
 import { Auth } from "aws-amplify";
 import Note from "components/Note/Note";
@@ -21,6 +22,7 @@ const Home = () => {
   const { headings } = useSelector((state) => state.headings);
   const { editHeading } = useSelector((state) => state.headings);
   const { images } = useSelector((state) => state.images);
+  const { stickers } = useSelector((state) => state.stickers);
   const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const [showEditHeading, setShowEditHeading] = useState(false);
@@ -51,6 +53,7 @@ const Home = () => {
       dispatch(fetchListNotes(userInfo.data.id));
       dispatch(fetchHeadings(userInfo.data.id));
       dispatch(fetchImages(userInfo.data.id));
+      dispatch(fetchStickers(userInfo.data.id));
     }
   };
 
@@ -94,7 +97,10 @@ const Home = () => {
         images.data.map((image) => {
           return <Images key={image.id} image={image} />;
         })}
-      <Sticker />
+      {stickers.data &&
+        stickers.data.map((sticker) => {
+          return <Sticker key={sticker.id} sticker={sticker} />;
+        })}
       <SideHelp
         isOpen={isOpen}
         onOpen={onOpen}
