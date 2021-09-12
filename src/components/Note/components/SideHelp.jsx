@@ -16,6 +16,7 @@ import {
 } from "react-icons/bi";
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
 import CreateImagesModal from "components/Images/components/Modal/createImageModal";
+import CreateStickerModal from "components/Stickers/components/SideHelpComponent/AddStickerModal";
 import { ToastBody } from "components/Toast";
 import { executeGraphqlRequest } from "libs/awsLib";
 import { reduceBoardHeight } from "libs/reduceBoardHeight";
@@ -122,6 +123,13 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
           Add Heading
         </MenuItem>
         <CreateImagesModal
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          modalState={modalState}
+          setModalState={setModalState}
+        />
+        <CreateStickerModal
           isOpen={isOpen}
           onOpen={onOpen}
           onClose={onClose}

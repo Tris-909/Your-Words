@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Image, Button, Input } from "@chakra-ui/react";
 import { Rnd } from "react-rnd";
-import dummySticker from "./creativity.png";
 import { uploadToS3 } from "libs/awsLib";
 
 const Sticker = () => {
@@ -43,7 +42,7 @@ const Sticker = () => {
       }}
     >
       <Image
-        id={dummySticker}
+        id={"12345"}
         src={`https://amplifytutorialoneeb71ffcb9e1e4ab09d46e7e344ec4231901-frei.s3.ap-southeast-2.amazonaws.com/private/ap-southeast-2%3A6f82b9fd-9b91-471a-850b-31f48b226aa7/1631413917815-undefined`}
         alt="dummy"
         draggable={false}
