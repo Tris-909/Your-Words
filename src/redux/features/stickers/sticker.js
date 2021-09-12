@@ -55,6 +55,23 @@ export const stickers = createSlice({
 
       state.stickers.data = currentDataList;
     },
+    updateStickerSizeLocally: (state, action) => {
+      const { id, newWidth, newHeight } = action.payload;
+
+      const currentDataList = state.stickers.data;
+
+      currentDataList.forEach((item, index) => {
+        if (item.id === id) {
+          currentDataList[index] = {
+            ...currentDataList[index],
+            width: newWidth ? newWidth : currentDataList[index].width,
+            height: newHeight ? newHeight : currentDataList[index].height,
+          };
+        }
+      });
+
+      state.stickers.data = currentDataList;
+    },
   },
   extraReducers: {
     [fetchStickers.pending.type]: (state, action) => {
@@ -81,7 +98,10 @@ export const stickers = createSlice({
   },
 });
 
-export const { addStickerLocally, updateStickerPositionLocally } =
-  stickers.actions;
+export const {
+  addStickerLocally,
+  updateStickerPositionLocally,
+  updateStickerSizeLocally,
+} = stickers.actions;
 
 export default stickers.reducer;

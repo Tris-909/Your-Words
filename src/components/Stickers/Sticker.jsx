@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Rnd } from "react-rnd";
 import CommonImage from "components/Common/Image/Image";
-import { updateStickerPositionLocally } from "redux/features/stickers/sticker";
+import { useOutsideClick } from "@chakra-ui/react";
+import {
+  updateStickerPositionLocally,
+  updateStickerSizeLocally,
+} from "redux/features/stickers/sticker";
 import { useDispatch } from "react-redux";
 import { updateSticker } from "graphql/mutations";
 import { executeGraphqlRequest } from "libs/awsLib";
@@ -15,7 +19,14 @@ const Sticker = ({ sticker }) => {
     x: sticker.x,
     y: sticker.y,
   });
+  const [showBorder, setShowBorder] = useState(false);
+  const ref = useRef();
   const dispatch = useDispatch();
+
+  useOutsideClick({
+    ref: ref,
+    handler: () => setShowBorder(false),
+  });
 
   const onChangePostionHandler = async ({ newX, newY }) => {
     setPosition({
@@ -32,6 +43,21 @@ const Sticker = ({ sticker }) => {
     dispatch(updateStickerPositionLocally({ id: sticker.id, newX, newY }));
   };
 
+  const onResizeHandler = async ({ newWidth, newHeight }) => {
+    setSize({
+      width: newWidth,
+      height: newHeight,
+    });
+
+    await executeGraphqlRequest(updateSticker, {
+      id: sticker.id,
+      width: newWidth,
+      height: newHeight,
+    });
+
+    dispatch(updateStickerSizeLocally({ id: sticker.id, newWidth, newHeight }));
+  };
+
   return (
     <Rnd
       size={{ width: size.width, height: size.height }}
@@ -44,13 +70,22 @@ const Sticker = ({ sticker }) => {
         });
       }}
       onResizeStop={(e, direction, ref, delta, position) => {
-        setSize({
-          width: ref.style.width,
-          height: ref.style.height,
+        onResizeHandler({
+          newWidth: ref.style.width,
+          newHeight: ref.style.height,
         });
       }}
+      onClick={() => setShowBorder(true)}
+      style={{
+        border: showBorder ? "1px solid black" : "none",
+      }}
     >
-      <CommonImage id={sticker.id} source={sticker.source} draggable="false" />
+      <CommonImage
+        ref={ref}
+        id={sticker.id}
+        source={sticker.source}
+        draggable="false"
+      />
     </Rnd>
   );
 };
