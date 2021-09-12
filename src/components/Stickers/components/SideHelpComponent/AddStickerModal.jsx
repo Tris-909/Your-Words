@@ -22,6 +22,7 @@ import * as uuid from "uuid";
 import PackOneSticker from "components/Stickers/Pack1/creativity(11).png";
 import PackTwoSticker from "components/Stickers/Pack2/bees.png";
 import PackThreeSticker from "components/Stickers/Pack3/dream.png";
+import CustomStickerUploader from "components/Stickers/components/CustomStickerUploader/CustomStickerUploader";
 
 const PackButton = ({ packSrc, onClickHandler }) => {
   return (
@@ -30,6 +31,7 @@ const PackButton = ({ packSrc, onClickHandler }) => {
       alt="PackOne"
       w="150px"
       h="150px"
+      cursor="pointer"
       onClick={() => onClickHandler()}
     />
   );
@@ -51,7 +53,10 @@ const AddStickerModal = ({
     const blob = await fetch(path).then((response) => response.blob());
     const file = new File([blob], "filename", { type: blob.type });
     const source = await uploadToS3(file);
+    await submitSticker(source);
+  };
 
+  const submitSticker = async (source) => {
     const newSticker = {
       id: uuid.v1(),
       userId: userInfo.data.id,
@@ -100,6 +105,7 @@ const AddStickerModal = ({
                   />
                 );
               })}
+              <CustomStickerUploader submitSticker={submitSticker} />
             </Box>
             <Divider mt={3} />
             {packIndex === 0 && <PackOne onSubmitSticker={onSubmitSticker} />}
