@@ -12,6 +12,7 @@ import {
 import { BiHappyHeartEyes } from "react-icons/bi";
 import PackOne from "components/Stickers/Pack1/PackOne";
 import PackTwo from "components/Stickers/Pack2/Pack2";
+import PackThree from "components/Stickers/Pack3/Pack3";
 import { useSelector, useDispatch } from "react-redux";
 import { addStickerLocally } from "redux/features/stickers/sticker";
 import { uploadToS3, executeGraphqlRequest } from "libs/awsLib";
@@ -20,6 +21,7 @@ import * as uuid from "uuid";
 
 import PackOneSticker from "components/Stickers/Pack1/creativity(11).png";
 import PackTwoSticker from "components/Stickers/Pack2/bees.png";
+import PackThreeSticker from "components/Stickers/Pack3/dream.png";
 
 const PackButton = ({ packSrc, onClickHandler }) => {
   return (
@@ -42,7 +44,7 @@ const AddStickerModal = ({
 }) => {
   const { userInfo } = useSelector((state) => state.user);
   const [packIndex, setPackIndex] = useState(0);
-  const packButtonImages = [PackOneSticker, PackTwoSticker];
+  const packButtonImages = [PackOneSticker, PackTwoSticker, PackThreeSticker];
   const dispatch = useDispatch();
 
   const onSubmitSticker = async (path) => {
@@ -102,6 +104,7 @@ const AddStickerModal = ({
             <Divider mt={3} />
             {packIndex === 0 && <PackOne onSubmitSticker={onSubmitSticker} />}
             {packIndex === 1 && <PackTwo onSubmitSticker={onSubmitSticker} />}
+            {packIndex === 2 && <PackThree onSubmitSticker={onSubmitSticker} />}
           </ModalBody>
         </CommonModal>
       )}
