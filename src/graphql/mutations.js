@@ -298,3 +298,60 @@ export const deleteImages = /* GraphQL */ `
     }
   }
 `;
+export const createSticker = /* GraphQL */ `
+  mutation CreateSticker(
+    $input: CreateStickerInput!
+    $condition: ModelStickerConditionInput
+  ) {
+    createSticker(input: $input, condition: $condition) {
+      id
+      userId
+      source
+      type
+      x
+      y
+      width
+      height
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateSticker = /* GraphQL */ `
+  mutation UpdateSticker(
+    $input: UpdateStickerInput!
+    $condition: ModelStickerConditionInput
+  ) {
+    updateSticker(input: $input, condition: $condition) {
+      id
+      userId
+      source
+      type
+      x
+      y
+      width
+      height
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteSticker = /* GraphQL */ `
+  mutation DeleteSticker(
+    $input: DeleteStickerInput!
+    $condition: ModelStickerConditionInput
+  ) {
+    deleteSticker(input: $input, condition: $condition) {
+      id
+      userId
+      source
+      type
+      x
+      y
+      width
+      height
+      createdAt
+      updatedAt
+    }
+  }
+`;

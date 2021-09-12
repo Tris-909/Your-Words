@@ -14,7 +14,6 @@ import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideH
 
 // Under development
 import Sticker from "components/Stickers/Sticker";
-import ImageMovable from "components/Images/components/ImageMovable";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,7 +24,6 @@ const Home = () => {
   const { userInfo } = useSelector((state) => state.user);
   const [username, setUsername] = useState(null);
   const [showEditHeading, setShowEditHeading] = useState(false);
-  const [movable, setMovable] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -58,17 +56,6 @@ const Home = () => {
 
   return (
     <>
-      {images.data &&
-        images.data.map((image) => {
-          return (
-            <ImageMovable
-              key={image.id}
-              image={image}
-              movable={movable}
-              setMovable={setMovable}
-            />
-          );
-        })}
       {list.data &&
         list.data.map((singleTodo) => {
           return (
@@ -103,11 +90,11 @@ const Home = () => {
             />
           );
         })}
-      {/* {images.data &&
+      {images.data &&
         images.data.map((image) => {
           return <Images key={image.id} image={image} />;
-        })} */}
-      {/* <Sticker /> */}
+        })}
+      <Sticker />
       <SideHelp
         isOpen={isOpen}
         onOpen={onOpen}

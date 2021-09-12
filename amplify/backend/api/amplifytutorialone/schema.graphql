@@ -47,6 +47,17 @@ type Images @model {
   y: Float
 }
 
+type Sticker @model {
+  id: ID!
+  userId: ID!
+  source: String!
+  type: String
+  x: Float
+  y: Float
+  width: String
+  height: String
+}
+
 type Image {
   id: ID!
   source: String!

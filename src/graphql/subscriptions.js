@@ -262,3 +262,51 @@ export const onDeleteImages = /* GraphQL */ `
     }
   }
 `;
+export const onCreateSticker = /* GraphQL */ `
+  subscription OnCreateSticker {
+    onCreateSticker {
+      id
+      userId
+      source
+      type
+      x
+      y
+      width
+      height
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSticker = /* GraphQL */ `
+  subscription OnUpdateSticker {
+    onUpdateSticker {
+      id
+      userId
+      source
+      type
+      x
+      y
+      width
+      height
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSticker = /* GraphQL */ `
+  subscription OnDeleteSticker {
+    onDeleteSticker {
+      id
+      userId
+      source
+      type
+      x
+      y
+      width
+      height
+      createdAt
+      updatedAt
+    }
+  }
+`;
