@@ -42,6 +42,7 @@ const AddStickerModal = ({
 
     await executeGraphqlRequest(createSticker, newSticker);
     dispatch(addStickerLocally({ newSticker: newSticker }));
+    onClose();
   };
 
   return (

@@ -98,6 +98,7 @@ const Home = () => {
           return <Images key={image.id} image={image} />;
         })}
       {stickers.data &&
+        Array.isArray(stickers.data) &&
         stickers.data.map((sticker) => {
           return <Sticker key={sticker.id} sticker={sticker} />;
         })}

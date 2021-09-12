@@ -35,8 +35,9 @@ export const stickers = createSlice({
       const { newSticker } = action.payload;
 
       const currentDataList = state.stickers.data;
+      currentDataList.push(newSticker);
 
-      state.stickers.data = currentDataList.push(newSticker);
+      state.stickers.data = currentDataList;
     },
     updateStickerPositionLocally: (state, action) => {
       const { id, newX, newY } = action.payload;
@@ -84,7 +85,7 @@ export const stickers = createSlice({
     [fetchStickers.fulfilled.type]: (state, action) => {
       state.stickers = {
         status: false,
-        data: action.payload,
+        data: [...action.payload],
         error: {},
       };
     },
