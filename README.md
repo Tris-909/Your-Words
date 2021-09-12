@@ -63,12 +63,17 @@
   1. Drag & drop the Image inside the board
   2. Edit the Image to change / delete / add image to a an album 
   3. View Image at fullsize 
+### Sticker :smiley_cat:
+ - You can add sticker as image from a list of stickers 
+ - You can drag & drop and resize your sticker
+ - Delete it as wanted 
 ### Board :straight_ruler: 
   - The space where all your images, notes, headings, ... are inside 
   - You can : 
   1. Add / Reduce the board height 
   2. On clicking on reduce board height. If there is at least 1 item, inside the board area you want to reduce, you will get the toast notification to warn you that you can't do that because [Note/Heading/Images] are inside the area you want to delete 
 
+ 
 # Images about the application :newspaper:
 
  ![alt text](https://github.com/Tris-909/Your-Words/blob/master/src/github/images/currentstate.png)
