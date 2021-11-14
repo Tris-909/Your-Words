@@ -181,7 +181,7 @@ const Login = () => {
       <GridItem colStart={isSM ? 2 : 4} colEnd={isSM ? 12 : 10}>
         <Box borderWidth="1px" borderRadius="lg" bg="#f2f2f7" p="10">
           <Heading
-            as="h3"
+            as="p"
             fontSize={isSM ? "7rem" : "4rem"}
             className="FormHeader"
             textAlign="center"
@@ -191,7 +191,7 @@ const Login = () => {
             Your Words{" "}
           </Heading>
           <Heading
-            as="h5"
+            as="p"
             fontSize={isSM ? "4rem" : "2.5rem"}
             className="FormHeader"
             textAlign="center"
