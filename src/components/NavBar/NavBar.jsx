@@ -12,7 +12,7 @@ const NavBar = ({ onOpen }) => {
 
   const handlerLogOut = async () => {
     await Auth.signOut();
-    history.push("/login");
+    history.push("/auth");
     setIsAuthenticated(false);
   };
 

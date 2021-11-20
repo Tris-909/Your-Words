@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "amplifytutorialonec3c2721f": {}
+        "amplifytutorialonec3c2721f": {},
+        "userPoolGroups": {}
       },
       "hosting": {}
     }

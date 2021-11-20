@@ -7,10 +7,14 @@ const CommonImage = (props) => {
   const { auth } = useSelector((state) => state.user);
 
   return (
-    <Image
-      src={`https://${config.aws_user_files_s3_bucket}.s3.${config.aws_user_files_s3_bucket_region}.amazonaws.com/private/${auth.data.id}/${props.source}`}
-      {...props}
-    />
+    <>
+      {auth && auth.data ? (
+        <Image
+          src={`https://${config.aws_user_files_s3_bucket}.s3.${config.aws_user_files_s3_bucket_region}.amazonaws.com/private/${auth.data.id}/${props.source}`}
+          {...props}
+        />
+      ) : null}
+    </>
   );
 };
 

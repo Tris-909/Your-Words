@@ -45,7 +45,9 @@ const Home = () => {
 
   const getUserName = async () => {
     const res = await Auth.currentUserInfo();
-    setUsername(res.username);
+    if (res && res.username) {
+      setUsername(res.username);
+    }
   };
 
   const fetchLists = () => {

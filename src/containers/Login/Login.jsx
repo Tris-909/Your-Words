@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Auth, API, graphqlOperation } from "aws-amplify";
+import { Auth } from "aws-amplify";
 import { useAppContext } from "libs/context-libs";
 import useBreakPoints from "libs/useMediaQueries";
 import {
