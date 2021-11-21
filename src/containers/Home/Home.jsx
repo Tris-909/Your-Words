@@ -44,9 +44,13 @@ const Home = () => {
   }, [userInfo]);
 
   const getUserName = async () => {
-    const res = await Auth.currentUserInfo();
+    const res = await Auth.currentAuthenticatedUser();
     if (res && res.username) {
+      // normal signIn
       setUsername(res.username);
+    } else if (res && res.email) {
+      // federation signIn
+      setUsername(res.email);
     }
   };
 

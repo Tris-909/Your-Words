@@ -173,6 +173,7 @@ const Images = ({ image }) => {
             onOpen={onOpen}
             onClose={onClose}
             image={image}
+            setCurrentImageIndex={setCurrentImageIndex}
           />
           <IconButton as={BiTrash} onClick={() => deleteImagesHandler()} />
         </Box>

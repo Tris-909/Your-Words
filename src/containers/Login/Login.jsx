@@ -15,9 +15,8 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-import { executeGraphqlRequest } from "libs/awsLib";
-import { createUser } from "graphql/mutations";
-import * as uuid from "uuid";
+import SignInWithGoogle from "../../components/Buttons/GoogleSignIn/GoogleSignIn";
+import { createUserProfile } from "./utils/createNewUser";
 import "./Login.scss";
 
 const Login = () => {
@@ -68,17 +67,6 @@ const Login = () => {
     }
   };
 
-  const createUserProfile = async (username) => {
-    const user = {
-      id: uuid.v1(),
-      username: username,
-      type: "USER",
-      boardHeight: 100,
-    };
-
-    await executeGraphqlRequest(createUser, user);
-  };
-
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
     setError("");
@@ -93,7 +81,6 @@ const Login = () => {
     }
 
     try {
-      console.log("username and pass", email, password);
       const newUser = await Auth.signUp({
         username: email,
         password: password,
@@ -125,7 +112,7 @@ const Login = () => {
     try {
       await Auth.confirmSignUp(email, confirmationCode);
       const result = await Auth.signIn(email, password);
-      createUserProfile(result.username);
+      createUserProfile(result.username, result.attributes.email);
       setIsAuthenticated(true);
       history.push("/");
     } catch (error) {
@@ -234,21 +221,27 @@ const Login = () => {
                 alignItems="center"
                 marginTop={2}
               >
-                <Button
-                  type="submit"
-                  isLoading={isLoading}
-                  disabled={!validateForm()}
-                  bg="#F56565"
-                  color="white"
-                  variant="solid"
-                  marginTop={isSM ? 12 : 6}
-                  marginBottom={isSM ? 12 : 6}
-                  p={isSM ? 8 : 0}
-                  fontSize={isSM ? "32px" : "16px"}
-                  className="SubmitButton"
-                >
-                  Login
-                </Button>
+                <Box marginTop={isSM ? 12 : 6}>
+                  <SignInWithGoogle />
+
+                  <Button
+                    type="submit"
+                    isLoading={isLoading}
+                    disabled={!validateForm()}
+                    bg="#F56565"
+                    color="white"
+                    variant="solid"
+                    marginTop={isSM ? 6 : 6}
+                    marginBottom={isSM ? 12 : 6}
+                    p={isSM ? 8 : 0}
+                    fontSize={isSM ? "32px" : "16px"}
+                    width="100%"
+                    className="SubmitButton"
+                  >
+                    Login
+                  </Button>
+                </Box>
+
                 <Box justifySelf="flex-end">
                   <Text
                     className="SignUp"

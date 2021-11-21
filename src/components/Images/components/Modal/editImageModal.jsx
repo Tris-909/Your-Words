@@ -24,7 +24,13 @@ import AddMoreEditImages from "components/Images/components/EditImages/editAddIm
 import CommonImage from "components/Common/Image/Image";
 import * as uuid from "uuid";
 
-const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
+const EditImagesModal = ({
+  isOpen,
+  onOpen,
+  onClose,
+  image,
+  setCurrentImageIndex,
+}) => {
   const { editImage } = useSelector((state) => state.images);
   const dispatch = useDispatch();
   const [previewImages, setPreviewImages] = useState([]);
@@ -79,6 +85,7 @@ const EditImagesModal = ({ isOpen, onOpen, onClose, image }) => {
     setAddImages([]);
 
     setIsLoading(false);
+    setCurrentImageIndex(0);
     onClose();
   };
 
