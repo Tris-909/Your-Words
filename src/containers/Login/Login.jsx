@@ -58,7 +58,6 @@ const Login = () => {
 
     try {
       await Auth.signIn(email, password);
-
       setIsAuthenticated(true);
       setIsLoading(false);
     } catch (error) {

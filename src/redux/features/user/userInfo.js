@@ -1,22 +1,32 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { byUsername } from "graphql/queries";
+import { getUser } from "graphql/queries";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 
 export const getAuth = createAsyncThunk("user/getAuth", async () => {
-  const response = await Auth.currentUserInfo();
-  return response;
+  const auth = await Auth.currentAuthenticatedUser();
+  const { identityId } = await Auth.currentUserCredentials();
+
+  if (auth.username) {
+    // Return this for normal signIn user
+    return {
+      ...auth.attributes,
+      id: identityId,
+    };
+  }
+
+  return auth;
 });
 
 export const getUserInfo = createAsyncThunk(
   "user/getUserInfo",
-  async (username) => {
+  async (userId) => {
     try {
       const data = await API.graphql(
-        graphqlOperation(byUsername, {
-          username: username,
+        graphqlOperation(getUser, {
+          id: userId,
         })
       );
-      return data.data.byUsername.items[0];
+      return data.data.getUser;
     } catch (error) {
       console.log("ERROR", error);
     }

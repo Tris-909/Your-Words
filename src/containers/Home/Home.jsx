@@ -24,7 +24,6 @@ const Home = () => {
   const { images } = useSelector((state) => state.images);
   const { stickers } = useSelector((state) => state.stickers);
   const { userInfo } = useSelector((state) => state.user);
-  const [username, setUsername] = useState(null);
   const [showEditHeading, setShowEditHeading] = useState(false);
   const dispatch = useDispatch();
 
@@ -34,12 +33,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (username) {
-      dispatch(getUserInfo(username));
-    }
-  }, [username]);
-
-  useEffect(() => {
     fetchLists();
   }, [userInfo]);
 
@@ -47,10 +40,10 @@ const Home = () => {
     const res = await Auth.currentAuthenticatedUser();
     if (res && res.username) {
       // normal signIn
-      setUsername(res.username);
+      dispatch(getUserInfo(res.username));
     } else if (res && res.email) {
       // federation signIn
-      setUsername(res.email);
+      dispatch(getUserInfo(res.id));
     }
   };
 
