@@ -72,6 +72,8 @@ const SignInWithGoogle = () => {
     // init the Google SDK client
     const g = window.gapi;
 
+    console.log("Debug", GOOGLE_CLIENT_ID);
+
     g.load("auth2", function () {
       g.auth2.init({
         client_id: GOOGLE_CLIENT_ID,
