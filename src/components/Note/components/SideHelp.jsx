@@ -13,6 +13,8 @@ import {
   BiMessageSquareMinus,
   BiError,
   BiText,
+  BiLockAlt,
+  BiLockOpenAlt,
 } from "react-icons/bi";
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
 import CreateImagesModal from "components/Images/components/Modal/createImageModal";
@@ -94,6 +96,24 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
     dispatch(createHeadingThunk(userInfo.data.id));
   };
 
+  const toggleEditMode = async (mode) => {
+    if (mode === "disable") {
+      const changes = {
+        id: userInfo.data.id,
+        lockEdit: true,
+      };
+      await executeGraphqlRequest(updateUser, changes);
+      dispatch(getUserInfo(userInfo.data.username));
+    } else {
+      const changes = {
+        id: userInfo.data.id,
+        lockEdit: false,
+      };
+      await executeGraphqlRequest(updateUser, changes);
+      dispatch(getUserInfo(userInfo.data.username));
+    }
+  };
+
   return (
     <Menu>
       <MenuButton
@@ -161,6 +181,23 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
         >
           Shrink Board
         </MenuItem>
+        {userInfo?.data?.lockEdit ? (
+          <MenuItem
+            icon={
+              <BiLockOpenAlt viewBox="0 0 22 22" wdith="1rem" height="1rem" />
+            }
+            onClick={() => toggleEditMode("enable")}
+          >
+            Enable Edit
+          </MenuItem>
+        ) : (
+          <MenuItem
+            icon={<BiLockAlt viewBox="0 0 22 22" wdith="1rem" height="1rem" />}
+            onClick={() => toggleEditMode("disable")}
+          >
+            Disable Edit
+          </MenuItem>
+        )}
       </MenuList>
     </Menu>
   );
