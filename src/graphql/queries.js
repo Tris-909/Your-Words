@@ -22,6 +22,7 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      lockEdit
       createdAt
       updatedAt
     }
@@ -42,6 +43,7 @@ export const listUsers = /* GraphQL */ `
         todos {
           nextToken
         }
+        lockEdit
         createdAt
         updatedAt
       }
@@ -258,6 +260,7 @@ export const byUsername = /* GraphQL */ `
         todos {
           nextToken
         }
+        lockEdit
         createdAt
         updatedAt
       }

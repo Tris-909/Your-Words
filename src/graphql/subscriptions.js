@@ -22,6 +22,7 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      lockEdit
       createdAt
       updatedAt
     }
@@ -48,6 +49,7 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      lockEdit
       createdAt
       updatedAt
     }
@@ -74,6 +76,7 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      lockEdit
       createdAt
       updatedAt
     }

@@ -25,6 +25,7 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      lockEdit
       createdAt
       updatedAt
     }
@@ -54,6 +55,7 @@ export const updateUser = /* GraphQL */ `
         }
         nextToken
       }
+      lockEdit
       createdAt
       updatedAt
     }
@@ -83,6 +85,7 @@ export const deleteUser = /* GraphQL */ `
         }
         nextToken
       }
+      lockEdit
       createdAt
       updatedAt
     }
