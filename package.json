@@ -42,7 +42,8 @@
     "build": "react-scripts build",
     "save": "git push origin HEAD",
     "push": "amplify push",
-    "deploy": "amplify publish"
+    "deploy": "amplify publish",
+    "doc": "grip"
   },
   "eslintConfig": {
     "extends": [

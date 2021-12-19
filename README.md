@@ -45,6 +45,10 @@
 
 # Features :rainbow:
 
+### User :pouting_man:
+
+- Google Sign In
+
 ### Notes :memo:
 
 - Create a normal note with header and content along with an image if you like
@@ -73,8 +77,9 @@
 - After creating an image album, you can :
 
 1. Drag & drop the Image inside the board
-2. Edit the Image to change / delete / add image to a an album
-3. View Image at fullsize
+2. Resize the Image as you want
+3. Edit the Image to change / delete / add image to a an album
+4. View Image at fullsize
 
 ### Sticker :smiley_cat:
 
