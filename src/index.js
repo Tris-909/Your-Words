@@ -6,10 +6,11 @@ import App from "./App";
 import { store } from "redux/store";
 import { Provider } from "react-redux";
 import "./theme/theme.css";
-
 import Amplify from "aws-amplify";
-import awsExports from "./aws-exports";
-Amplify.configure(awsExports);
+import awsExports2 from "./aws-exports-env";
+
+const ENV = process.env.REACT_APP_DEV_ENV;
+Amplify.configure(awsExports2[ENV]);
 
 ReactDOM.render(
   <ChakraProvider>
