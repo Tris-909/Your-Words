@@ -223,6 +223,8 @@ export const onCreateImages = /* GraphQL */ `
       type
       x
       y
+      width
+      height
       createdAt
       updatedAt
     }
@@ -240,6 +242,8 @@ export const onUpdateImages = /* GraphQL */ `
       type
       x
       y
+      width
+      height
       createdAt
       updatedAt
     }
@@ -257,6 +261,8 @@ export const onDeleteImages = /* GraphQL */ `
       type
       x
       y
+      width
+      height
       createdAt
       updatedAt
     }

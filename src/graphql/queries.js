@@ -163,6 +163,8 @@ export const getImages = /* GraphQL */ `
       type
       x
       y
+      width
+      height
       createdAt
       updatedAt
     }
@@ -185,6 +187,8 @@ export const listImages = /* GraphQL */ `
         type
         x
         y
+        width
+        height
         createdAt
         updatedAt
       }

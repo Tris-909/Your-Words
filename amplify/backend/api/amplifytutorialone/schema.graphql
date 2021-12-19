@@ -45,6 +45,8 @@ type Images @model {
   type: String
   x: Float
   y: Float
+  width: String
+  height: String
 }
 
 type Sticker @model {

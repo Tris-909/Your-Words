@@ -253,6 +253,8 @@ export const createImages = /* GraphQL */ `
       type
       x
       y
+      width
+      height
       createdAt
       updatedAt
     }
@@ -273,6 +275,8 @@ export const updateImages = /* GraphQL */ `
       type
       x
       y
+      width
+      height
       createdAt
       updatedAt
     }
@@ -293,6 +297,8 @@ export const deleteImages = /* GraphQL */ `
       type
       x
       y
+      width
+      height
       createdAt
       updatedAt
     }
