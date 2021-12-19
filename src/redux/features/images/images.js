@@ -47,7 +47,7 @@ export const images = createSlice({
       state.images.data = [...state.images.data, createdImages];
     },
     updateImagesLocally: (state, action) => {
-      const { id, newX, newY } = action.payload;
+      const { id, newX, newY, newWidth, newHeight } = action.payload;
 
       const currentDataList = state.images.data;
 
@@ -57,6 +57,8 @@ export const images = createSlice({
             ...currentDataList[index],
             x: newX ? newX : currentDataList[index].x,
             y: newY ? newY : currentDataList[index].y,
+            width: newWidth ? newWidth : currentDataList[index].width,
+            height: newHeight ? newHeight : currentDataList[index].height,
           };
         }
       });

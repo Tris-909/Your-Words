@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Rnd } from "react-rnd";
 import { Icon, Box } from "@chakra-ui/react";
@@ -26,7 +26,7 @@ import "./Images.scss";
 
 const ImageContainer = ({ src }) => {
   return (
-    <CommonImage source={src} width="400px" height="400px" borderRadius="0px" />
+    <CommonImage source={src} width="100%" height="100%" borderRadius="0px" />
   );
 };
 
@@ -38,6 +38,10 @@ const Images = ({ image }) => {
   const [position, setPosition] = useState({
     x: image.x,
     y: image.y,
+  });
+  const [size, setSize] = useState({
+    width: image.width || 410,
+    height: image.height || 410,
   });
 
   const deleteImagesHandler = async () => {
@@ -55,6 +59,7 @@ const Images = ({ image }) => {
   return (
     <Rnd
       position={{ x: position.x, y: position.y }}
+      size={{ width: size.width, height: size.height }}
       bounds="parent"
       onDragStop={async (e, d) => {
         setPosition({
@@ -70,12 +75,32 @@ const Images = ({ image }) => {
 
         dispatch(updateImagesLocally({ id: image.id, newY: d.y, newX: d.x }));
       }}
-      enableResizing={false}
+      onResizeStop={async (e, direction, ref, delta, position) => {
+        setSize({
+          width: ref.style.width,
+          height: ref.style.height,
+        });
+
+        await executeGraphqlRequest(updateImages, {
+          id: image.id,
+          width: ref.style.width,
+          height: ref.style.height,
+        });
+
+        dispatch(
+          updateImagesLocally({
+            id: image.id,
+            newWidth: ref.style.width,
+            newX: ref.style.height,
+          })
+        );
+      }}
+      enableResizing={true}
     >
       <Box
         position="relative"
-        width="410px"
-        height="410px"
+        width={`${size.width}`}
+        height={`${size.height}`}
         borderRadius="2px"
         bg="white"
         border="1px solid white"
@@ -109,7 +134,9 @@ const Images = ({ image }) => {
           showIndicators={false}
           showArrows={false}
           infiniteLoop={false}
-          width="400px"
+          style={{
+            height: "100%",
+          }}
         >
           {image.list.map((singleImage) => {
             return (
