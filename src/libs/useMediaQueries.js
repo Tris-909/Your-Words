@@ -21,12 +21,17 @@ const useBreakPoints = () => {
     query: "(min-device-width: 1201px)",
   });
 
+  const isViewable = useMediaQuery({
+    query: "(min-device-width: 1500px)",
+  });
+
   return {
     isXS,
     isSM,
     isMD,
     isLG,
     isExLg,
+    isViewable,
   };
 };
 
