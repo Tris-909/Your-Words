@@ -8,7 +8,7 @@ import { fetchStickers } from "redux/features/stickers/sticker";
 import { getUserInfo, getAuth } from "redux/features/user/userInfo";
 import { Auth } from "aws-amplify";
 import Note from "components/Note/Note";
-import SideHelp from "components/Note/components/SideHelp";
+import SideHelp from "components/SideHelp/SideHelp";
 import Heading from "components/Heading/Heading";
 import Images from "components/Images/Images";
 import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideHelp";
