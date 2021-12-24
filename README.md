@@ -48,6 +48,7 @@
 ### User :pouting_man:
 
 - Google Sign In
+- Enable / disable edit mode
 
 ### Notes :memo:
 
