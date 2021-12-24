@@ -14,7 +14,7 @@ import {
   deleteImagesLocally,
   loadViewFullSize,
 } from "redux/features/images/images";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import { deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import EditImagesModal from "components/Images/components/Modal/editImageModal";
@@ -32,6 +32,8 @@ const ImageContainer = ({ src }) => {
 
 const Images = ({ image }) => {
   const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.user);
+  const editIsLocked = userInfo?.data?.lockEdit;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width } = useWindowDimensions();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -75,6 +77,7 @@ const Images = ({ image }) => {
 
         dispatch(updateImagesLocally({ id: image.id, newY: d.y, newX: d.x }));
       }}
+      disableDragging={editIsLocked}
       onResizeStop={async (e, direction, ref, delta, position) => {
         setSize({
           width: ref.style.width,
@@ -95,7 +98,7 @@ const Images = ({ image }) => {
           })
         );
       }}
-      enableResizing={true}
+      enableResizing={!editIsLocked}
     >
       <Box
         position="relative"
@@ -107,7 +110,7 @@ const Images = ({ image }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        className="gallery-carousel hoverEffect"
+        className={`gallery-carousel ${editIsLocked ? "" : "hoverEffect"}`}
       >
         {currentImageIndex !== 0 && (
           <Icon
@@ -179,31 +182,35 @@ const Images = ({ image }) => {
             top="50%"
           />
         )}
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="flex-end"
-          width="115%"
-          gridGap={4}
-          position="absolute"
-          top="0%"
-          right={position.x <= width / 2 ? "-15%" : "0%"}
-          zIndex="-1"
-          cursor="initial"
-          className="hoverEffect"
-          transform={
-            position.x <= width / 2 ? "none" : "rotateZ(180deg) rotateX(180deg)"
-          }
-        >
-          <EditImagesModal
-            isOpen={isOpen}
-            onOpen={onOpen}
-            onClose={onClose}
-            image={image}
-            setCurrentImageIndex={setCurrentImageIndex}
-          />
-          <IconButton as={BiTrash} onClick={() => deleteImagesHandler()} />
-        </Box>
+        {!editIsLocked && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-end"
+            width="115%"
+            gridGap={4}
+            position="absolute"
+            top="0%"
+            right={position.x <= width / 2 ? "-15%" : "0%"}
+            zIndex="-1"
+            cursor="initial"
+            className="hoverEffect"
+            transform={
+              position.x <= width / 2
+                ? "none"
+                : "rotateZ(180deg) rotateX(180deg)"
+            }
+          >
+            <EditImagesModal
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+              image={image}
+              setCurrentImageIndex={setCurrentImageIndex}
+            />
+            <IconButton as={BiTrash} onClick={() => deleteImagesHandler()} />
+          </Box>
+        )}
       </Box>
     </Rnd>
   );

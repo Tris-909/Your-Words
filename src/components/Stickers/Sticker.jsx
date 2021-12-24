@@ -8,7 +8,7 @@ import {
   updateStickerSizeLocally,
   removeStickerLocally,
 } from "redux/features/stickers/sticker";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateSticker, deleteSticker } from "graphql/mutations";
 import { executeGraphqlRequest, deleteFromS3 } from "libs/awsLib";
 import IconButton from "components/Buttons/IconButton/IconButton";
@@ -23,6 +23,8 @@ const Sticker = ({ sticker }) => {
     y: sticker.y,
   });
   const [showBorder, setShowBorder] = useState(false);
+  const { userInfo } = useSelector((state) => state.user);
+  const editIsLocked = userInfo?.data?.lockEdit;
   const ref = useRef();
   const dispatch = useDispatch();
 
@@ -83,17 +85,19 @@ const Sticker = ({ sticker }) => {
             newY: d.y,
           });
         }}
+        disableDragging={editIsLocked}
         onResizeStop={(e, direction, ref, delta, position) => {
           onResizeHandler({
             newWidth: ref.style.width,
             newHeight: ref.style.height,
           });
         }}
+        enableResizing={!editIsLocked}
         onClick={() => setShowBorder(true)}
         style={{
           border: showBorder ? "1px solid black" : "none",
         }}
-        className="hoverEffect"
+        className={editIsLocked ? "" : "hoverEffect"}
       >
         <CommonImage
           ref={ref}
@@ -101,20 +105,22 @@ const Sticker = ({ sticker }) => {
           source={sticker.source}
           draggable="false"
         />
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="flex-end"
-          width="115%"
-          gridGap={4}
-          position="absolute"
-          top="0%"
-          right="-25%"
-          zIndex="-1"
-          cursor="initial"
-        >
-          <IconButton as={BiTrash} onClick={() => deleteStickerHandler()} />
-        </Box>
+        {!editIsLocked && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="flex-end"
+            width="115%"
+            gridGap={4}
+            position="absolute"
+            top="0%"
+            right="-25%"
+            zIndex="-1"
+            cursor="initial"
+          >
+            <IconButton as={BiTrash} onClick={() => deleteStickerHandler()} />
+          </Box>
+        )}
       </Rnd>
     </>
   );

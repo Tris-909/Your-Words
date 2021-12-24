@@ -49,7 +49,12 @@ const initialState = {
 export const user = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    updateUserInfoLocally: (state, action) => {
+      const { lockEdit } = action.payload;
+      state.userInfo.data.lockEdit = lockEdit;
+    },
+  },
   extraReducers: {
     [getUserInfo.pending.type]: (state, action) => {
       state.userInfo = {
@@ -95,5 +100,7 @@ export const user = createSlice({
     },
   },
 });
+
+export const { updateUserInfoLocally } = user.actions;
 
 export default user.reducer;

@@ -34,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchLists();
-  }, [userInfo]);
+  }, [userInfo?.data?.id]);
 
   const getUserName = async () => {
     const res = await Auth.currentAuthenticatedUser();

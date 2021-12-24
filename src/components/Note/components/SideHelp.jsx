@@ -24,7 +24,10 @@ import { executeGraphqlRequest } from "libs/awsLib";
 import { reduceBoardHeight } from "libs/reduceBoardHeight";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "graphql/mutations";
-import { getUserInfo } from "redux/features/user/userInfo";
+import {
+  getUserInfo,
+  updateUserInfoLocally,
+} from "redux/features/user/userInfo";
 import { createHeadingThunk } from "redux/features/heading/heading";
 import "./SideHelp.scss";
 
@@ -103,14 +106,22 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
         lockEdit: true,
       };
       await executeGraphqlRequest(updateUser, changes);
-      dispatch(getUserInfo(userInfo.data.username));
+      dispatch(
+        updateUserInfoLocally({
+          lockEdit: true,
+        })
+      );
     } else {
       const changes = {
         id: userInfo.data.id,
         lockEdit: false,
       };
       await executeGraphqlRequest(updateUser, changes);
-      dispatch(getUserInfo(userInfo.data.username));
+      dispatch(
+        updateUserInfoLocally({
+          lockEdit: false,
+        })
+      );
     }
   };
 

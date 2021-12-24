@@ -17,16 +17,19 @@ import { deleteFromS3, executeGraphqlRequest } from "libs/awsLib";
 import { CloseIcon, SettingsIcon } from "@chakra-ui/icons";
 import { BiDetail } from "react-icons/bi";
 import { deleteTodo, updateTodo } from "graphql/mutations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateLocalXYPosition } from "redux/features/notes/note";
 import Interweave from "interweave";
 import CommonImage from "components/Common/Image/Image";
+import { FaEye } from "react-icons/fa";
 import "./Note.scss";
 
 const Note = ({ note, fetchLists }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [onHide, setOnHide] = useState(true);
   const [currentModalState, setCurrentModalState] = useState(null);
+  const { userInfo } = useSelector((state) => state.user);
+  const editIsLocked = userInfo?.data?.lockEdit;
   const dispatch = useDispatch();
 
   const deleteNote = async (objectKey) => {
@@ -35,6 +38,12 @@ const Note = ({ note, fetchLists }) => {
     });
     await deleteFromS3(objectKey);
     fetchLists();
+  };
+
+  const viewNoteInDetail = () => {
+    setOnHide(true);
+    setCurrentModalState("detail");
+    onOpen();
   };
 
   const savePositionToDatabases = async (data) => {
@@ -68,41 +77,38 @@ const Note = ({ note, fetchLists }) => {
           <Box fontWeight="bold" width="100%">
             {note.name}
           </Box>
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<SettingsIcon className="hoverAnimation" />}
-              variant="none"
-            />
-            <MenuList zIndex="2">
-              <MenuItem
-                icon={<BiDetail />}
-                onClick={() => {
-                  setOnHide(true);
-                  setCurrentModalState("detail");
-                  onOpen();
-                }}
-              >
-                View Note
-              </MenuItem>
-              <EditNoteModal
-                note={note}
-                isOpen={isOpen}
-                onClose={onClose}
-                onOpen={onOpen}
-                currentModalState={currentModalState}
-                setCurrentModalState={setCurrentModalState}
-                fetchLists={fetchLists}
+          {editIsLocked ? (
+            <FaEye className="hyperlink" onClick={viewNoteInDetail} />
+          ) : (
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label="Options"
+                icon={<SettingsIcon className="hoverAnimation" />}
+                variant="none"
               />
-              <MenuItem
-                icon={<CloseIcon />}
-                onClick={() => deleteNote(note.image)}
-              >
-                Delete Note
-              </MenuItem>
-            </MenuList>
-          </Menu>
+              <MenuList zIndex="2">
+                <MenuItem icon={<BiDetail />} onClick={viewNoteInDetail}>
+                  View Note
+                </MenuItem>
+                <EditNoteModal
+                  note={note}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  onOpen={onOpen}
+                  currentModalState={currentModalState}
+                  setCurrentModalState={setCurrentModalState}
+                  fetchLists={fetchLists}
+                />
+                <MenuItem
+                  icon={<CloseIcon />}
+                  onClick={() => deleteNote(note.image)}
+                >
+                  Delete Note
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          )}
         </HStack>
 
         {note.labels && (

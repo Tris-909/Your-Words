@@ -7,6 +7,10 @@
   transition: transform 0.8s ease-out;
 }
 
+.hyperlink {
+  cursor: pointer;
+}
+
 .hoverAnimation:hover {
   transform: rotate(180deg);
 }

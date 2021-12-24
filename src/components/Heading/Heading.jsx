@@ -30,6 +30,8 @@ const Heading = ({
   const dispatch = useDispatch();
   const [input, setInput] = useState(content);
   const { editHeading } = useSelector((state) => state.headings);
+  const { userInfo } = useSelector((state) => state.user);
+  const editIsLocked = userInfo?.data?.lockEdit;
 
   const activeInput = () => {
     setShowEditHeading(true);
@@ -88,13 +90,15 @@ const Heading = ({
           gridGap="6"
           padding="8px"
           wordBreak="break-word"
-          className="hoverEffect"
+          className={editIsLocked ? "" : "hoverEffect"}
         >
           {input}
-          <Box display="flex" flexDirection="column" gridGap="4">
-            <IconButton as={BiPen} onClick={() => activeInput()} />
-            <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
-          </Box>
+          {!editIsLocked && (
+            <Box display="flex" flexDirection="column" gridGap="4">
+              <IconButton as={BiPen} onClick={() => activeInput()} />
+              <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
+            </Box>
+          )}
         </Box>
       )}
     </>
