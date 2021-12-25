@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateSticker, deleteSticker } from "graphql/mutations";
 import { executeGraphqlRequest, deleteFromS3 } from "libs/awsLib";
 import IconButton from "components/Buttons/IconButton/IconButton";
+import DeleteItem from "components/Common/DeleteItem/DeleteItem";
 
 const Sticker = ({ sticker }) => {
   const [size, setSize] = useState({
@@ -105,22 +106,10 @@ const Sticker = ({ sticker }) => {
           source={sticker.source}
           draggable="false"
         />
-        {!editIsLocked && (
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-end"
-            width="115%"
-            gridGap={4}
-            position="absolute"
-            top="0%"
-            right="-25%"
-            zIndex="-1"
-            cursor="initial"
-          >
-            <IconButton as={BiTrash} onClick={() => deleteStickerHandler()} />
-          </Box>
-        )}
+        <DeleteItem
+          editIsLocked={editIsLocked}
+          deleteHandler={deleteStickerHandler}
+        />
       </Rnd>
     </>
   );

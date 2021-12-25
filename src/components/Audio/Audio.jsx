@@ -2,9 +2,13 @@ import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CommonAudio from "components/Common/Audio/Audio";
 import { Rnd } from "react-rnd";
-import { updateAudio } from "graphql/mutations";
+import { updateAudio, deleteAudio } from "graphql/mutations";
 import { executeGraphqlRequest, deleteFromS3 } from "libs/awsLib";
-import { updateAudioPositionLocally } from "redux/features/audio/audio";
+import {
+  updateAudioPositionLocally,
+  removeAudioLocally,
+} from "redux/features/audio/audio";
+import DeleteItem from "components/Common/DeleteItem/DeleteItem";
 
 const Audio = ({ audio }) => {
   const { userInfo } = useSelector((state) => state.user);
@@ -31,6 +35,16 @@ const Audio = ({ audio }) => {
     dispatch(updateAudioPositionLocally({ id: audio.id, newX, newY }));
   };
 
+  const deleteAudioHandler = async () => {
+    await executeGraphqlRequest(deleteAudio, {
+      id: audio.id,
+    });
+
+    await deleteFromS3(audio.source);
+
+    dispatch(removeAudioLocally({ id: audio.id }));
+  };
+
   return (
     <Rnd
       position={{ x: position.x, y: position.y }}
@@ -43,11 +57,17 @@ const Audio = ({ audio }) => {
       }}
       disableDragging={editIsLocked}
       enableResizing={false}
+      className={editIsLocked ? "" : "hoverEffect"}
     >
       <CommonAudio
         ref={ref}
         editIsLocked={editIsLocked}
         source={audio.source}
+      />
+      <DeleteItem
+        editIsLocked={editIsLocked}
+        deleteHandler={() => deleteAudioHandler()}
+        right="-15%"
       />
     </Rnd>
   );

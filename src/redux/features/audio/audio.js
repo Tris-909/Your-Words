@@ -50,6 +50,16 @@ export const audio = createSlice({
       });
       state.audios.data = currentDataList;
     },
+    removeAudioLocally: (state, action) => {
+      const { id } = action.payload;
+      const currentDataList = state.audios.data;
+
+      const deletePosition = currentDataList.findIndex(
+        (item) => item.id === id
+      );
+      currentDataList.splice(deletePosition, 1);
+      state.audios.data = currentDataList;
+    },
   },
   extraReducers: {
     [fetchAudios.pending.type]: (state, action) => {
@@ -76,6 +86,10 @@ export const audio = createSlice({
   },
 });
 
-export const { createAudioLocally, updateAudioPositionLocally } = audio.actions;
+export const {
+  createAudioLocally,
+  updateAudioPositionLocally,
+  removeAudioLocally,
+} = audio.actions;
 
 export default audio.reducer;
