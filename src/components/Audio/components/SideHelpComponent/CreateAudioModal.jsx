@@ -8,6 +8,8 @@ import {
   Button,
   MenuItem,
   Box,
+  Alert,
+  AlertIcon,
 } from "@chakra-ui/react";
 import { BiUserVoice, BiX, BiUpload } from "react-icons/bi";
 import { useDropzone } from "react-dropzone";
@@ -28,11 +30,20 @@ const CreateAudioModal = ({
 }) => {
   const [previewURL, setPreviewURL] = useState(null);
   const [audioFile, setAudioFile] = useState(null);
+  const [error, setError] = useState("");
   const onDrop = useCallback((acceptedFiles) => {
-    setPreviewURL(URL.createObjectURL(acceptedFiles[0]));
-    setAudioFile(acceptedFiles[0]);
+    if (acceptedFiles.length === 0) {
+      setError("File type can only be .mp4");
+    } else {
+      setPreviewURL(URL.createObjectURL(acceptedFiles[0]));
+      setAudioFile(acceptedFiles[0]);
+      setError("");
+    }
   }, []);
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: ".mp4",
+  });
   const { userInfo } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -52,7 +63,13 @@ const CreateAudioModal = ({
 
     setPreviewURL(null);
     setAudioFile(null);
+    setError("");
     onClose();
+  };
+
+  const closeModalHandler = () => {
+    onClose();
+    setError("");
   };
 
   return (
@@ -70,7 +87,7 @@ const CreateAudioModal = ({
       {modalState === "createAudio" && (
         <CommonModal
           isOpen={isOpen}
-          onClose={onClose}
+          onClose={closeModalHandler}
           customeMaxWContent="60rem"
           scrollBehavior="outside"
         >
@@ -89,6 +106,12 @@ const CreateAudioModal = ({
                   Upload Audio
                 </Button>
               </div>
+            )}
+            {error && (
+              <Alert status="error" mt="4">
+                <AlertIcon />
+                {error}
+              </Alert>
             )}
 
             {previewURL && (
@@ -129,7 +152,7 @@ const CreateAudioModal = ({
             >
               Save
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={closeModalHandler}>Cancel</Button>
           </ModalFooter>
         </CommonModal>
       )}
