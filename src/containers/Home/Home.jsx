@@ -5,6 +5,7 @@ import { fetchListNotes } from "redux/features/notes/note";
 import { fetchHeadings } from "redux/features/heading/heading";
 import { fetchImages } from "redux/features/images/images";
 import { fetchStickers } from "redux/features/stickers/sticker";
+import { fetchAudios } from "redux/features/audio/audio";
 import { getUserInfo, getAuth } from "redux/features/user/userInfo";
 import { Auth } from "aws-amplify";
 import Note from "components/Note/Note";
@@ -23,6 +24,7 @@ const Home = () => {
   const { editHeading } = useSelector((state) => state.headings);
   const { images } = useSelector((state) => state.images);
   const { stickers } = useSelector((state) => state.stickers);
+  const { audios } = useSelector((state) => state.audio);
   const { userInfo } = useSelector((state) => state.user);
   const [showEditHeading, setShowEditHeading] = useState(false);
   const { isViewable } = useBreakPoints();
@@ -54,6 +56,7 @@ const Home = () => {
       dispatch(fetchHeadings(userInfo.data.id));
       dispatch(fetchImages(userInfo.data.id));
       dispatch(fetchStickers(userInfo.data.id));
+      dispatch(fetchAudios(userInfo.data.id));
     }
   };
 
@@ -103,7 +106,10 @@ const Home = () => {
           stickers.data.map((sticker) => {
             return <Sticker key={sticker.id} sticker={sticker} />;
           })}
-        {/* <Audio /> */}
+        {audios.data &&
+          audios.data.map((audio) => {
+            return <Audio audio={audio} />;
+          })}
         <SideHelp
           isOpen={isOpen}
           onOpen={onOpen}

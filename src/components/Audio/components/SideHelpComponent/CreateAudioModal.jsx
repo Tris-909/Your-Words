@@ -14,6 +14,10 @@ import { useDropzone } from "react-dropzone";
 import ReactPlayer from "react-player";
 import IconButton from "components/Buttons/IconButton/IconButton";
 import { uploadToS3, executeGraphqlRequest } from "libs/awsLib";
+import { createAudio } from "graphql/mutations";
+import { useSelector, useDispatch } from "react-redux";
+import { createAudioLocally } from "redux/features/audio/audio";
+import * as uuid from "uuid";
 
 const CreateAudioModal = ({
   isOpen,
@@ -29,21 +33,27 @@ const CreateAudioModal = ({
     setAudioFile(acceptedFiles[0]);
   }, []);
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { userInfo } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
-    // Create a DynamoDB Obj
-
-    // Create a S3 Object
     const attachment = await uploadToS3(audioFile);
-    // Clear the current State
 
-    // Update all of that in redux locally
+    const audioForDynamoDB = {
+      id: uuid.v1(),
+      userId: userInfo.data.id,
+      type: "AUDIO",
+      source: attachment,
+      x: Math.round(window.innerWidth / 2),
+      y: Math.round(window.pageYOffset),
+    };
+    await executeGraphqlRequest(createAudio, audioForDynamoDB);
+    dispatch(createAudioLocally({ createdAudio: audioForDynamoDB }));
 
-    // Close Modal
+    setPreviewURL(null);
+    setAudioFile(null);
     onClose();
   };
-
-  console.log("audioFile", audioFile);
 
   return (
     <>

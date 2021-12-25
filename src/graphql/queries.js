@@ -203,7 +203,7 @@ export const getAudio = /* GraphQL */ `
     getAudio(id: $id) {
       id
       userId
-      souce
+      source
       x
       y
       type
@@ -222,7 +222,7 @@ export const listAudio = /* GraphQL */ `
       items {
         id
         userId
-        souce
+        source
         x
         y
         type

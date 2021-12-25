@@ -53,7 +53,7 @@ type Images @model {
 type Audio @model {
   id: ID!
   userId: ID!
-  souce: String
+  source: String
   x: Float
   y: Float
   type: String

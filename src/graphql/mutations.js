@@ -315,7 +315,7 @@ export const createAudio = /* GraphQL */ `
     createAudio(input: $input, condition: $condition) {
       id
       userId
-      souce
+      source
       x
       y
       type
@@ -332,7 +332,7 @@ export const updateAudio = /* GraphQL */ `
     updateAudio(input: $input, condition: $condition) {
       id
       userId
-      souce
+      source
       x
       y
       type
@@ -349,7 +349,7 @@ export const deleteAudio = /* GraphQL */ `
     deleteAudio(input: $input, condition: $condition) {
       id
       userId
-      souce
+      source
       x
       y
       type

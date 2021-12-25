@@ -2,6 +2,9 @@ import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CommonAudio from "components/Common/Audio/Audio";
 import { Rnd } from "react-rnd";
+import { updateAudio } from "graphql/mutations";
+import { executeGraphqlRequest, deleteFromS3 } from "libs/awsLib";
+import { updateAudioPositionLocally } from "redux/features/audio/audio";
 
 const Audio = ({ audio }) => {
   const { userInfo } = useSelector((state) => state.user);
@@ -9,8 +12,8 @@ const Audio = ({ audio }) => {
   const dispatch = useDispatch();
   const ref = useRef();
   const [position, setPosition] = useState({
-    x: 0,
-    y: 0,
+    x: audio.x,
+    y: audio.y,
   });
 
   const onChangePostionHandler = async ({ newX, newY }) => {
@@ -19,13 +22,13 @@ const Audio = ({ audio }) => {
       y: newY,
     });
 
-    // await executeGraphqlRequest(updateSticker, {
-    //   id: sticker.id,
-    //   x: newX,
-    //   y: newY,
-    // });
+    await executeGraphqlRequest(updateAudio, {
+      id: audio.id,
+      x: newX,
+      y: newY,
+    });
 
-    // dispatch(updateStickerPositionLocally({ id: sticker.id, newX, newY }));
+    dispatch(updateAudioPositionLocally({ id: audio.id, newX, newY }));
   };
 
   return (
@@ -33,22 +36,18 @@ const Audio = ({ audio }) => {
       position={{ x: position.x, y: position.y }}
       bounds="parent"
       onDragStop={(e, d) => {
-        setPosition({
-          x: d.x,
-          y: d.y,
+        onChangePostionHandler({
+          newX: d.x,
+          newY: d.y,
         });
-        // onChangePostionHandler({
-        //   newX: d.x,
-        //   newY: d.y,
-        // });
       }}
-      disableDragging={false}
+      disableDragging={editIsLocked}
       enableResizing={false}
     >
       <CommonAudio
         ref={ref}
         editIsLocked={editIsLocked}
-        source={"1640403282338-undefined"}
+        source={audio.source}
       />
     </Rnd>
   );

@@ -276,7 +276,7 @@ export const onCreateAudio = /* GraphQL */ `
     onCreateAudio {
       id
       userId
-      souce
+      source
       x
       y
       type
@@ -290,7 +290,7 @@ export const onUpdateAudio = /* GraphQL */ `
     onUpdateAudio {
       id
       userId
-      souce
+      source
       x
       y
       type
@@ -304,7 +304,7 @@ export const onDeleteAudio = /* GraphQL */ `
     onDeleteAudio {
       id
       userId
-      souce
+      source
       x
       y
       type
