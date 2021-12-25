@@ -11,6 +11,7 @@ import Note from "components/Note/Note";
 import SideHelp from "components/SideHelp/SideHelp";
 import Heading from "components/Heading/Heading";
 import Images from "components/Images/Images";
+import Audio from "components/Audio/Audio";
 import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideHelp";
 import Sticker from "components/Stickers/Sticker";
 import useBreakPoints from "libs/useMediaQueries";
@@ -102,6 +103,7 @@ const Home = () => {
           stickers.data.map((sticker) => {
             return <Sticker key={sticker.id} sticker={sticker} />;
           })}
+        {/* <Audio /> */}
         <SideHelp
           isOpen={isOpen}
           onOpen={onOpen}

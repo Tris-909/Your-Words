@@ -19,6 +19,7 @@ import {
 import CreateNoteModal from "components/NoteModal/CreateNoteModal";
 import CreateImagesModal from "components/Images/components/Modal/createImageModal";
 import CreateStickerModal from "components/Stickers/components/SideHelpComponent/AddStickerModal";
+import CreateAudioModal from "components/Audio/components/SideHelpComponent/CreateAudioModal";
 import { ToastBody } from "components/Toast";
 import { executeGraphqlRequest } from "libs/awsLib";
 import { reduceBoardHeight } from "libs/reduceBoardHeight";
@@ -161,6 +162,13 @@ const SideHelp = ({ isOpen, onOpen, onClose, fetchLists }) => {
           setModalState={setModalState}
         />
         <CreateStickerModal
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          modalState={modalState}
+          setModalState={setModalState}
+        />
+        <CreateAudioModal
           isOpen={isOpen}
           onOpen={onOpen}
           onClose={onClose}
