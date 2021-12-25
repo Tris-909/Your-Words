@@ -307,6 +307,57 @@ export const deleteImages = /* GraphQL */ `
     }
   }
 `;
+export const createAudio = /* GraphQL */ `
+  mutation CreateAudio(
+    $input: CreateAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
+    createAudio(input: $input, condition: $condition) {
+      id
+      userId
+      souce
+      x
+      y
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateAudio = /* GraphQL */ `
+  mutation UpdateAudio(
+    $input: UpdateAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
+    updateAudio(input: $input, condition: $condition) {
+      id
+      userId
+      souce
+      x
+      y
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteAudio = /* GraphQL */ `
+  mutation DeleteAudio(
+    $input: DeleteAudioInput!
+    $condition: ModelAudioConditionInput
+  ) {
+    deleteAudio(input: $input, condition: $condition) {
+      id
+      userId
+      souce
+      x
+      y
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createSticker = /* GraphQL */ `
   mutation CreateSticker(
     $input: CreateStickerInput!

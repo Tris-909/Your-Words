@@ -50,6 +50,15 @@ type Images @model {
   height: String
 }
 
+type Audio @model {
+  id: ID!
+  userId: ID!
+  souce: String
+  x: Float
+  y: Float
+  type: String
+}
+
 type Sticker @model {
   id: ID!
   userId: ID!

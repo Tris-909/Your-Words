@@ -271,6 +271,48 @@ export const onDeleteImages = /* GraphQL */ `
     }
   }
 `;
+export const onCreateAudio = /* GraphQL */ `
+  subscription OnCreateAudio {
+    onCreateAudio {
+      id
+      userId
+      souce
+      x
+      y
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateAudio = /* GraphQL */ `
+  subscription OnUpdateAudio {
+    onUpdateAudio {
+      id
+      userId
+      souce
+      x
+      y
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteAudio = /* GraphQL */ `
+  subscription OnDeleteAudio {
+    onDeleteAudio {
+      id
+      userId
+      souce
+      x
+      y
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateSticker = /* GraphQL */ `
   subscription OnCreateSticker {
     onCreateSticker {

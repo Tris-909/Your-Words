@@ -34,7 +34,7 @@ const CreateAudioModal = ({
     // Create a DynamoDB Obj
 
     // Create a S3 Object
-    await uploadToS3(audioFile);
+    const attachment = await uploadToS3(audioFile);
     // Clear the current State
 
     // Update all of that in redux locally

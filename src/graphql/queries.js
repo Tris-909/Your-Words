@@ -198,6 +198,41 @@ export const listImages = /* GraphQL */ `
     }
   }
 `;
+export const getAudio = /* GraphQL */ `
+  query GetAudio($id: ID!) {
+    getAudio(id: $id) {
+      id
+      userId
+      souce
+      x
+      y
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listAudio = /* GraphQL */ `
+  query ListAudio(
+    $filter: ModelAudioFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAudio(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        souce
+        x
+        y
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getSticker = /* GraphQL */ `
   query GetSticker($id: ID!) {
     getSticker(id: $id) {
