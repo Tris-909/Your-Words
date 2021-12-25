@@ -88,6 +88,12 @@
 - You can drag & drop and resize your sticker
 - Delete it as wanted
 
+### Audio
+
+- You can add audio as mp4
+- You can drag and drop the player in the edit mode
+- You can delete it if you want to
+
 ### Board :straight_ruler:
 
 - The space where all your images, notes, headings, ... are inside
