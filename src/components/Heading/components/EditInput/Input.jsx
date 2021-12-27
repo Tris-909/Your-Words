@@ -128,8 +128,8 @@ const TextInput = ({
         }
         display="inline-block"
         wordBreak="break-word"
-        width={`${width}px`}
-        height={`${height}px`}
+        width={width}
+        height={height}
         background="transparent"
         padding="8px"
         border="none"

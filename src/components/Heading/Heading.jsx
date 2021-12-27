@@ -94,7 +94,13 @@ const Heading = ({
         >
           {input}
           {!editIsLocked && (
-            <Box display="flex" flexDirection="column" gridGap="4">
+            <Box
+              position="absolute"
+              right="-10%"
+              display="flex"
+              flexDirection="column"
+              gridGap="4"
+            >
               <IconButton as={BiPen} onClick={() => activeInput()} />
               <IconButton as={BiTrash} onClick={() => deleteHeadingHandler()} />
             </Box>
