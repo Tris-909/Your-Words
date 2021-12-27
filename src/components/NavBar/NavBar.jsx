@@ -1,13 +1,24 @@
-import { HStack, Text, Icon } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import {
+  HStack,
+  Text,
+  Box,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { LinkWrapper } from "../LinkWrapper/LinkWrapper";
 import { useAppContext } from "libs/context-libs";
 import { useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import { BiUser, BiExit } from "react-icons/bi";
 import "./NavBar.scss";
 
-const NavBar = ({ onOpen }) => {
+const NavBar = () => {
   const { setIsAuthenticated } = useAppContext();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
 
   const handlerLogOut = async () => {
@@ -25,20 +36,31 @@ const NavBar = ({ onOpen }) => {
       className="navbar"
     >
       <HStack alignItems="center">
-        <Icon
-          color="white"
-          cursor="pointer"
-          boxSize={7}
-          as={HamburgerIcon}
-          onClick={onOpen}
-        />
-        <Text className="logo" pl={6}>
+        <Text className="logo">
           <LinkWrapper to="/">Your Words</LinkWrapper>
         </Text>
       </HStack>
-      <Text color="white" fontSize="18px" onClick={() => handlerLogOut()}>
-        <LinkWrapper to="/auth">Sign Out</LinkWrapper>
-      </Text>
+      <Box>
+        <Menu isOpen={isOpen}>
+          <MenuButton
+            as={Avatar}
+            onMouseEnter={() => onOpen()}
+            onMouseLeave={() => onClose()}
+            src="https://bit.ly/code-beast"
+          ></MenuButton>
+          <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
+            <MenuItem icon={<BiUser className="icon" boxSize="3em" />}>
+              Profile
+            </MenuItem>
+            <MenuItem
+              icon={<BiExit className="icon" boxSize="3em" />}
+              onClick={handlerLogOut}
+            >
+              Sign Out
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
     </HStack>
   );
 };
