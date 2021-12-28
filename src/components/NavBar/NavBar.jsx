@@ -15,11 +15,17 @@ import { useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { BiUser, BiExit } from "react-icons/bi";
 import "./NavBar.scss";
+import { useSelector } from "react-redux";
+import config from "aws-exports-env";
+import NoAvatarImage from "containers/Profile/no-avatar.jpg";
+const ENV = process.env.REACT_APP_DEV_ENV;
 
 const NavBar = () => {
   const { setIsAuthenticated } = useAppContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
+  const { auth } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
 
   const handlerLogOut = async () => {
     await Auth.signOut();
@@ -46,7 +52,11 @@ const NavBar = () => {
             as={Avatar}
             onMouseEnter={() => onOpen()}
             onMouseLeave={() => onClose()}
-            src="https://bit.ly/code-beast"
+            src={
+              auth?.data?.id && userInfo.data.avatarSource
+                ? `https://${config[ENV].aws_user_files_s3_bucket}.s3.${config[ENV].aws_user_files_s3_bucket_region}.amazonaws.com/private/${auth.data.id}/${userInfo.data.avatarSource}`
+                : NoAvatarImage
+            }
           ></MenuButton>
           <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
             <MenuItem

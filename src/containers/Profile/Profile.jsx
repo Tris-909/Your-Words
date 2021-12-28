@@ -3,15 +3,23 @@ import { Box, Avatar, Input, Button } from "@chakra-ui/react";
 import { BiEdit, BiCheck } from "react-icons/bi";
 import { updateUserInfoLocally } from "redux/features/user/userInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { executeGraphqlRequest } from "libs/awsLib";
+import { executeGraphqlRequest, uploadToS3 } from "libs/awsLib";
 import { updateUser } from "graphql/mutations";
+import ImageUploading from "react-images-uploading";
+import config from "aws-exports-env";
+import NoAvatarImage from "./no-avatar.jpg";
+const ENV = process.env.REACT_APP_DEV_ENV;
 
 const ProfileScreen = () => {
   const { userInfo } = useSelector((state) => state.user);
+  const { auth } = useSelector((state) => state.user);
   const [name, setName] = useState(
     userInfo.data.name ? userInfo.data.name : ""
   );
   const [onEditName, setOnEditName] = useState(false);
+  const [image, setImage] = useState(
+    userInfo.data.avatarSource ? userInfo.data.avatarSource : null
+  );
   const dispatch = useDispatch();
 
   const changeNameHandler = async () => {
@@ -23,6 +31,18 @@ const ProfileScreen = () => {
     });
 
     setOnEditName(false);
+  };
+
+  const onChangeAvatar = async (imageList, addUpdateIndex) => {
+    const avatarSource = await uploadToS3(imageList[0].file);
+    setImage(avatarSource);
+
+    dispatch(updateUserInfoLocally({ avatarSource }));
+
+    await executeGraphqlRequest(updateUser, {
+      id: userInfo.data.id,
+      avatarSource: avatarSource,
+    });
   };
 
   return (
@@ -51,12 +71,33 @@ const ProfileScreen = () => {
             borderRight="2px dashed black"
             borderBottom="2px dashed black"
           >
-            <Avatar
-              width="250px"
-              height="250px"
-              name="Segun Adebayo"
-              src="https://bit.ly/sage-adebayo"
-            />
+            <ImageUploading
+              multiple
+              value={image}
+              onChange={onChangeAvatar}
+              dataURLKey="data_url"
+            >
+              {({
+                imageList,
+                onImageUpload,
+                onImageRemoveAll,
+                onImageUpdate,
+                onImageRemove,
+                isDragging,
+                dragProps,
+              }) => (
+                <Avatar
+                  width="250px"
+                  height="250px"
+                  onClick={onImageUpload}
+                  src={
+                    image
+                      ? `https://${config[ENV].aws_user_files_s3_bucket}.s3.${config[ENV].aws_user_files_s3_bucket_region}.amazonaws.com/private/${auth.data.id}/${image}`
+                      : NoAvatarImage
+                  }
+                />
+              )}
+            </ImageUploading>
           </Box>
           <Box
             height="40%"
@@ -114,7 +155,7 @@ const ProfileScreen = () => {
             )}
           </Box>
           <Box fontSize="30px" fontFamily={"cursive"} color="black" mt="20px">
-            Email : tranminhtri9090@gmail.com
+            Email : {userInfo.data.username}
           </Box>
           <Box fontSize="50px" fontFamily={"cursive"} color="black" mt="30px">
             Security :
