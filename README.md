@@ -49,6 +49,7 @@
 
 - Google Sign In
 - Enable / disable edit mode
+- Upload Avatar Image
 
 ### Notes :memo:
 
