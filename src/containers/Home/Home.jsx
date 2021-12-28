@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDisclosure, Box } from "@chakra-ui/react";
+import { useDisclosure, Box, useToast } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchListNotes } from "redux/features/notes/note";
 import { fetchHeadings } from "redux/features/heading/heading";
@@ -16,6 +16,7 @@ import Audio from "components/Audio/Audio";
 import HeadingSideHelp from "components/Heading/components/SideHelp/HeadingSideHelp";
 import Sticker from "components/Stickers/Sticker";
 import useBreakPoints from "libs/useMediaQueries";
+import { BiHappyBeaming } from "react-icons/bi";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,6 +29,8 @@ const Home = () => {
   const { userInfo } = useSelector((state) => state.user);
   const [showEditHeading, setShowEditHeading] = useState(false);
   const { isViewable } = useBreakPoints();
+  const toast = useToast();
+  const toastId = "welcome-toast";
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,6 +41,36 @@ const Home = () => {
   useEffect(() => {
     fetchLists();
   }, [userInfo?.data?.id]);
+
+  useEffect(() => {
+    if (
+      userInfo &&
+      userInfo.data &&
+      userInfo.data.name &&
+      !toast.isActive(toastId)
+    ) {
+      toast({
+        id: toastId,
+        render: () => (
+          <Box
+            color="black"
+            fontFamily="cursive"
+            p={3}
+            bg="white"
+            borderRadius="5px"
+          >
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <BiHappyBeaming width="20px" height="20px" />
+              <Box marginLeft="5px">Welcome back {userInfo.data.name},</Box>
+            </Box>
+
+            <Box>What's on your mind today ?</Box>
+          </Box>
+        ),
+        position: "top",
+      });
+    }
+  }, [userInfo?.data?.name]);
 
   const getUserName = async () => {
     const res = await Auth.currentAuthenticatedUser();
