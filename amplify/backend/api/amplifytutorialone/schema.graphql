@@ -7,6 +7,7 @@ type User
   boardHeight: Int
   todos: [Todo] @connection(keyName: "byUser", fields: ["id"])
   lockEdit: Boolean
+  name: String
 }
 
 type Todo @model @key(name: "byUser", fields: ["userId"]) {
