@@ -8,6 +8,7 @@ type User
   todos: [Todo] @connection(keyName: "byUser", fields: ["id"])
   lockEdit: Boolean
   name: String
+  avatarSource: String
 }
 
 type Todo @model @key(name: "byUser", fields: ["userId"]) {

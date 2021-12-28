@@ -24,6 +24,7 @@ export const getUser = /* GraphQL */ `
       }
       lockEdit
       name
+      avatarSource
       createdAt
       updatedAt
     }
@@ -46,6 +47,7 @@ export const listUsers = /* GraphQL */ `
         }
         lockEdit
         name
+        avatarSource
         createdAt
         updatedAt
       }
@@ -299,6 +301,7 @@ export const byUsername = /* GraphQL */ `
         }
         lockEdit
         name
+        avatarSource
         createdAt
         updatedAt
       }

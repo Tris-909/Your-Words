@@ -27,6 +27,7 @@ export const createUser = /* GraphQL */ `
       }
       lockEdit
       name
+      avatarSource
       createdAt
       updatedAt
     }
@@ -58,6 +59,7 @@ export const updateUser = /* GraphQL */ `
       }
       lockEdit
       name
+      avatarSource
       createdAt
       updatedAt
     }
@@ -89,6 +91,7 @@ export const deleteUser = /* GraphQL */ `
       }
       lockEdit
       name
+      avatarSource
       createdAt
       updatedAt
     }
