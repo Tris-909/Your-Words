@@ -3,7 +3,7 @@ import UnauthenticatedRoute from "routes/UnAuthenticatedRoute";
 import PrivateRoute from "routes/PrivateRoutes";
 import { Switch } from "react-router-dom";
 import { useAppContext } from "libs/context-libs";
-import { BasicLayout, Login, Home, NotFound } from "containers";
+import { BasicLayout, Login, Home, NotFound, ProfileScreen } from "containers";
 
 export default function Routes() {
   const { isAuthenticated } = useAppContext();
@@ -15,6 +15,11 @@ export default function Routes() {
       </UnauthenticatedRoute>
       <BasicLayout>
         <Switch>
+          <PrivateRoute
+            isAuthenticated={isAuthenticated}
+            component={ProfileScreen}
+            path="/profile"
+          />
           <PrivateRoute
             isAuthenticated={isAuthenticated}
             component={Home}

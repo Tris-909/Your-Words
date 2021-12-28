@@ -51,8 +51,12 @@ export const user = createSlice({
   initialState,
   reducers: {
     updateUserInfoLocally: (state, action) => {
-      const { lockEdit } = action.payload;
-      state.userInfo.data.lockEdit = lockEdit;
+      const { lockEdit, name } = action.payload;
+      state.userInfo.data = {
+        ...state.userInfo.data,
+        lockEdit: lockEdit ? lockEdit : state.userInfo.data.lockEdit,
+        name: name ? name : state.userInfo.data.name,
+      };
     },
   },
   extraReducers: {

@@ -49,7 +49,12 @@ const NavBar = () => {
             src="https://bit.ly/code-beast"
           ></MenuButton>
           <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
-            <MenuItem icon={<BiUser className="icon" boxSize="3em" />}>
+            <MenuItem
+              icon={<BiUser className="icon" boxSize="3em" />}
+              onClick={() => {
+                history.push("/profile");
+              }}
+            >
               Profile
             </MenuItem>
             <MenuItem
