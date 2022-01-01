@@ -171,6 +171,10 @@ export const headings = createSlice({
     clearEditHeading: (state, action) => {
       state.editHeading = {};
     },
+    clearHeadingState: (state, action) => {
+      state.headings = {};
+      state.editHeading = {};
+    },
   },
 
   extraReducers: {
@@ -226,6 +230,8 @@ export const {
   getEditHeading,
   updateEditHeading,
   clearEditHeading,
+  // Clear State
+  clearHeadingState,
 } = headings.actions;
 
 export default headings.reducer;

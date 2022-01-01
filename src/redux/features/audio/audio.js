@@ -60,6 +60,9 @@ export const audio = createSlice({
       currentDataList.splice(deletePosition, 1);
       state.audios.data = currentDataList;
     },
+    clearAudiosState: (state, action) => {
+      state.audios = {};
+    },
   },
   extraReducers: {
     [fetchAudios.pending.type]: (state, action) => {
@@ -90,6 +93,8 @@ export const {
   createAudioLocally,
   updateAudioPositionLocally,
   removeAudioLocally,
+  //Clear State
+  clearAudiosState,
 } = audio.actions;
 
 export default audio.reducer;

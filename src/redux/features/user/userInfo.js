@@ -61,6 +61,10 @@ export const user = createSlice({
           : state.userInfo.data.avatarSource,
       };
     },
+    clearUserState: (state, action) => {
+      state.userInfo = {};
+      state.auth = {};
+    },
   },
   extraReducers: {
     [getUserInfo.pending.type]: (state, action) => {
@@ -108,6 +112,6 @@ export const user = createSlice({
   },
 });
 
-export const { updateUserInfoLocally } = user.actions;
+export const { updateUserInfoLocally, clearUserState } = user.actions;
 
 export default user.reducer;

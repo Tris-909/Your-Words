@@ -13,7 +13,7 @@ const BasicLayout = (props) => {
     <Box position="relative">
       <Box
         className="Home"
-        height={userInfo.data ? `${userInfo.data.boardHeight}px` : `100vh`}
+        height={userInfo?.data ? `${userInfo.data.boardHeight}px` : `100vh`}
         display="flex"
         flexDirection="column"
       >
@@ -27,7 +27,7 @@ const BasicLayout = (props) => {
           {props.children}
         </Box>
       </Box>
-      {fullSizeImage.data.length > 0 && (
+      {fullSizeImage?.data?.length > 0 && (
         <FullSizeImage images={fullSizeImage.data} />
       )}
     </Box>

@@ -83,6 +83,9 @@ export const stickers = createSlice({
       currentDataList.splice(deletePosition, 1);
       state.stickers.data = currentDataList;
     },
+    clearStickerState: (state, action) => {
+      state.stickers = {};
+    },
   },
   extraReducers: {
     [fetchStickers.pending.type]: (state, action) => {
@@ -114,6 +117,7 @@ export const {
   updateStickerPositionLocally,
   updateStickerSizeLocally,
   removeStickerLocally,
+  clearStickerState,
 } = stickers.actions;
 
 export default stickers.reducer;

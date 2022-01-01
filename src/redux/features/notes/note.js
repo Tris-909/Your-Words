@@ -117,6 +117,9 @@ export const notes = createSlice({
       state.list.status = false;
       state.list.data = currentDataList;
     },
+    clearNotesState: (state, action) => {
+      state.list = {};
+    },
   },
   extraReducers: {
     [fetchListNotes.pending.type]: (state, action) => {
@@ -148,6 +151,7 @@ export const {
   addingNewLabel,
   removeALabel,
   updateSingleLabelContent,
+  clearNotesState,
 } = notes.actions;
 
 export default notes.reducer;

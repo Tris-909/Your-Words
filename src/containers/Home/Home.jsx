@@ -39,7 +39,9 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    fetchLists();
+    if (userInfo && userInfo?.data && userInfo?.data?.id) {
+      fetchLists();
+    }
   }, [userInfo?.data?.id]);
 
   useEffect(() => {
@@ -68,6 +70,7 @@ const Home = () => {
           </Box>
         ),
         position: "top",
+        duration: 3000,
       });
     }
   }, [userInfo?.data?.name]);

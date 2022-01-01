@@ -15,7 +15,13 @@ import { useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { BiUser, BiExit } from "react-icons/bi";
 import "./NavBar.scss";
-import { useSelector } from "react-redux";
+import { clearUserState } from "redux/features/user/userInfo";
+import { clearAudiosState } from "redux/features/audio/audio";
+import { clearHeadingState } from "redux/features/heading/heading";
+import { clearNotesState } from "redux/features/notes/note";
+import { clearImagesState } from "redux/features/images/images";
+import { clearStickerState } from "redux/features/stickers/sticker";
+import { useSelector, useDispatch } from "react-redux";
 import config from "aws-exports-env";
 import NoAvatarImage from "containers/Profile/no-avatar.jpg";
 const ENV = process.env.REACT_APP_DEV_ENV;
@@ -26,8 +32,18 @@ const NavBar = () => {
   const history = useHistory();
   const { auth } = useSelector((state) => state.user);
   const { userInfo } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handlerLogOut = async () => {
+    // Clearing redux state
+    dispatch(clearStickerState());
+    dispatch(clearHeadingState());
+    dispatch(clearNotesState());
+    dispatch(clearImagesState());
+    dispatch(clearAudiosState());
+    dispatch(clearUserState());
+
+    // Redirect to login page
     await Auth.signOut();
     history.push("/auth");
     setIsAuthenticated(false);
@@ -53,7 +69,7 @@ const NavBar = () => {
             onMouseEnter={() => onOpen()}
             onMouseLeave={() => onClose()}
             src={
-              auth?.data?.id && userInfo.data.avatarSource
+              auth?.data?.id && userInfo?.data?.avatarSource
                 ? `https://${config[ENV].aws_user_files_s3_bucket}.s3.${config[ENV].aws_user_files_s3_bucket_region}.amazonaws.com/private/${auth.data.id}/${userInfo.data.avatarSource}`
                 : NoAvatarImage
             }
